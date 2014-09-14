@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+    <title>takemikami&#39;s note</title>
+    <description>読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
 </description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 14 Sep 2014 16:51:28 +0000</pubDate>
-    <lastBuildDate>Sun, 14 Sep 2014 16:51:28 +0000</lastBuildDate>
+    <link>http://takemikami.github.io/</link>
+    <atom:link href="http://takemikami.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 15 Sep 2014 07:26:31 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Sep 2014 07:26:31 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -25,11 +25,10 @@
 &lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
-
 </description>
-        <pubDate>Sun, 14 Sep 2014 00:17:44 +0000</pubDate>
-        <link>http://yourdomain.com/jekyll/update/2014/09/14/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/jekyll/update/2014/09/14/welcome-to-jekyll.html</guid>
+        <pubDate>Sun, 14 Sep 2014 09:17:44 +0900</pubDate>
+        <link>http://takemikami.github.io/2014/09/14/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://takemikami.github.io/2014/09/14/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>
