@@ -6,9 +6,289 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 15 Sep 2014 23:39:16 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Sep 2014 23:39:16 +0900</lastBuildDate>
+    <pubDate>Tue, 16 Sep 2014 02:52:37 +0900</pubDate>
+    <lastBuildDate>Tue, 16 Sep 2014 02:52:37 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>blog用にjekyllを設定したメモ</title>
+        <description>&lt;p&gt;このブログをjekyllで生成するにあたって、プラグインとかいろいろと調べたので、このエントリにまとめておきます。&lt;/p&gt;
+
+&lt;h1&gt;基本的なこと&lt;/h1&gt;
+
+&lt;h2&gt;jekyllのプラグイン機能って？&lt;/h2&gt;
+
+&lt;p&gt;jekyllにはプラグイン機能があり、いろいろとサイト生成の挙動を拡張できます。作成したプラグインは&lt;code&gt;_plugins&lt;/code&gt;ディレクトリに配置して利用します。以下のページの「Available Plugins」というところで、利用できるプラグインも紹介されています。&lt;/p&gt;
+
+&lt;p&gt;プラグイン機能の説明： &lt;a href=&quot;http://jekyllrb.com/docs/plugins/&quot;&gt;http://jekyllrb.com/docs/plugins/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Liquidって？&lt;/h2&gt;
+
+&lt;p&gt;jekyllではLiquidというテンプレートエンジンを利用しています。基本的には、変数の表示：&lt;code&gt;{{ variable }}&lt;/code&gt;、機能の実行：&lt;code&gt;{% function %}&lt;/code&gt;で、テンプレートを作成していきます。Liquidの文法などは次のページに説明があります。&lt;/p&gt;
+
+&lt;p&gt;Liquid Documentaion：  &lt;a href=&quot;http://docs.shopify.com/themes/liquid-documentation/basics&quot;&gt;http://docs.shopify.com/themes/liquid-documentation/basics&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;設定したこと&lt;/h1&gt;
+
+&lt;p&gt;jekyllとか関係ないこともありますが、ブログを生成する際に設定したことをずらっと並べていきます。&lt;/p&gt;
+
+&lt;h2&gt;アイコンを利用する&lt;/h2&gt;
+
+&lt;p&gt;このブログでは、 &lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt; &lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt; などのアイコンを利用していますが、これはFont Awesomeというツールキットのアイコンです。以下のプラグインを使えばLiquidのタグでアイコンを表示出来るようになります。&lt;/p&gt;
+
+&lt;p&gt;アイコンを表示するプラグイン： &lt;a href=&quot;http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/&quot;&gt;http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Font Awesomeについて： &lt;a href=&quot;http://fortawesome.github.io/Font-Awesome/&quot;&gt;http://fortawesome.github.io/Font-Awesome/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;アイコンの一覧：　&lt;a href=&quot;http://fortawesome.github.io/Font-Awesome/icons/&quot;&gt;http://fortawesome.github.io/Font-Awesome/icons/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;一覧をページングする&lt;/h2&gt;
+
+&lt;p&gt;一覧ページをページングする場合は、次のページの方法で設定します。&lt;/p&gt;
+
+&lt;p&gt;Pagination: &lt;a href=&quot;http://jekyllrb.com/docs/pagination/&quot;&gt;http://jekyllrb.com/docs/pagination/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;タグページを作る&lt;/h2&gt;
+
+&lt;p&gt;タグページ（タグ毎の投稿一覧ページ）を作成する場合は、次のプラグインを利用します。このプラグインでタグクラウドも生成出来ます。&lt;/p&gt;
+
+&lt;p&gt;jekyll-tagginプラグイン：&lt;a href=&quot;https://github.com/pattex/jekyll-tagging&quot;&gt;https://github.com/pattex/jekyll-tagging&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;カテゴリページを作る&lt;/h2&gt;
+
+&lt;p&gt;カテゴリページ（カテゴリ毎の投稿一覧ページ）は、次のページを参考に作成しました。
+ jekyllのカテゴリページ：&lt;a href=&quot;http://count0.org/2013/07/04/jekyll-category-page.html&quot;&gt;http://count0.org/2013/07/04/jekyll-category-page.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;サイトマップを作る&lt;/h2&gt;
+
+&lt;p&gt;サイトマップ（検索エンジンに読み込ませるためのサイトマップ）は、次のプラグインで生成できます。&lt;/p&gt;
+
+&lt;p&gt;Jekyll Plugin: sitemap.xml Generator : &lt;a href=&quot;https://github.com/kinnetica/jekyll-plugins&quot;&gt;https://github.com/kinnetica/jekyll-plugins&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Liquidのテンプレートを無効にする&lt;/h2&gt;
+
+&lt;p&gt;投稿の本文に&lt;code&gt;{{ variable }}&lt;/code&gt;のような記載があるとLiquidのタグとして処理され困ることがあるので、これを回避するために以下のプラグインで無効化出来るようにします。&lt;/p&gt;
+
+&lt;p&gt;Raw tag for jekyll:  &lt;a href=&quot;https://gist.github.com/phaer/1020852&quot;&gt;https://gist.github.com/phaer/1020852&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;数式を表示する&lt;/h2&gt;
+
+&lt;p&gt;数式の表示にはMathJaxを利用します。これでLaTexライクに数式が利用できます。以下はjekyllでの設定方法と、MathJax自体のドキュメントです。&lt;/p&gt;
+
+&lt;p&gt;MathJax with Jekyll: &lt;a href=&quot;http://gastonsanchez.com/blog/opinion/2014/02/16/Mathjax-with-jekyll.html&quot;&gt;http://gastonsanchez.com/blog/opinion/2014/02/16/Mathjax-with-jekyll.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;MathJax Documentation: &lt;a href=&quot;http://docs.mathjax.org/en/latest/index.html&quot;&gt;http://docs.mathjax.org/en/latest/index.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;MathJaxを利用する場合は&lt;code&gt;_&lt;/code&gt;記号を頻繁に利用するので、redcarpetを利用している場合は、&lt;code&gt;_config.yml&lt;/code&gt;を以下のように設定して強調表示を無効にしておいた方が良さそうです。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;markdown&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;redcarpet&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;redcarpet&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+ &lt;span class=&quot;l-Scalar-Plain&quot;&gt;extensions&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p-Indicator&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;no_intra_emphasis&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;サイト内検索&lt;/h2&gt;
+
+&lt;p&gt;jekyllで生成するページは静的ページなので、サイト内検索は外部の機能を利用します（JavaScriptでなんとかするのもアリですが、）。このサイトで利用しているのはGoogleのカスタム検索です。&lt;/p&gt;
+
+&lt;p&gt;Googleのカスタム検索: &lt;a href=&quot;https://www.google.co.jp/cse/?hl=ja&quot;&gt;https://www.google.co.jp/cse/?hl=ja&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;ドラフト原稿を登録する&lt;/h2&gt;
+
+&lt;p&gt;jekyllでは、&lt;code&gt;_posts&lt;/code&gt;の代わりに&lt;code&gt;_drafts&lt;/code&gt;というディレクトリ配下に原稿を置くとドラフト原稿となり、&lt;code&gt;--drafts&lt;/code&gt;オプションをつけて起動した場合のみ、生成対象にすることが出来ます。これでドラフト原稿安心して、バージョン管理に含めることが出来ますね。。&lt;/p&gt;
+
+&lt;p&gt;他にもあるけど、ひとまずこんな感じ。。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Sep 2014 02:49:11 +0900</pubDate>
+        <link>http://takemikami.com/2014/09/16/blogjekyll.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/09/16/blogjekyll.html</guid>
+        
+        <category>jekyll</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
+    
+      <item>
+        <title>blogをGitHubPages/jekyllに移行したメモ</title>
+        <description>&lt;p&gt;このブログをGitHubPagesに移行し、同時にWordPressからjekyllでの静的ページ生成に切り替えたので。移行のメモとして、GitHubPagesとjekyllでサイトを作成する手順を残しておきます。&lt;/p&gt;
+
+&lt;p&gt;GitHubPageではjekyllを使って動的にサイト生成する機能があるのですが、pluginなどを自由に拡張できないなどの制約があるので、Shippableでページを生成して、静的ファイルをホスティングする流れでいきます。全体の流れを以下の図に示します。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://farm4.staticflickr.com/3886/15226091626_5cf3367829.jpg&quot; alt=&quot;ShippableとGitHubPages全体図&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;この手順を実施する際に以下のページを参考にさせていただきました。
+Shippableの場合はsshkeyがあるのでTravisのよりも、シンプルに実現できました。&lt;/p&gt;
+
+&lt;p&gt;Middleman で作った web サイトを Travis + GitHub pages でお手軽に運用する
+&lt;a href=&quot;http://tricknotes.hateblo.jp/entry/2013/06/17/020229&quot;&gt;http://tricknotes.hateblo.jp/entry/2013/06/17/020229&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;GutHubPagesを準備する&lt;/h1&gt;
+
+&lt;h2&gt;GitHubPagesとは&lt;/h2&gt;
+
+&lt;p&gt;GitHubPagesとは、GitHubのサーバで静的なWebサイトをホスティングする機能です。サイトのソースコードがGitHubのリポジトリで管理されます。&lt;/p&gt;
+
+&lt;p&gt;HTML, CSS, Japascript, ImageなどをリポジトリにpushするとWebサイトとして公開されるという仕組みです。&lt;/p&gt;
+
+&lt;p&gt;詳しくはこちら、 &lt;a href=&quot;https://pages.github.com/&quot;&gt;https://pages.github.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;GitHubPageを準備する&lt;/h2&gt;
+
+&lt;p&gt;手順は、先ほどのページに書いてありますが。「[githubのアカウント名].github.io」という名称のリポジトリをgithubに作成して。「index.html」ファイルをpushすれば準備完了です。&lt;/p&gt;
+
+&lt;p&gt;しばらく待ってから、&lt;code&gt;http://[githubのアカウント名].github.io/&lt;/code&gt;にアクセスするとサイトが確認できます。（※ 私の場合、10分と少しほど待てば確認出来ました。）&lt;/p&gt;
+
+&lt;h1&gt;PCへのjekyllセットアップ&lt;/h1&gt;
+
+&lt;h2&gt;jekyllとは&lt;/h2&gt;
+
+&lt;p&gt;jekyllとは、markdownやtextile記法で書かれたテキストファイルを、静的なWebサイトやブログに変換するツールです。GitHubPagesやOctpressというブログツールなどで利用されています。&lt;/p&gt;
+
+&lt;p&gt;詳しくはこちら、&lt;a href=&quot;http://jekyllrb.com&quot;&gt;http://jekyllrb.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;jekyllのセットアップ&lt;/h2&gt;
+
+&lt;p&gt;まずはローカルPCにjekyllをセットアップします。rubyの環境が構築出来ている前提で話をすすめます。（※私の場合は、MacOSX&amp;amp;rbenvでruby2.1.2でやっています）&lt;/p&gt;
+
+&lt;p&gt;bundlerで、jekyllをセットアップします。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Gemfile&lt;/code&gt;を次のように作成&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;jekyll&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のように、インストールと初期化を実施。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path vendor/bundle
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll new &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;/.gitignore ./
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;/_config.yml ./
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;_config.yml&lt;/code&gt;に以下を追記しておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Global settings&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;source&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;※_config.ymlの設定についてはこちら、&lt;a href=&quot;http://jekyllrb.com/docs/configuration/&quot;&gt;http://jekyllrb.com/docs/configuration/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ここまで出来たら以下のコマンドから、開発用Webサーバを起動し、&lt;code&gt;http://localhost:4000/&lt;/code&gt; で表示を確認出来るはずです。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;に、以下を追加しておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Ignore vendor gems
+/vendor/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここで一度commitしておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git init
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add --all
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -a -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;install jekyll&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;このリポジトリをbitbucketの非公開リポジトリにpushしておきます。手順は、bitbucketで新規リポジトリを生成した後に出てくる、既存リポジトリの登録方法を参照してください。&lt;/p&gt;
+
+&lt;h2&gt;GitHubPagesへの公開&lt;/h2&gt;
+
+&lt;p&gt;それでは、ローカルPCからjekyllで生成したページをGitHubPagesに公開します。&lt;/p&gt;
+
+&lt;p&gt;まず、&lt;code&gt;_site&lt;/code&gt;以下に、GitHubPages用のリポジトリを取り込みます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ rm -rf _site
+$ git clone git@github.com:[あなたのID]/[あなたのID].github.io.git _site
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;jekyllでページを生成します。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle exec jekyll build
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;_site&lt;/code&gt;以下でcommit/pushを行い、変更をGitHubPagesに反映します。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ cd _site
+$ git add --all
+$ git commit -m &amp;quot;&amp;quot;
+$ git push
+$ cd ../
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここまで出来たら&lt;code&gt;http://[あなたのID].github.io/&lt;/code&gt; でサイトの表示を確認出来るはずです。&lt;/p&gt;
+
+&lt;h1&gt;Shippableでの配備の設定&lt;/h1&gt;
+
+&lt;h2&gt;Shippableとは&lt;/h2&gt;
+
+&lt;p&gt;Shippableとはアプリケーションの継続的インテグレーションと配備の機能を提供しているWebサービスです。類似のサービスにTravisCIやCircleCIなどがあります。&lt;/p&gt;
+
+&lt;p&gt;shippableでの継続的インテグレーションは、以下の２点を対応を行えば設定することができます。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;対象リポジトリにshippable.ymlという定義ファイルを格納&lt;/li&gt;
+&lt;li&gt;ShippableにbitbucketのIDでログインし該当リポジトリをEnableに設定&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;詳しくはこちら、 &lt;a href=&quot;http://www.shippable.com&quot;&gt;http://www.shippable.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;Shippableでの配備設定を行う&lt;/h2&gt;
+
+&lt;p&gt;前準備として、先ほど手動で行ったGitHubPagesへの公開の手順を&lt;code&gt;Rakefile&lt;/code&gt;として作成しておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;REPO_URL=&amp;#39;git@github.com:[あなたのID]/[あなたのID].github.io.git&amp;#39;
+
+desc &amp;#39;setup for github pages deploy&amp;#39;
+task :setup do
+  unless File.exists?(&amp;#39;_site/.git&amp;#39;)
+    system &amp;#39;rm -rf _site&amp;#39;
+    system &amp;quot;git clone --quiet #{REPO_URL} _site&amp;quot;
+  end
+end
+
+desc &amp;#39;build site&amp;#39;
+task :build do
+  system &amp;#39;rm -rf _site/*&amp;#39;
+  system &amp;#39;bundle exec jekyll build&amp;#39;
+end
+
+desc &amp;#39;deploy to github pages&amp;#39;
+task :deploy do
+  msg = `git log -n 1 --oneline`.chomp
+  system &amp;quot;cd _site &amp;amp;&amp;amp; git add --all &amp;amp;&amp;amp; git commit -m \&amp;quot;update with #{msg}\&amp;quot;&amp;quot;
+  system &amp;quot;cd _site &amp;amp;&amp;amp; git push --quiet #{REPO_URL}&amp;quot;
+end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のように&lt;code&gt;shippable.yml&lt;/code&gt;を作成して、Rakefileで定義したtaskを呼び出すようにします。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;ruby&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;rvm&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;2.0.0&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;l-Scalar-Plain&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;master&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;before_script&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake setup&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake build&lt;/span&gt;
+&lt;span class=&quot;l-Scalar-Plain&quot;&gt;after_success&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake deploy&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Shippalbeの管理画面で、Organizationを選び、Reposの中から対象のリポジトリを選び「Enable」を押すと、継続的インテグレーションを有効にします。&lt;/p&gt;
+
+&lt;p&gt;ただし、このままではShippableからGitHubに対してpushが出来ないので、以下の手順でGitHubにsshkeyを登録します。&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Shippableの管理画面で、Organizationを選び、「Deployment Key」で表示される公開鍵をコピーします。&lt;/li&gt;
+&lt;li&gt;GitHubのアカウントSettingから「SSH Keys」を選び、「Add SSH Key」でShippableの公開鍵をペーストし、登録します&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;ここまで出来たら、次のようにbitbucketに変更をpushします。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ git add shippable.yml Rakefile
+$ git commit -a -m &amp;quot;install shippable&amp;quot;
+$ git push
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;あとは、自動的にShippableがページを生成して、GitHubPagesにpushしてサイトが公開されます。（Shippableがバージョンアップした直後だからなのか、無償アカウントだからなのか、30〜40分くらい待たないと生成が開始しないみたいです。）&lt;/p&gt;
+
+&lt;p&gt;生成から配備までの流れは以上になります。ここまで設定すれば、あとは記事を追加して、bitbucketにpushすれば、サイト公開まで自動的に行われます。&lt;/p&gt;
+
+&lt;p&gt;WordPressもよく出来たアプリケーションですが、このような仕組みの方がソースと公開したファイルのバージョン管理がやりやすくて好きですね。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Sep 2014 02:48:47 +0900</pubDate>
+        <link>http://takemikami.com/2014/09/16/blogGitHubPagesjekyll.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/09/16/blogGitHubPagesjekyll.html</guid>
+        
+        <category>jekyll</category>
+        
+        <category>github</category>
+        
+        <category>shippable</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>PusherとRubyOnRailsでチャットアプリを作ってみた</title>
@@ -67,7 +347,7 @@ Railsと組み合わせて、簡単なチャットアプリを作ってみます
 &lt;a href=&quot;https://app.pusher.com/accounts/sign_in&quot;&gt;&lt;a href=&quot;https://app.pusher.com/accounts/sign_in&quot;&gt;https://app.pusher.com/accounts/sign_in&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Your Appsで「+ New app」ボタンを押し、&lt;br&gt;
-「chat&lt;em&gt;rails&lt;/em&gt;pusher_sample」という名称を指定して、&lt;br&gt;
+「chat_rails_pusher_sample」という名称を指定して、&lt;br&gt;
 「Create app」を押し、アプリを作成します。  &lt;/p&gt;
 
 &lt;p&gt;アプリ作成後の画面では、&lt;br&gt;
@@ -877,110 +1157,6 @@ JDKをセットアップしたマシンに、JDKがセットアップされて�
         <category>chef</category>
         
         <category>jdk</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>「良いものを作れば売れる」は違うかも知れないけれど</title>
-        <description>&lt;p&gt;意識の高いビジネスマンの方とお話をすると、
-技術者の仕事に対する姿勢を、
-「良い物を作れば売れると思っている」
-という指摘する方に、会うことが度々ある。&lt;/p&gt;
-
-&lt;p&gt;「良い物を作れば売れる」というのは、
-間違ってはいないけれど、それだけでは足りないのは確かだと思う。
-「良い売り方」、言い換えると良いマーケティングが無ければ物は売れない。&lt;/p&gt;
-
-&lt;p&gt;単によい「物」を作っても、
-その「物」をどのように使うかが、お客さんに伝わらなければ、
-その「物」が良いかどうかすらお客さんには分からない。
-だから、
-「良い物を作れば売れる」という姿勢では問題がある。
-こういうロジックで、
-「良い物を作れば売れると思っている」
-という指摘で、仕事に対する姿勢に疑問を投げかけるのだろう。&lt;/p&gt;
-
-&lt;p&gt;ただ、このような指摘をするビジネスマンに対して、
-僕はよく疑問を感じる。
-「良い物を作る」という姿勢は素晴らしいし、それは技術者の仕事だ。
-意識の高いビジネスマンであれば、
-技術者が頑張って作った「良い物」を「良い売り方」で売ればいいのではないだろうか？
-技術者が「良い物を作る」という事に集中できるように、
-「良い売り方」でサポートすることこそが、ビジネスマンの仕事だと思うのだ。&lt;/p&gt;
-
-&lt;p&gt;もちろん「良い売り方」まで出来る技術者もいると思うが、
-人が出来ることには時間的・体力的に限りがあるし、
-得意な部分で上手く分業してスピード感持って仕事した方が、
-お客さんも、ビジネスマンも、技術者も幸せになれるはずだと思う。&lt;/p&gt;
-
-&lt;p&gt;「良い物を作れば売れると思っている」
-という指摘を聞くたびに、こんなことを考えてしまう。&lt;/p&gt;
-</description>
-        <pubDate>Mon, 02 Jun 2014 08:41:21 +0900</pubDate>
-        <link>http://takemikami.com/archives/1475</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1475</guid>
-        
-        
-        <category>日記</category>
-        
-      </item>
-    
-      <item>
-        <title>MacOSX上でFORTRAN環境を作った手順メモ</title>
-        <description>&lt;p&gt;ちょっと野暮用で、FORTRANを使う機会があったため、&lt;br&gt;
-MacOSX上でFORTRAN環境を作ったので、手順をメモしておきます。&lt;br&gt;
-ここではHomebrewを使ってgfortranをインストールします。  &lt;/p&gt;
-
-&lt;p&gt;実行したOS： MacOSX v10.9.2 (Mavericks)  &lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;strong&gt;■Homebrewのインストール&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;以下のHomebrewのサイトの「Install Homebrew」部分に記載されている&lt;br&gt;
-セットアップコマンドをターミナルから実行します。  &lt;/p&gt;
-
-&lt;p&gt;Homebrew&lt;br&gt;
-　&lt;a href=&quot;http://brew.sh&quot;&gt;&lt;a href=&quot;http://brew.sh&quot;&gt;http://brew.sh&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ruby -e &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&amp;quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;※XcodeとCommandLineToolsはインストールしておく前提です。  &lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;strong&gt;■gfortranのインストール&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Homebrewがインストール出来たら、&lt;br&gt;
-以下のコマンドでgfortranをインストールします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;brew install gfortran
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;インストールが完了したら、以下のコマンドで、&lt;br&gt;
-gfortranがインストール出来ていることを確認します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which gfortran
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;strong&gt;■HelloWorldプログラムの作成と実行&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;エディタで以下の内容のファイルを作成します。  &lt;/p&gt;
-
-&lt;p&gt;test.f  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;program hellofortran
-print *, &amp;#39;Hello Fortran&amp;#39;
-end program hellofortran
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;作成したファイルを配置したディレクトリに移動し、&lt;br&gt;
-以下のコマンドを実行し、HelloWorldプログラムを実行します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gfortran test.f
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./a.out
-Hello Fortran
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以上。&lt;br&gt;
-なんて事は無いですが、FORTRANとか久しぶりにさわった。&lt;br&gt;
-多分、学生の時代以来ww  &lt;/p&gt;
-</description>
-        <pubDate>Thu, 22 May 2014 10:28:48 +0900</pubDate>
-        <link>http://takemikami.com/archives/1469</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1469</guid>
-        
-        <category>fortran</category>
         
         
         <category>it技術</category>
