@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>capistranoでのRails3アプリ配備チュートリアル | takemikami's note</title>
+    <meta name="description" content="読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="canonical" href="http://takemikami.com/archives/1310">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+
+  <body>
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=214236895371631&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">takemikami's note</a>
+
+<div class="site-search">
+<script>
+  (function() {
+    var cx = '001111401147268864293:eygh6uuznk8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/categories/it技術/">IT</a>
+        <a class="page-link" href="/categories/アプリ/">Apps</a>
+        <a class="page-link" href="/categories/文芸/">Literary</a>
+        <a class="page-link" href="/categories/読書ノート/">Bookworm</a>
+        <a class="page-link" href="/categories/日記/">Diary</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-main">
+      <div class="wrapper">
+        <div class="main-col-wrapper">
+          <div class="main-col main-col-1">
+            <div class="page-content">
+              <div class="post">
+
+  <header class="post-header">
+    <a class="post-category" href="/categories/it技術">IT技術</a>
+
+
+
+    <h1 class="post-title">capistranoでのRails3アプリ配備チュートリアル</h1>
+    <p class="post-metainfo">
+      
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/capistrano.html">capistrano</a>
+      
+        <a href="/tag/rails3.html">rails3</a>
+      </div>
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2012/08/17 18:50:22</div>
+    </p>
+  </header>
+
+
+  <article class="post-content">
+    
+      <p>rails3のアプリ作成しcapistranoを使って配備するまでのチュートリアルを示す。  </p>
+
+<h2>railsアプリを作る</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails new myapp
+create
+create  README
+create  <span class="nv">Rakefile</span>
+<span class="o">=</span> 途中省略 <span class="o">=</span>
+run  bundle <span class="nv">install</span>
+<span class="o">=</span> 途中省略 <span class="o">=</span>
+Your bundle is <span class="nb">complete</span>! Use <span class="sb">`</span>bundle show <span class="o">[</span>gemname<span class="o">]</span><span class="sb">`</span> to see where a bundled gem is installed.
+</code></pre></div>
+<h2>アプリを起動する</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myapp
+</code></pre></div>
+<p>※javascriptのライブラリ不足でエラーになるので以下を追記<br>
+・「Gemfile」を編集  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">&#39;execjs&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;therubyracer&#39;</span>
+
+<span class="n">gem</span> <span class="s1">&#39;capistrano&#39;</span> <span class="err">←コメントイン</span>
+</code></pre></div>
+<p>・Gemfileで指定したライブラリをインストール  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle install
+</code></pre></div>
+<h2>capistranoでの配信に対応させる(capify)</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>capify .
+<span class="o">[</span>add<span class="o">]</span> writing <span class="s1">&#39;./Capfile&#39;</span>
+<span class="o">[</span>add<span class="o">]</span> writing <span class="s1">&#39;./config/deploy.rb&#39;</span>
+<span class="o">[</span><span class="k">done</span><span class="o">]</span> capified!
+</code></pre></div>
+<h2>生成されたファイルの確認</h2>
+
+<p>・「Capfile」を参照する  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">load</span> <span class="s1">&#39;deploy&#39;</span> <span class="k">if</span> <span class="nb">respond_to?</span><span class="p">(</span><span class="ss">:namespace</span><span class="p">)</span> <span class="c1"># cap2 differentiator</span>
+
+<span class="c1"># Uncomment if you are using Rails&#39; asset pipeline</span>
+<span class="c1"># load &#39;deploy/assets&#39;</span>
+
+<span class="no">Dir</span><span class="o">[</span><span class="s1">&#39;vendor/gems/*/recipes/*.rb&#39;</span><span class="p">,</span><span class="s1">&#39;vendor/plugins/*/recipes/*.rb&#39;</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">plugin</span><span class="o">|</span> <span class="nb">load</span><span class="p">(</span><span class="n">plugin</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="nb">load</span> <span class="s1">&#39;config/deploy&#39;</span> <span class="c1"># remove this line to skip loading any of the default tasks</span>
+</code></pre></div>
+<p>・「./config/deploy.rb」を参照する  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">set</span> <span class="ss">:application</span><span class="p">,</span> <span class="s2">&quot;set your application name here&quot;</span>
+<span class="n">set</span> <span class="ss">:repository</span><span class="p">,</span>  <span class="s2">&quot;set your repository location here&quot;</span>
+
+<span class="n">set</span> <span class="ss">:scm</span><span class="p">,</span> <span class="ss">:subversion</span>
+<span class="c1"># Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`</span>
+
+<span class="n">role</span> <span class="ss">:web</span><span class="p">,</span> <span class="s2">&quot;your web-server here&quot;</span>                          <span class="c1"># Your HTTP server, Apache/etc</span>
+<span class="n">role</span> <span class="ss">:app</span><span class="p">,</span> <span class="s2">&quot;your app-server here&quot;</span>                          <span class="c1"># This may be the same as your `Web` server</span>
+<span class="n">role</span> <span class="ss">:db</span><span class="p">,</span>  <span class="s2">&quot;your primary db-server here&quot;</span><span class="p">,</span> <span class="ss">:primary</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="c1"># This is where Rails migrations will run</span>
+<span class="n">role</span> <span class="ss">:db</span><span class="p">,</span>  <span class="s2">&quot;your slave db-server here&quot;</span>
+
+<span class="c1"># if you&#39;re still using the script/reaper helper you will need</span>
+<span class="c1"># these http://github.com/rails/irs_process_scripts</span>
+
+<span class="c1"># If you are using Passenger mod_rails uncomment this:</span>
+<span class="c1"># namespace :deploy do</span>
+<span class="c1">#   task :start do ; end</span>
+<span class="c1">#   task :stop do ; end</span>
+<span class="c1">#   task :restart, :roles =&gt; :app, :except =&gt; { :no_release =&gt; true } do</span>
+<span class="c1">#     run &quot;#{try_sudo} touch #{File.join(current_path,&#39;tmp&#39;,&#39;restart.txt&#39;)}&quot;</span>
+<span class="c1">#   end</span>
+<span class="c1"># end</span>
+</code></pre></div>
+<h2>配信コマンドを確認する</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cap -T
+cap deploy               <span class="c"># Deploys your project.</span>
+cap deploy:check         <span class="c"># Test deployment dependencies.</span>
+cap deploy:cleanup       <span class="c"># Clean up old releases.</span>
+cap deploy:cold          <span class="c"># Deploys and starts a `cold&#39; application.</span>
+cap deploy:migrate       <span class="c"># Run the migrate rake task.</span>
+cap deploy:migrations    <span class="c"># Deploy and run pending migrations.</span>
+cap deploy:pending       <span class="c"># Displays the commits since your last deploy.</span>
+cap deploy:pending:diff  <span class="c"># Displays the `diff&#39; since your last deploy.</span>
+cap deploy:restart       <span class="c"># Blank task exists as a hook into which to install ...</span>
+cap deploy:rollback      <span class="c"># Rolls back to a previous version and restarts.</span>
+cap deploy:rollback:code <span class="c"># Rolls back to the previously deployed version.</span>
+cap deploy:setup         <span class="c"># Prepares one or more servers for deployment.</span>
+cap deploy:start         <span class="c"># Blank task exists as a hook into which to install ...</span>
+cap deploy:stop          <span class="c"># Blank task exists as a hook into which to install ...</span>
+cap deploy:symlink       <span class="c"># Updates the symlink to the most recently deployed ...</span>
+cap deploy:update        <span class="c"># Copies your project and updates the symlink.</span>
+cap deploy:update_code   <span class="c"># Copies your project to the remote servers.</span>
+cap deploy:upload        <span class="c"># Copy files to the currently deployed version.</span>
+cap deploy:web:disable   <span class="c"># Present a maintenance page to visitors.</span>
+cap deploy:web:enable    <span class="c"># Makes the application web-accessible again.</span>
+cap invoke               <span class="c"># Invoke a single command on the remote servers.</span>
+cap shell                <span class="c"># Begin an interactive Capistrano session.</span>
+
+Some tasks were not listed, either because they have no description,
+or because they are only used internally by other tasks. To see all
+tasks, <span class="nb">type</span> <span class="sb">`</span>cap -vT<span class="s1">&#39;.</span>
+
+<span class="s1">Extended help may be available for these tasks.</span>
+<span class="s1">Type `cap -e taskname&#39;</span> to view it.
+</code></pre></div>
+<h2>作成したアプリケーションをgitにコミットする</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git init
+Initialized empty Git repository in /home/mikamitakeshi/myapp/.git/
+<span class="nv">$ </span>git add --all
+<span class="nv">$ </span>git commit -a -m <span class="s2">&quot;initial commit&quot;</span>
+<span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> cb1a4bb<span class="o">]</span> initial commit
+<span class="m">39</span> files changed, <span class="m">1219</span> insertions<span class="o">(</span>+<span class="o">)</span>, <span class="m">0</span> deletions<span class="o">(</span>-<span class="o">)</span>
+create mode <span class="m">100644</span> .gitignore
+create mode <span class="m">100644</span> <span class="nv">Capfile</span>
+<span class="o">=</span> 途中省略 <span class="o">=</span>
+create mode <span class="m">100644</span> vendor/plugins/.gitkeep
+</code></pre></div>
+<h2>配信用の定義を記載する</h2>
+
+<p>・「./config/deploy.rb」を編集する  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">set</span> <span class="ss">:application</span><span class="p">,</span> <span class="s2">&quot;myapp&quot;</span>
+<span class="n">set</span> <span class="ss">:repository</span><span class="p">,</span>  <span class="s2">&quot;※作業ディレクトリを指定（例：/home/user01/myapp）※&quot;</span>
+
+<span class="n">set</span> <span class="ss">:scm</span><span class="p">,</span> <span class="ss">:git</span>
+<span class="c1"># Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`</span>
+
+<span class="n">role</span> <span class="ss">:web</span><span class="p">,</span> <span class="s2">&quot;127.0.0.1&quot;</span>                          <span class="c1"># Your HTTP server, Apache/etc</span>
+<span class="n">role</span> <span class="ss">:app</span><span class="p">,</span> <span class="s2">&quot;127.0.0.1&quot;</span>                          <span class="c1"># This may be the same as your `Web` server</span>
+<span class="n">role</span> <span class="ss">:db</span><span class="p">,</span>  <span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="ss">:primary</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="c1"># This is where Rails migrations will run</span>
+<span class="n">role</span> <span class="ss">:db</span><span class="p">,</span>  <span class="s2">&quot;127.0.0.1&quot;</span>
+</code></pre></div>
+<h2>実際に配信する(cap)</h2>
+
+<p>・配信先ディレクトリを作っておく←配信先サーバで実行  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo mkdir -p /u/apps/myapp/releases /u/apps/myapp/shared/log /u/apps/myapp/shared/pids
+<span class="nv">$ </span>sudo chown -R ※配信ユーザ（例：user01）※:※配信ユーザグループ（例：user01）※ /u/apps/myapp
+</code></pre></div>
+<p>・配信する  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cap deploy
+* executing <span class="sb">`</span>deploy<span class="s1">&#39;</span>
+<span class="s1">* executing `deploy:update&#39;</span>
+** transaction: start
+* executing <span class="sb">`</span>deploy:update_code<span class="s1">&#39;</span>
+<span class="s1">executing locally: &quot;git ls-remote /home/user01/myapp HEAD&quot;</span>
+<span class="s1">command finished in 36ms</span>
+<span class="s1">* executing &quot;git clone -q /home/user01/myapp /u/apps/myapp/releases/20120124035234 &amp;&amp; cd /u/apps/myapp/releases/20120124035234 &amp;&amp; git checkout -q -b deploy cb1a4bb38001c03d6face683f6607df53a3151a1 &amp;&amp; (echo cb1a4bb38001c03d6face683f6607df53a3151a1 &gt; /u/apps/myapp/releases/20120124035234/REVISION)&quot;</span>
+<span class="s1">servers: [&quot;127.0.0.1&quot;]</span>
+<span class="s1">Password:</span>
+<span class="s1">[127.0.0.1] executing command</span>
+<span class="s1">command finished in 535ms</span>
+<span class="s1">* executing `deploy:finalize_update&#39;</span>
+* executing <span class="s2">&quot;chmod -R g+w /u/apps/myapp/releases/20120124035234&quot;</span>
+servers: <span class="o">[</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">]</span>
+<span class="o">[</span>127.0.0.1<span class="o">]</span> executing <span class="nb">command</span>
+<span class="nb">command </span>finished in 377ms
+* executing <span class="s2">&quot;rm -rf /u/apps/myapp/releases/20120124035234/log /u/apps/myapp/releases/20120124035234/public/system /u/apps/myapp/releases/20120124035234/tmp/pids &amp;&amp;\\\n      mkdir -p /u/apps/myapp/releases/20120124035234/public &amp;&amp;\\\n      mkdir -p /u/apps/myapp/releases/20120124035234/tmp &amp;&amp;\\\n      ln -s /u/apps/myapp/shared/log /u/apps/myapp/releases/20120124035234/log &amp;&amp;\\\n      ln -s /u/apps/myapp/shared/system /u/apps/myapp/releases/20120124035234/public/system &amp;&amp;\\\n      ln -s /u/apps/myapp/shared/pids /u/apps/myapp/releases/20120124035234/tmp/pids&quot;</span>
+servers: <span class="o">[</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">]</span>
+<span class="o">[</span>127.0.0.1<span class="o">]</span> executing <span class="nb">command</span>
+<span class="nb">command </span>finished in 393ms
+* executing <span class="s2">&quot;find /u/apps/myapp/releases/20120124035234/public/images /u/apps/myapp/releases/20120124035234/public/stylesheets /u/apps/myapp/releases/20120124035234/public/javascripts -exec touch -t 201201240352.38 {} &#39;;&#39;; true&quot;</span>
+servers: <span class="o">[</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">]</span>
+<span class="o">[</span>127.0.0.1<span class="o">]</span> executing <span class="nb">command</span>
+*** <span class="o">[</span>err :: 127.0.0.1<span class="o">]</span> find:
+*** <span class="o">[</span>err :: 127.0.0.1<span class="o">]</span> <span class="sb">`</span>/u/apps/myapp/releases/20120124035234/public/images<span class="s1">&#39;</span>
+<span class="s1">*** [err :: 127.0.0.1] : そのようなファイルやディレクトリはありません</span>
+<span class="s1">*** [err :: 127.0.0.1]</span>
+<span class="s1">*** [err :: 127.0.0.1] find:</span>
+<span class="s1">*** [err :: 127.0.0.1] `/u/apps/myapp/releases/20120124035234/public/stylesheets&#39;</span>
+*** <span class="o">[</span>err :: 127.0.0.1<span class="o">]</span> : そのようなファイルやディレクトリはありません
+*** <span class="o">[</span>err :: 127.0.0.1<span class="o">]</span>
+*** <span class="o">[</span>err :: 127.0.0.1<span class="o">]</span> find:
+*** <span class="o">[</span>err :: 127.0.0.1<span class="o">]</span> <span class="sb">`</span>/u/apps/myapp/releases/20120124035234/public/javascripts<span class="s1">&#39;</span>
+<span class="s1">*** [err :: 127.0.0.1] : そのようなファイルやディレクトリはありません</span>
+<span class="s1">*** [err :: 127.0.0.1]</span>
+<span class="s1">command finished in 389ms</span>
+<span class="s1">* executing `deploy:symlink&#39;</span>
+* executing <span class="s2">&quot;rm -f /u/apps/myapp/current &amp;&amp; ln -s /u/apps/myapp/releases/20120124035234 /u/apps/myapp/current&quot;</span>
+servers: <span class="o">[</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="o">]</span>
+<span class="o">[</span>127.0.0.1<span class="o">]</span> executing <span class="nb">command</span>
+<span class="nb">command </span>finished in 420ms
+** transaction: commit
+* executing <span class="sb">`</span>deploy:restart<span class="err">&#39;</span>
+</code></pre></div>
+<h2><i>■おまけ：配信のカスタマイズ</i></h2>
+
+<h2>multistageに対応させる</h2>
+
+<p>→staging用/produnction用など配信定義を分けたい場合  </p>
+
+<p>・config/deploy.rb            ← 共通の定義<br>
+・config/deploy/production.rb ← production用の定義<br>
+・config/deploy/staging.rb    ← staging用の定義  </p>
+
+<p>production.rb/staging.rbに環境固有の定義を記載し、<br>
+deploy.rbには共通の定義を記載する。  </p>
+
+<p>production/stagingには以下のコマンドで配備を行う。<br>
+$ bundle exec cap production deploy ← productionの場合<br>
+$ bundle exec cap staging deploy    ← stagingの場合  </p>
+
+<h2>配信前後の処理を追加する</h2>
+
+<p>・「config/deploy.rb」を編集する  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># namespace :deploy do</span>
+<span class="c1">#   task :start do ; end　　←★サーバ開始の処理を記載する</span>
+<span class="c1">#   task :stop do ; end　　←★サーバ停止の処理を記載する</span>
+<span class="c1">#   task :restart, :roles =&gt; :app, :except =&gt; { :no_release =&gt; true } do</span>
+<span class="c1">#     run &quot;#{try_sudo} touch #{File.join(current_path,&#39;tmp&#39;,&#39;restart.txt&#39;)}&quot;</span>
+<span class="c1">#   end</span>
+<span class="c1"># end</span>
+</code></pre></div>
+<p>※配信前後にサーバの再起動、asset::precompileを追加した例  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">after</span> <span class="s2">&quot;deploy:update_code&quot;</span><span class="p">,</span> <span class="s2">&quot;deploy:pipeline_precompile&quot;</span>
+
+<span class="n">namespace</span> <span class="ss">:deploy</span> <span class="k">do</span>
+<span class="n">task</span> <span class="ss">:start</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span>
+<span class="n">run</span> <span class="s2">&quot;sudo /etc/init.d/</span><span class="si">#{</span><span class="n">application</span><span class="si">}</span><span class="s2"> start&quot;</span>
+<span class="k">end</span>
+<span class="n">task</span> <span class="ss">:stop</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span>
+<span class="n">run</span> <span class="s2">&quot;sudo /etc/init.d/</span><span class="si">#{</span><span class="n">application</span><span class="si">}</span><span class="s2"> stop&quot;</span>
+<span class="k">end</span>
+<span class="n">task</span> <span class="ss">:graceful_stop</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span>
+<span class="n">run</span> <span class="s2">&quot;sudo /etc/init.d/</span><span class="si">#{</span><span class="n">application</span><span class="si">}</span><span class="s2"> graceful_stop&quot;</span>
+<span class="k">end</span>
+<span class="n">task</span> <span class="ss">:reload</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span>
+<span class="n">run</span> <span class="s2">&quot;sudo /etc/init.d/</span><span class="si">#{</span><span class="n">application</span><span class="si">}</span><span class="s2"> reload&quot;</span>
+<span class="k">end</span>
+<span class="n">task</span> <span class="ss">:restart</span><span class="p">,</span> <span class="ss">:roles</span> <span class="o">=&gt;</span> <span class="ss">:app</span><span class="p">,</span> <span class="ss">:except</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:no_release</span> <span class="o">=&gt;</span> <span class="kp">true</span> <span class="p">}</span> <span class="k">do</span>
+<span class="n">stop</span>
+<span class="n">start</span>
+<span class="k">end</span>
+
+<span class="n">task</span> <span class="ss">:pipeline_precompile</span> <span class="k">do</span>
+<span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">release_path</span><span class="si">}</span><span class="s2">; RAILS_ENV=</span><span class="si">#{</span><span class="n">rails_env</span><span class="si">}</span><span class="s2"> bundle exec rake assets:precompile&quot;</span>
+<span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div>
+    
+  </article>
+
+  <footer class="post-header">
+    <p class="post-metainfo">
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2012/08/17 18:50:22</div>
+      <div class="post-meta-category"><i class="fa fa-folder"></i> カテゴリ：
+        <a href="/categories/it技術">IT技術</a>
+      </div>
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/capistrano.html">capistrano</a>
+      
+        <a href="/tag/rails3.html">rails3</a>
+      </div>
+      
+      
+      
+    </p>
+  </footer>
+
+<div style="margin-bottom:0.5em;"><!-- sns button -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="takemikami" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- twitter-->
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ja'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- google plus -->
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><!-- hatena blog -->
+<br/>
+<div class="fb-like" data-href="http://takemikami.com/archives/1310" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div><!-- facebook -->
+</div><!-- .sns button -->
+
+
+<div class="nav-links">
+	<div class="nav-previous">&laquo; <a href="/archives/1308">Rails3チュートリアル　（はじめてのRails3</a></div>
+	<div class="nav-next">&raquo; <a href="/archives/1312">deviseによる認証を組み込んだRails3アプリの作成</a></div>
+</div>
+
+<div class="page-widget-header">[PR]</div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:60px"
+     data-ad-client="ca-pub-6279684021251205"
+     data-ad-slot="1274582921"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'takemikami'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+            </div>
+          </div><!-- main-col-1 -->
+          <div class="main-col main-col-2">
+            <div class="site-widgets">
+              <div class="widget-header">Author</div>
+<div class="widget-content">
+<a href="/about/profile.html"><img src="/images/common/portrait_takemikami.jpg" width="72" height="72" style="float:right;"/></a>
+<b><a href="/about/profile.html">takemikami</a></b><br/>
+読書や創作が趣味なITエンジニア<br/>
+・データ分析及びアプリ開発<br/>
+・創作はショートショート<br/>
+・YUI/FLOWER FLOWERファン<br/>
+・<a href="/about/techworks.html">研究発表履歴</a> |
+<a href="/about/litworks.html">創作発表履歴</a>
+<br clear="all" />
+<table width="100%"><tr>
+ <td width="50%" valign="top">
+<a href="http://google.com/+TakeshiMikami"
+   rel="publisher" target="_top" style="text-decoration:none;">
+<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/> Google+
+</a><br/>
+<a href="http://twitter.com/takemikami"><img src="/images/common/favicon_twitter.png"> twitter</a><br/>
+<a href="http://www.linkedin.com/in/takemikami"><img src="/images/common/favicon_linkedin.png"> LinkedIn</a><br/>
+<a href="http://play.google.com/store/apps/developer?id=Takeshi+Mikami"><img src="/images/common/favicon_googleplay.png"> Google Play</a><br/>
+ <td>
+ <td width="50%" valign="top">
+<a href="http://booklog.jp/users/takemikami"><img src="/images/common/favicon_booklog.png"> ブクログ</a><br/>
+<a href="http://github.com/takemikami"><img src="/images/common/favicon_github.png"> github</a><br/>
+<a href="http://www.slideshare.net/takemikami"><img src="/images/common/favicon_slideshare.png"> slideshare</a><br/>
+<a href="http://b.hatena.ne.jp/takemikami/"><img src="/images/common/favicon_hateb.png"> Hatena::Bookmark</a><br/>
+ <td>
+</tr></table>
+
+</div>
+
+<div class="widget-header">Recent Posts</div>
+<div class="widget-content">
+<ul class="recent-post-list">
+  
+    <li>
+     <a href="/archives/1518">PusherとRubyOnRailsでチャットアプリを作ってみた</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1516">MacOSXでAngularJS開発環境を構築する手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1512">MacOSXでのrbenvを使ってrubyをインストールする手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1492">母校で後輩が書いた小説の合評してきました</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1490">「期末に予算を消化する」ことに正義はあるか？</a>
+    </li>
+  
+</ul>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar 1*/
+google_ad_slot = "3350215728";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">タグ</div>
+<div class="widget-content">
+<div id="tag-cloud">
+<a href="/tag/AngularJS.html" class="set-1">AngularJS</a> <a href="/tag/Excel.html" class="set-1">Excel</a> <a href="/tag/GoogleChartTools.html" class="set-1">GoogleChartTools</a> <a href="/tag/MySQL.html" class="set-1">MySQL</a> <a href="/tag/android.html" class="set-1">android</a> <a href="/tag/aws.html" class="set-2">aws</a> <a href="/tag/bi.html" class="set-1">bi</a> <a href="/tag/bitbucket.html" class="set-1">bitbucket</a> <a href="/tag/capistrano.html" class="set-1">capistrano</a> <a href="/tag/chef.html" class="set-4">chef</a> <a href="/tag/css.html" class="set-1">css</a> <a href="/tag/designpattern.html" class="set-1">designpattern</a> <a href="/tag/devise.html" class="set-1">devise</a> <a href="/tag/ec2.html" class="set-1">ec2</a> <a href="/tag/eclipse.html" class="set-1">eclipse</a> <a href="/tag/emr.html" class="set-1">emr</a> <a href="/tag/fluent.html" class="set-1">fluent</a> <a href="/tag/fluentd.html" class="set-1">fluentd</a> <a href="/tag/fortran.html" class="set-1">fortran</a> <a href="/tag/git.html" class="set-1">git</a> <a href="/tag/github.html" class="set-1">github</a> <a href="/tag/hadoop.html" class="set-1">hadoop</a> <a href="/tag/hibernate.html" class="set-1">hibernate</a> <a href="/tag/hive.html" class="set-1">hive</a> <a href="/tag/igo.html" class="set-1">igo</a> <a href="/tag/infobright.html" class="set-1">infobright</a> <a href="/tag/iptables.html" class="set-1">iptables</a> <a href="/tag/java.html" class="set-5">java</a> <a href="/tag/javascript.html" class="set-1">javascript</a> <a href="/tag/jdk.html" class="set-1">jdk</a> <a href="/tag/jmeter.html" class="set-1">jmeter</a> <a href="/tag/mathML.html" class="set-1">mathML</a> <a href="/tag/maven.html" class="set-1">maven</a> <a href="/tag/nginx.html" class="set-1">nginx</a> <a href="/tag/nodejs.html" class="set-1">nodejs</a> <a href="/tag/nokogiri.html" class="set-1">nokogiri</a> <a href="/tag/pentaho.html" class="set-1">pentaho</a> <a href="/tag/perl.html" class="set-1">perl</a> <a href="/tag/php.html" class="set-1">php</a> <a href="/tag/pusher.html" class="set-1">pusher</a> <a href="/tag/r.html" class="set-1">r</a> <a href="/tag/rails3.html" class="set-2">rails3</a> <a href="/tag/rails4.html" class="set-1">rails4</a> <a href="/tag/rbenv.html" class="set-1">rbenv</a> <a href="/tag/rstudio.html" class="set-1">rstudio</a> <a href="/tag/ruby.html" class="set-4">ruby</a> <a href="/tag/s3.html" class="set-1">s3</a> <a href="/tag/servlet.html" class="set-2">servlet</a> <a href="/tag/springMVC.html" class="set-1">springMVC</a> <a href="/tag/subversion.html" class="set-1">subversion</a> <a href="/tag/tortoisegit.html" class="set-1">tortoisegit</a> <a href="/tag/twitter.html" class="set-1">twitter</a> <a href="/tag/vagrant.html" class="set-1">vagrant</a> <a href="/tag/websocket.html" class="set-1">websocket</a> <a href="/tag/wordpress.html" class="set-1">wordpress</a> <a href="/tag/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%90.html" class="set-1">形態素解析</a> <a href="/tag/%E8%B2%A0%E8%8D%B7%E3%83%86%E3%82%B9%E3%83%88.html" class="set-1">負荷テスト</a> <a href="/tag/%E9%96%8B%E7%99%BA%E7%AE%A1%E7%90%86.html" class="set-1">開発管理</a>
+</div>
+
+</div>
+
+<div class="widget-content">
+<table>
+<tr><td>
+    <script type="text/javascript" src="http://widget.booklog.jp/blogparts/js/booklog_minishelf_3col.js?default" id="booklog_minishelf_3col"></script>
+    <script type="text/javascript" src="http://api.booklog.jp/json/takemikami?category=0&count=6&callback=booklog_minishelf_3col"></script>
+</td><td>
+<a href="http://user.awasete.com/user/1003533_4c6ed/"><img src="http://awasete.nakanohito.jp/img/?u=1003533&amp;h=3e850aae&amp;s=160" width="160" height="140" border="" alt="あわせて読みたい" /></a>
+</td></tr></table>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar2 */
+google_ad_slot = "9848917726";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">RSS</div>
+<div class="widget-content">
+<p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
+
+            </div>
+          </div><!-- main-col-2 -->
+        </div><!-- main-col-wrapper -->
+      </div><!-- wrapper -->
+    </div><!-- page-main -->
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    Copyright (C) 1999-2014 Takeshi Mikami. All rights reserved.
+  </div>
+</div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-32149053-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </body>
+
+</html>

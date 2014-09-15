@@ -4,36 +4,986 @@
     <title>takemikami&#39;s note</title>
     <description>読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
 </description>
-    <link>http://takemikami.github.io/</link>
-    <atom:link href="http://takemikami.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 15 Sep 2014 19:40:12 +0900</pubDate>
-    <lastBuildDate>Mon, 15 Sep 2014 19:40:12 +0900</lastBuildDate>
+    <link>http://takemikami.com/</link>
+    <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 15 Sep 2014 21:49:39 +0900</pubDate>
+    <lastBuildDate>Mon, 15 Sep 2014 21:49:39 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
-        <title>Welcome to Jekyll!</title>
-        <description>&lt;p&gt;You’ll find this post in your &lt;code&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code&gt;jekyll serve --watch&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+        <title>PusherとRubyOnRailsでチャットアプリを作ってみた</title>
+        <description>&lt;p&gt;このエントリでは、&lt;br&gt;
+PusherとRubyOnRailsで簡単なチャットアプリを作成する流れを示します。  &lt;/p&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;p&gt;WebSocketを使うと、Webアプリケーションで、&lt;br&gt;
+サーバ・クライアント間でリアルタイムな双方向通信を行うことが出来ます。&lt;br&gt;
+Pusherというサービスを使うと、&lt;br&gt;
+WebSocketに対応したサーバを自前で用意しなくても、&lt;br&gt;
+お手軽にWebSocketを使用する事ができるので、&lt;br&gt;
+Railsと組み合わせて、簡単なチャットアプリを作ってみます。  &lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;Pusher&lt;br&gt;
+&lt;a href=&quot;http://pusher.com&quot;&gt;&lt;a href=&quot;http://pusher.com&quot;&gt;http://pusher.com&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;p&gt;このエントリで作成したソースコードはgithubに上げています。&lt;br&gt;
+&lt;a href=&quot;https://github.com/takemikami/chat_rails_pusher_sample&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chat_rails_pusher_sample&quot;&gt;https://github.com/takemikami/chat_rails_pusher_sample&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;作成するアプリの概要&lt;/h1&gt;
+
+&lt;p&gt;作成するアプリは以下の流れで、&lt;br&gt;
+チャットのメッセージを送信し、ページに表示することとします。  &lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;ブラウザからメッセージ送信&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;Railsサーバで受信、PusherにPush通知依頼&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;PusherからブラウザにPush通知&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;Push通知を受けて、メッセージを表示領域に即時表示&lt;br&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15034779635&quot; title=&quot;View &#39;chat_rails_pusher_1&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;375&quot; title=&quot;chat_rails_pusher_1&quot; alt=&quot;chat_rails_pusher_1&quot; border=&quot;0&quot; src=&quot;https://farm4.staticflickr.com/3849/15034779635_0597b39a56.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以下の流れでアプリを作っていきます。&lt;br&gt;
+・Puhserのアカウントとアプリケーションを作る&lt;br&gt;
+・既定の状態のRailsアプリを作る&lt;br&gt;
+・チャット画面の枠組みを作る&lt;br&gt;
+・サーバサイドの機能を組み込む&lt;br&gt;
+・クライアントサイドの機能を組み込む&lt;br&gt;
+・チャットの動作確認を行う&lt;br&gt;
+・Pusherのキー情報を設定ファイルに移動させる  &lt;/p&gt;
+
+&lt;h1&gt;Pusherのアカウントとアプリケーションを作る&lt;/h1&gt;
+
+&lt;p&gt;まずは、Pusherのアカウントとアプリを作成していきます。  &lt;/p&gt;
+
+&lt;p&gt;Pusherのサイトにアクセスする。  &lt;/p&gt;
+
+&lt;p&gt;Pusher&lt;br&gt;
+&lt;a href=&quot;http://pusher.com&quot;&gt;&lt;a href=&quot;http://pusher.com&quot;&gt;http://pusher.com&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;「Create a Free Account」から手順に従って、アカウント作成。&lt;br&gt;
+アカウントを作成したら、以下からログインして、Dashbordを表示します。  &lt;/p&gt;
+
+&lt;p&gt;Pusher: Dashboard&lt;br&gt;
+&lt;a href=&quot;https://app.pusher.com/accounts/sign_in&quot;&gt;&lt;a href=&quot;https://app.pusher.com/accounts/sign_in&quot;&gt;https://app.pusher.com/accounts/sign_in&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Your Appsで「+ New app」ボタンを押し、&lt;br&gt;
+「chat&lt;em&gt;rails&lt;/em&gt;pusher_sample」という名称を指定して、&lt;br&gt;
+「Create app」を押し、アプリを作成します。  &lt;/p&gt;
+
+&lt;p&gt;アプリ作成後の画面では、&lt;br&gt;
+「Code examples」が表示され、&lt;br&gt;
+クライアント側のJavascriptと、&lt;br&gt;
+サーバ側の各種言語のサンプルが確認できます。  &lt;/p&gt;
+
+&lt;p&gt;後ほどの手順では、&lt;br&gt;
+ここに表示されるサンプルをコピーして使用していきます。  &lt;/p&gt;
+
+&lt;h1&gt;既定の状態のRailsアプリを作る&lt;/h1&gt;
+
+&lt;p&gt;ひとまず、既定の状態のRailsアプリを用意します。  &lt;/p&gt;
+
+&lt;p&gt;次のコマンドでRailsアプリ用のディレクトリを作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir chat_rails_pusher_sample
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;chat_rails_pusher_sample
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のとおり「Gemfile」を作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;https://rubygems.org&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のコマンドでrailsをインストール、Railsアプリを作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path vendor/bundle
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails new .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のコマンドで、開発用Webサーバを起動します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ブラウザで「&lt;a href=&quot;http://127.0.0.1:3000/%E3%80%8D%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%80%81&quot;&gt;http://127.0.0.1:3000/」を表示し、&lt;/a&gt;&lt;br&gt;
+RailsのWelcomeが表示されていることを確認。  &lt;/p&gt;
+
+&lt;h1&gt;チャット画面の枠組みを作る&lt;/h1&gt;
+
+&lt;p&gt;次に、チャット画面を枠組みを作ります。  &lt;/p&gt;
+
+&lt;p&gt;次のコマンドで、メインのコントローラーを作成。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails g controller chat
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;「config/routes.rb」に、&lt;br&gt;
+チャットのメイン画面のルート、メッセージの送信先ルートを設定します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;draw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chat#index&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;post&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chat#post&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;****&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;省略&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;****&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Tom&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints &amp;#39;Hi, Tom&amp;#39; to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;「app/views/chat/index.html.erb」を編集し、&lt;br&gt;
+チャットのメイン画面の枠組みをつくります。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= form_tag(&amp;#39;/post&amp;#39;, :remote =&amp;gt; true) do %&amp;gt;
+&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= text_field_tag &amp;#39;message&amp;#39; %&amp;gt;
+&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= submit_tag &amp;#39;send&amp;#39; %&amp;gt;
+&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;% end %&amp;gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;messagelog&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;前半のform_tagが、メッセージの送信用フォーム&lt;br&gt;
+後半のdivタグが、メッセージの表示領域です。  &lt;/p&gt;
+
+&lt;h1&gt;サーバサイドの機能を組み込む&lt;/h1&gt;
+
+&lt;p&gt;次にサーバサイド側の機能を組み込んでいきます。  &lt;/p&gt;
+
+&lt;p&gt;pusherのライブラリを使うので、「Gemfile」に以下を追記します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pusher&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のコマンドで、先ほど追記したpusherのgemをインストール。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;PusherのDashbordからRails用のコードを確認します。&lt;br&gt;
+Dashbordに表示されているサンプルコードを元に、&lt;br&gt;
+以下のように「config/initializers/pusher.rb」を作成。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pusher&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://&amp;lt;あなたのaccess_key&amp;gt;:&amp;lt;あなたのaccess_key_secret&amp;gt;@api.pusherapp.com/apps/&amp;lt;あなたのapp_id&amp;gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;gem追加とinitializer配下を修正したので、&lt;br&gt;
+ここで、railsのWebサーバは再起動しておきます。  &lt;/p&gt;
+
+&lt;p&gt;以下のように「app/controllers/chat_controller.rb」を編集します。&lt;br&gt;
+ここでは、ブラウザからpostされたメッセージを受け付け、&lt;br&gt;
+そのメッセージ情報をpush送信するように、pusherに依頼を行っています。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChatController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;post&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;general_channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trigger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;chat_event&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;render&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;OK&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;クライアントサイドの機能を組み込む&lt;/h1&gt;
+
+&lt;p&gt;ここまでで、&lt;br&gt;
+1. ブラウザからメッセージ送信&lt;br&gt;
+2. Railsサーバで受信、PusherにPush通知依頼&lt;br&gt;
+3. PusherからブラウザにPush通知&lt;br&gt;
+まで実装できたので、&lt;br&gt;
+次は、ブラウザ側でPush通知を受け付け、&lt;br&gt;
+メッセージ表示領域に追記する部分を実装します。  &lt;/p&gt;
+
+&lt;p&gt;PusherのDashbordのクライアント側サンプルコードを元に、&lt;br&gt;
+以下のように「app/views/chat/index.html.erb」に処理を追記。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;//js.pusher.com/2.2/pusher.min.js&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// Enable pusher logging - don&amp;#39;t include this in production&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pusher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;あなたのaccess_key&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;channel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pusher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;general_channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;chat_event&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messagelog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;messagelog&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messagediv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;div&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;messagediv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;innerHTML&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;messagelog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;messagediv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+
+**** 省略 ****
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;チャットの動作確認を行う&lt;/h1&gt;
+
+&lt;p&gt;ここまでで、チャットアプリの流れは完成したので、動作確認を行います。&lt;br&gt;
+２つのブラウザを起動し、&lt;br&gt;
+両方のブラウザで「&lt;a href=&quot;http://127.0.0.1:3000/%E3%80%8D%E3%82%92%E9%96%8B%E3%81%8D%E3%81%BE%E3%81%99%E3%80%82&quot;&gt;http://127.0.0.1:3000/」を開きます。&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;一方でメッセージを入力し送信すると、&lt;br&gt;
+即時に両方にメッセージが追記されることが確認出来るはずです。  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15031721821&quot; title=&quot;View &#39;chat_rails_pusher_2&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;258&quot; title=&quot;chat_rails_pusher_2&quot; alt=&quot;chat_rails_pusher_2&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5573/15031721821_6a58c09530.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;Pusherのキー情報を設定ファイルに移動させる&lt;/h1&gt;
+
+&lt;p&gt;Pusherのキー情報がソースコードべた書きなのが気持ち悪いので、&lt;br&gt;
+最後にキー情報を設定ファイルに移動させておきます。  &lt;/p&gt;
+
+&lt;p&gt;次のように「config/pusher.yml」を作成。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;development:
+app_id: &amp;lt;あなたのapp_id&amp;gt;
+access_key: &amp;lt;あなたのaccess_key&amp;gt;
+access_key_secret: &amp;lt;あなたのaccess_key_secret&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のとおり「config/initializer/pusher.rb」を修正。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pusher&amp;#39;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;YAML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;config/pusher.yml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;access_key_secret&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@api.pusherapp.com/apps/{config_pusher[&amp;#39;app_id&amp;#39;]}&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のとおり「app/controllers/chat_controller.rb」を修正。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChatController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;YAML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;config/pusher.yml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;vi&quot;&gt;@pusher_access_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;****&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;省略&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;****&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のとおり「app/views/chat/index.html.erb」を修正。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;**** 省略 ****
+var pusher = new Pusher(&amp;#39;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= @pusher_access_key %&amp;gt;&amp;#39;);
+**** 省略 ****
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以上。。  &lt;/p&gt;
 </description>
-        <pubDate>Sun, 14 Sep 2014 09:17:44 +0900</pubDate>
-        <link>http://takemikami.github.io/2014/09/14/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://takemikami.github.io/2014/09/14/welcome-to-jekyll.html</guid>
+        <pubDate>Tue, 26 Aug 2014 04:08:10 +0900</pubDate>
+        <link>http://takemikami.com/archives/1518</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1518</guid>
+        
+        <category>pusher</category>
+        
+        <category>rails4</category>
+        
+        <category>websocket</category>
         
         
-        <category>jekyll</category>
+        <category>it技術</category>
         
-        <category>update</category>
+      </item>
+    
+      <item>
+        <title>MacOSXでAngularJS開発環境を構築する手順</title>
+        <description>&lt;p&gt;MacOSXでAngularJSでの開発環境を構築したので、&lt;br&gt;
+その手順のメモを残します。  &lt;/p&gt;
+
+&lt;p&gt;AngularJS:&lt;br&gt;
+&lt;a href=&quot;https://angularjs.org&quot;&gt;&lt;a href=&quot;https://angularjs.org&quot;&gt;https://angularjs.org&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;全体の流れは、次のとおり。&lt;br&gt;
+1. nodebrewのインストール&lt;br&gt;
+2. nodeのインストール&lt;br&gt;
+3. grunt-cli, yo, bower, generator-angularのインストール&lt;br&gt;
+4. compassのインストール&lt;br&gt;
+5. AngularJSアプリのテンプレート生成  &lt;/p&gt;
+
+&lt;h1&gt;nodebrewのインストール&lt;/h1&gt;
+
+&lt;p&gt;まず、nodeのversion管理ツールとしてnodebrewをインストールします。&lt;br&gt;
+# 世間にはいくつかnodeのversion管理ツールがあるようですが、&lt;br&gt;
+# なんとなくactiveっぽいので、ここではnodebrewを選びました。    &lt;/p&gt;
+
+&lt;p&gt;nodebrew:&lt;br&gt;
+&lt;a href=&quot;https://github.com/hokaccha/nodebrew&quot;&gt;&lt;a href=&quot;https://github.com/hokaccha/nodebrew&quot;&gt;https://github.com/hokaccha/nodebrew&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以下の手順は、基本的に公式サイトの手順通りです。&lt;br&gt;
+次のコマンドでインストール実行。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl -L git.io/nodebrew &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; perl - setup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;「~/.bash_profile」に以下を追記して、パスを設定。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.nodebrew/current/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、パス設定を読み込む。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、パスが通っている事を確認。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew &lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;nodeのインストール&lt;/h1&gt;
+
+&lt;p&gt;次は、nodebrewを使って、nodeをインストールします。  &lt;/p&gt;
+
+&lt;p&gt;まずは、以下のコマンドで、利用可能なnodeのバージョンを確認。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew ls-remote
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;表示されたバージョンの中から、インストールしたいバージョンを指定して、&lt;br&gt;
+nodeのインストールを実行。&lt;br&gt;
+ここでは、最新の「v0.11.13」を指定します。&lt;br&gt;
+# しばらく時間がかかります。    &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew install v0.11.13
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドでインストールされたことを確認。&lt;br&gt;
+# インストールしたnodeのバージョンが表示されるはずです。    &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew list
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、利用するnodeのバージョンを指定します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew  use v0.11.13
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、指定したバージョンが有効になっている事を確認。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;node -v
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;grunt-cli, yo, bower, generator-angularのインストール&lt;/h1&gt;
+
+&lt;p&gt;以下のコマンドで、AngularJSの開発に利用する各種ツールをインストールします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install -g grunt-cli
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install -g yo
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install -g bower
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;インストールしたツールのサイトはそれぞれ、以下の通り。  &lt;/p&gt;
+
+&lt;p&gt;Grunt:&lt;br&gt;
+&lt;a href=&quot;http://gruntjs.com&quot;&gt;&lt;a href=&quot;http://gruntjs.com&quot;&gt;http://gruntjs.com&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Yeoman:&lt;br&gt;
+&lt;a href=&quot;http://yeoman.io&quot;&gt;&lt;a href=&quot;http://yeoman.io&quot;&gt;http://yeoman.io&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Bower:&lt;br&gt;
+&lt;a href=&quot;http://bower.io&quot;&gt;&lt;a href=&quot;http://bower.io&quot;&gt;http://bower.io&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;compassのインストール&lt;/h1&gt;
+
+&lt;p&gt;この手順では、sass/scssを利用するので、&lt;br&gt;
+以下のコマンドでcompassをインストールしておきます。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sudo gem install compass
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;AngularJSアプリのテンプレート生成&lt;/h1&gt;
+
+&lt;p&gt;以下のコマンドで、AngularJSの開発のテンプレートを生成するツールをインストールします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install generator-angular
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドでAngularJSアプリケーションのテンプレートを生成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ngapp
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;ngapp
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yo angular ngapp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;生成時にいろいろ聞かれますが、ひとまず全て既定値で回答しておきます。  &lt;/p&gt;
+
+&lt;p&gt;生成が終わったら、以下のコマンドで開発用のWebサーバを起動します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grunt serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;既定のブラウザが開き、&lt;br&gt;
+次のような画面が表示されれば、テンプレート作成OKです。  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15027881561&quot; title=&quot;View &#39;angularjs01&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;324&quot; title=&quot;angularjs01&quot; alt=&quot;angularjs01&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5581/15027881561_c81342553f.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;# 本番はここからですけどね    &lt;/p&gt;
+</description>
+        <pubDate>Mon, 25 Aug 2014 21:42:57 +0900</pubDate>
+        <link>http://takemikami.com/archives/1516</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1516</guid>
+        
+        <category>AngularJS</category>
+        
+        <category>javascript</category>
+        
+        <category>nodejs</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
+    
+      <item>
+        <title>MacOSXでのrbenvを使ってrubyをインストールする手順</title>
+        <description>&lt;p&gt;rubyのバージョン管理はながらくrvmを使っていて特に不満も無かったのですが、&lt;br&gt;
+まわりにrbenv使う人の方が増えてきたのもあり、&lt;br&gt;
+そろそろrbenvに乗り換えようと思ったので、ここに設定手順をまとめておきます。  &lt;/p&gt;
+
+&lt;p&gt;rbenv:&lt;br&gt;
+&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot;&gt;&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot;&gt;https://github.com/sstephenson/rbenv&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;全体の流れは、次のとおり。&lt;br&gt;
+1. homebrewでrbenvをインストール&lt;br&gt;
+2. rubyのインストール  &lt;/p&gt;
+
+&lt;p&gt;※homebrewがインストールされている事は前提です  &lt;/p&gt;
+
+&lt;h1&gt;homebrewでrbenvをインストール&lt;/h1&gt;
+
+&lt;p&gt;以下のお決まりコマンドで、インストールを実行。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;brew install rbenv ruby-build
+**** 省略 ****
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Caveats
+To use Homebrew&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;s directories rather than ~/.rbenv add to your profile:
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RBENV_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/rbenv
+
+To &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;shims and autocompletion add to your profile:
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; which rbenv &amp;gt; /dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(rbenv init -)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Summary
+**** 省略 ****
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;上記のように説明が表示されるので、&lt;br&gt;
+これから、この説明に従って設定をしていきます。  &lt;/p&gt;
+
+&lt;p&gt;「~/.bash_profile」に以下を追記します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; which rbenv &amp;gt; /dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(rbenv init -)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、パス設定を読み込む。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、パスが通っている事を確認。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv --help
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;rubyのインストール&lt;/h1&gt;
+
+&lt;p&gt;まずは、以下のコマンドで、利用可能なrubyのバージョンを確認。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv install -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;表示されたバージョンの中から、インストールしたいバージョンを指定して、&lt;br&gt;
+rubyのインストールを実行。&lt;br&gt;
+ここでは、「2.1.2」を指定します。&lt;br&gt;
+# しばらく時間がかかります。    &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv install 2.1.2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドでインストールされたことを確認。&lt;br&gt;
+# インストールしたrubyのバージョンが表示されるはずです。    &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv versions
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、利用するrubyのバージョンを指定します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv global 2.1.2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、指定したバージョンが有効になっている事を確認。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ruby -v
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、bunlderも入れておきます。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gem install bundler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;bundleのようにコマンドがあるgemの場合は、&lt;br&gt;
+システムに標準でインストールされているコマンドにパスが通っていることがあるので、&lt;br&gt;
+次のように「rbenv rehash」を実行して、&lt;br&gt;
+rbenv管理下のコマンドにパスが通るようにしておきます。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which bundle
+/usr/bin/bundle
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv rehash
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which bundle
+/Users/&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ユーザ名&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;/.rbenv/shims/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ドキュメントをよく読まなかった私が良くなかったのですが、&lt;br&gt;
+システム標準に入っているbundlerが動き、？？？となってしまいました。&lt;br&gt;
+そこだけ意識していれば、特に難しい事は無く使えるかなと思います、&lt;br&gt;
+今のところですが。。  &lt;/p&gt;
+</description>
+        <pubDate>Mon, 25 Aug 2014 21:35:47 +0900</pubDate>
+        <link>http://takemikami.com/archives/1512</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1512</guid>
+        
+        <category>rbenv</category>
+        
+        <category>ruby</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
+    
+      <item>
+        <title>母校で後輩が書いた小説の合評してきました</title>
+        <description>&lt;p&gt;大学の時に所属していた文学研究会の後輩から、
+「集まるから部室来て」というメールが来たので、
+行ってみると、合評会でした。&lt;/p&gt;
+
+&lt;p&gt;文学研究会でやっている合評会は、
+みんなが書いた文芸創作（小説や詩）を読んで、
+お互いに批評し合うという会です。
+何をするのか知らなかった私は、
+当然、自分が書いた作品を用意していなかったので。
+後輩達の小説の批評をする立場として参加してきました。&lt;/p&gt;
+
+&lt;p&gt;それぞれの作品に対して、
+「読者にどういう風に読ませたいと思って書いたのか？」
+と作者の意図を聞いて、
+その意図を作品から感じ取ることが出来たかを、
+読者の立場から意見する、という形で批評を進めていました。&lt;/p&gt;
+
+&lt;p&gt;以下、合評で話題になった内容で、
+印象的だった事について触れていきたいと思います。&lt;/p&gt;
+
+&lt;p&gt;まずは、キャラクターのネーミングについて。
+登場人物に意味ありげな名前をつけていると、
+作品中でその名前の意味がはっきりしないと、
+読後にもやもやが残るという意見がありました。
+特に意味を持たせる必要が無いなら、
+シンプルな名前にしておいた方が無難ということと、
+まじめに、名前の意味とかを調べ出すと、
+勉強も資料も必要になるので、大変だねという話をしていました。&lt;/p&gt;
+
+&lt;p&gt;次に、描写を曖昧にしておきたい場合の表現について。
+作中で「○○のような」という表現があり、
+「○○のようなもの」と書くと物質的になって意図した表現にならないが、
+「○○のような」で切ってしまうと収まりが悪いという部分があった。
+ここをどのように表現することが出来るか？という点を考えていた。
+地の文が三人称だと、曖昧な様を表現する時に、
+地の文でそのまま表現するより、
+登場人物の視点に移してから表現した方がしっくりくるかも知れない、
+という話をしていました。&lt;/p&gt;
+
+&lt;p&gt;次に、食べ物と色の表現について。
+食べ物を色で表現する時に、表現したい味と色がしっかりと、
+かみあっていないと伝わらないという話題。
+具体的にはおいしいカレーって何色と書けばいいんだろう？
+という話をしていました。
+辛いカレーとおいしいカレーでは、表現すべき色は違うねという話など。&lt;/p&gt;
+
+&lt;p&gt;最後に、切ない表現をどのようにするかという話題。
+恋愛における切ない様子を表現する際に、
+登場人物の内面を描写する方法もあるが、
+情景描写を使って登場人物の切ない心情を描写したいと話をしていました。
+このような表現を学ぶには、
+昔の歌謡曲の歌詞なども参考になるという話をしていました。&lt;/p&gt;
+
+&lt;p&gt;こんな風に、創作の話をしていると、
+久しぶりに自分でも小説を書きたいなと思いました。
+楽しかったです、こういう話ができる仲間は本当に貴重だと思います。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/62769571@N03/14470803751&quot; title=&quot;View &#39;DSC_0066&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;500&quot; title=&quot;DSC_0066&quot; alt=&quot;DSC_0066&quot; border=&quot;0&quot; src=&quot;https://farm4.staticflickr.com/3910/14470803751_2bba7a73a1.jpg&quot; width=&quot;281&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 22 Jun 2014 02:55:27 +0900</pubDate>
+        <link>http://takemikami.com/archives/1492</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1492</guid>
+        
+        
+        <category>日記</category>
+        
+      </item>
+    
+      <item>
+        <title>「期末に予算を消化する」ことに正義はあるか？</title>
+        <description>&lt;p&gt;期末になると道路工事が増える、など
+期末までに残された予算を使い切るということが、
+公共事業や、民間企業でも行われることは多い。&lt;/p&gt;
+
+&lt;p&gt;普通に考えれば、
+緊急性の無い工事や、その時点ですぐに必要では無いものを購入したりなど
+お金の使い道を、わざわざ探して使い切るという行為は合理的ではない。
+こういった行為は、
+割り当てられた予算をきちんと使い切るという実績を作って、
+次の期に、同等の金額の予算割り当てを受けるために行われる。&lt;/p&gt;
+
+&lt;p&gt;毎期、同様の額の予算割り当てを得るために、
+期末に、わざわざお金の使い道を探して使い切る。
+そんな行為は無駄なので、
+余ったお金は繰り越して、本当に必要な時に使うなり、
+もっと必要性が高い部分にお金を回した方が、合理的だと考えるのが普通だ。&lt;/p&gt;
+
+&lt;p&gt;が、ここで少し考えてみる。
+余ったお金を繰り越したり、他にお金を回すという判断を誰がするのだろう？
+毎期ごとに、予算を見直すようになるとすると、
+その判断をする人に、予算に対する権限が極端に集中するリスクがある。
+そのリスクを回避しようとすると、
+客観性の担保のため、予算の妥当性の証明や検証の費用がさらに必要になる。&lt;/p&gt;
+
+&lt;p&gt;そう考えると、
+「期末に予算を消化する」という方法は、
+手放しでベストな方法とは呼べないけれど、
+ある程度は合理性がある方法なのかもしれないなぁと思うようになった。&lt;/p&gt;
+
+&lt;p&gt;学生の頃とかはこんなこと考えなかったけれど、
+実際に、会社などで予算執行されるプロセス見てると、
+単に、キーマンと仲の良い人が要求したら割り当てられるという判断基準も多い。
+公共事業などが、そんなノリで割り当てられるくらいなら、
+毎期、同額の方が、税金の使われ方として、まだ納得だなと思ったりする。&lt;/p&gt;
+</description>
+        <pubDate>Fri, 20 Jun 2014 02:48:43 +0900</pubDate>
+        <link>http://takemikami.com/archives/1490</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1490</guid>
+        
+        
+        <category>日記</category>
+        
+      </item>
+    
+      <item>
+        <title>chef-soloを使ってRstudioServerをセットアップする手順</title>
+        <description>&lt;p&gt;CentOS6にchef-soloを使って、&lt;br&gt;
+RStudioServerをセットアップする手順を示します。  &lt;/p&gt;
+
+&lt;p&gt;RStudioServerセットアップの手順は簡単ですが、&lt;br&gt;
+処理するデータ量が増えた時の、サーバ増強・増設を考えると、&lt;br&gt;
+自動化しておいた方がいいような気がしたので、&lt;br&gt;
+chefのcookbookにしておきました。  &lt;/p&gt;
+
+&lt;p&gt;このエントリで使用するchefのcookbookは、私のgithubにおいています。&lt;br&gt;
+　&lt;a href=&quot;https://github.com/takemikami/chef-rstudio&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chef-rstudio&quot;&gt;https://github.com/takemikami/chef-rstudio&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;RStudio自体については、以下の公式サイトをご覧下さい。  &lt;/p&gt;
+
+&lt;p&gt;RStduio&lt;br&gt;
+　&lt;a href=&quot;https://www.rstudio.com/&quot;&gt;&lt;a href=&quot;https://www.rstudio.com/&quot;&gt;https://www.rstudio.com/&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;h1&gt;Knife/Berkshelfのインストール&lt;/h1&gt;
+
+&lt;p&gt;管理用のマシンで、&lt;br&gt;
+以下のコマンドから、Knife Soloの作業用ディレクトリを作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ~/rstudiosetup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;作業用ディレクトリに以下ファイルを作成します。  &lt;/p&gt;
+
+&lt;p&gt;Gemfile  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chef&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;knife-solo&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;berkshelf&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Berksfile  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;site&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:opscode&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cookbook&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rstudio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;takemikami&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rstudio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、KnifeSoloをインストールします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/rstudiosetup
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vendor/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、knifeのディレクトリ構成を作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo init .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、githubからrstudioのcookbookを取得します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;berks vendor cookbooks/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;RstudioServerのセットアップ用cookbookを適用&lt;/h1&gt;
+
+&lt;p&gt;knife-soloで接続できるCentOSの環境が用意されているとして、&lt;br&gt;
+以下のコマンドで、knifeの環境を準備します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/pentahosetup
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo prepare &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;lt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;接続先マシン名&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;gt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のファイルに適用時の設定を追記します。  &lt;/p&gt;
+
+&lt;p&gt;nodes/&amp;lt;接続先マシン名&amp;gt;.json  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;amp;quot;run_list&amp;amp;quot;:[&amp;amp;quot;recipe[rstudio::server]&amp;amp;quot;]}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、knifeでcookbookを適用をします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo cook &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;lt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;接続先マシン名&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;gt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここまでで、RStudioServerのセットアップが完了です。  &lt;/p&gt;
+
+&lt;p&gt;上記手順以外に、&lt;br&gt;
+RstudioServerは、TCPポート8787でサービスを提供するので、&lt;br&gt;
+クライアントからTCPポート8787でアクセス出来るようにしておく必要があります。  &lt;/p&gt;
+
+&lt;p&gt;ブラウザから「http://&amp;lt;接続先マシン名&amp;gt;:8787/」にアクセスすると以下のような&lt;br&gt;
+ログイン画面が表示されます。  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/62769571@N03/14315616396&quot; title=&quot;View &#39;chef-rstudio1&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;260&quot; title=&quot;chef-rstudio1&quot; alt=&quot;chef-rstudio1&quot; border=&quot;0&quot; src=&quot;https://farm4.staticflickr.com/3878/14315616396_74b9655490.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;サーバ上のユーザ（UNIXのユーザ）を指定してログインすると、&lt;br&gt;
+以下のような画面が表示され、Rの機能を利用することができます。  &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/62769571@N03/14358946083&quot; title=&quot;View &#39;chef-rstudio2&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;322&quot; title=&quot;chef-rstudio2&quot; alt=&quot;chef-rstudio2&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5153/14358946083_7d8333a136.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;参考にした記事&lt;/h1&gt;
+
+&lt;p&gt;RStudioがすごそうなので使ってみた - As a Futurist…&lt;br&gt;
+　&lt;a href=&quot;http://blog.riywo.com/2011/03/05/031831&quot;&gt;&lt;a href=&quot;http://blog.riywo.com/2011/03/05/031831&quot;&gt;http://blog.riywo.com/2011/03/05/031831&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;CentOS 6.2 に R と RStudio Server をインストールする - hiratake55 の開発メモ&lt;br&gt;
+　&lt;a href=&quot;http://d.hatena.ne.jp/hiratake55/20120527/1338091311&quot;&gt;&lt;a href=&quot;http://d.hatena.ne.jp/hiratake55/20120527/1338091311&quot;&gt;http://d.hatena.ne.jp/hiratake55/20120527/1338091311&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+</description>
+        <pubDate>Wed, 04 Jun 2014 02:03:45 +0900</pubDate>
+        <link>http://takemikami.com/archives/1484</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1484</guid>
+        
+        <category>chef</category>
+        
+        <category>r</category>
+        
+        <category>rstudio</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
+    
+      <item>
+        <title>chef-soloを使ってPentahoとInfobrightをセットアップしてみた</title>
+        <description>&lt;p&gt;PentahoとInfobrightを用いた集計用マシンを、&lt;br&gt;
+CentOS6.5に、chef-soloでセットアップしてみます。  &lt;/p&gt;
+
+&lt;p&gt;ここで行うことは、&lt;br&gt;
+以下の過去エントリのサーバ環境構築をchefで置き換えるイメージです。  &lt;/p&gt;
+
+&lt;p&gt;PentahoとInfobrightを用いた多次元データ分析環境の構築手順(Community版)&lt;br&gt;
+　&lt;a href=&quot;http://takemikami.com/archives/1330&quot;&gt;&lt;a href=&quot;http://takemikami.com/archives/1330&quot;&gt;http://takemikami.com/archives/1330&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;p&gt;また、このエントリで使用するcehfのcookbookは、私のgithubにおいています。&lt;br&gt;
+　&lt;a href=&quot;https://github.com/takemikami/chef-pentaho&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chef-pentaho&quot;&gt;https://github.com/takemikami/chef-pentaho&lt;/a&gt;&lt;/a&gt;&lt;br&gt;
+　&lt;a href=&quot;https://github.com/takemikami/chef-infobright&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chef-infobright&quot;&gt;https://github.com/takemikami/chef-infobright&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;h1&gt;Knife Soloのインストール&lt;/h1&gt;
+
+&lt;p&gt;管理用のマシンで、&lt;br&gt;
+以下のコマンドから、Knife Soloの作業用ディレクトリを作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ~/pentahosetup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;作業用ディレクトリに以下ファイルを作成します。  &lt;/p&gt;
+
+&lt;p&gt;Gemfile  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chef&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;knife-solo&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;berkshelf&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Berksfile  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;site&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:opscode&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cookbook&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;infobright&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;takemikami/chef-infobright&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cookbook&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;pentaho&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;takemikami/chef-pentaho&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、KnifeSoloをインストールします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/pentahosetup
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vendor/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、knifeのディレクトリ構成を作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo init .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、githubからpentahoとinfobrightのcookbookを取得します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;berks vendor cookbooks/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;Pentaho&amp;amp;Infobrightのセットアップ用cookbookを適用&lt;/h1&gt;
+
+&lt;p&gt;knife-soloで接続でき、&lt;br&gt;
+Oracle版JDKがセットアップ済みのCentOSの環境が用意されているとして、&lt;br&gt;
+以下のコマンドで、knifeの環境を準備します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/pentahosetup
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo prepare &amp;lt;接続先マシン名&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のファイルに適用時の設定を追記します。  &lt;/p&gt;
+
+&lt;p&gt;nodes/&amp;lt;接続先マシン名&amp;gt;.json  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;quot;run_list&amp;quot;:[&amp;quot;recipe[infobright::install]&amp;quot;, &amp;quot;recipe[pentaho::biserver-install]&amp;quot;]}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、knifeでcookbookを適用をします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo cook &amp;lt;接続先マシン名&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここまでで、&lt;br&gt;
+「&lt;a href=&quot;http://takemikami.com/archives/1330&quot;&gt;PentahoとInfobrightを用いた多次元データ分析環境の構築手順(Community版)&lt;/a&gt;」の&lt;br&gt;
+「サーバ環境構築」の実施と同等のことができています。&lt;br&gt;
+以降の使い方は、もとのエントリを参考にしてください。  &lt;/p&gt;
+
+&lt;p&gt;また、Oracle版JDKのセットアップもchefで行う場合は、以下も参考にしてください。  &lt;/p&gt;
+
+&lt;p&gt;Oracle版JDKをchef-soloを使ってセットアップする方法&lt;br&gt;
+　&lt;a href=&quot;http://takemikami.com/archives/1478&quot;&gt;&lt;a href=&quot;http://takemikami.com/archives/1478&quot;&gt;http://takemikami.com/archives/1478&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+</description>
+        <pubDate>Tue, 03 Jun 2014 22:12:59 +0900</pubDate>
+        <link>http://takemikami.com/archives/1481</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1481</guid>
+        
+        <category>chef</category>
+        
+        <category>infobright</category>
+        
+        <category>pentaho</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
+    
+      <item>
+        <title>Oracle版JDKをchef-soloを使ってセットアップする方法</title>
+        <description>&lt;p&gt;chef-soloを使ってOracle版Javaのセットアップしようとしても、&lt;br&gt;
+Oracleのサイトから利用規約に合意して、&lt;br&gt;
+JDKをダウンロードという手順を踏む必要があるので、&lt;br&gt;
+そのままでは、自動化することが出来ません。  &lt;/p&gt;
+
+&lt;p&gt;そこで、以下の２つの方法を考えました、&lt;br&gt;
+①社内用のyumリポジトリを用意して、ダウンロードしたJDKのrpmを配置&lt;br&gt;
+　社内用yumリポジトリからchefでセットアップする&lt;br&gt;
+②chefのcookbookの中に、ダウンロードしたJDKのrpmを配置&lt;br&gt;
+　cookbookの中のrpmを使ってセットアップする  &lt;/p&gt;
+
+&lt;p&gt;①の方法が素直ですが、&lt;br&gt;
+小規模な場合は社内用yumリポジトリを作るのも面倒なので、&lt;br&gt;
+ここでは②の方法でOracle版JDKをセットアップします。  &lt;/p&gt;
+
+&lt;p&gt;rpmが含まれていないOracle版JDK用セットアップ用のcookbookを、&lt;br&gt;
+githubに作ったので、これをcloneして作業を進めます。&lt;br&gt;
+　&lt;a href=&quot;https://github.com/takemikami/chef-oraclejdk&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chef-oraclejdk&quot;&gt;https://github.com/takemikami/chef-oraclejdk&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+
+&lt;h1&gt;Knife Soloのインストール&lt;/h1&gt;
+
+&lt;p&gt;管理用のマシンで、&lt;br&gt;
+以下のコマンドから、Knife Soloの作業用ディレクトリを作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ~/jdksetup
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;作業用ディレクトリに以下ファイルを作成します。  &lt;/p&gt;
+
+&lt;p&gt;Gemfile  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chef&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;knife-solo&amp;#39;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、KnifeSoloをインストールします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vendor/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、knifeのディレクトリ構成を作成します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo init .
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここまでで、以下のような構成になります。&lt;br&gt;
+　+ Gemfile&lt;br&gt;
+　+ Gemfile.lock&lt;br&gt;
+　+ cookbooks&lt;br&gt;
+　+ data_bags&lt;br&gt;
+　+ environments&lt;br&gt;
+　+ nodes&lt;br&gt;
+　+ roles&lt;br&gt;
+　+ site-cookbooks&lt;br&gt;
+　+ vendor  &lt;/p&gt;
+
+&lt;h1&gt;Oracle版JDK用セットアップ用のcookbookの作成&lt;/h1&gt;
+
+&lt;p&gt;以下のサイトからJavaSDKをダウンロードします。  &lt;/p&gt;
+
+&lt;p&gt;Java SE Downloads&lt;br&gt;
+　&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;http://www.oracle.com/technetwork/java/javase/downloads/index.html&lt;/a&gt;&lt;/a&gt;&lt;br&gt;
+ファイル名：jdk-7u25-linux-x64.rpm (Linux x64の場合)  &lt;/p&gt;
+
+&lt;p&gt;以下のコマンドで、&lt;br&gt;
+Oracle版JDK用セットアップ用のcookbook雛形をcloneする。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/jdksetup/cookbooks
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@github.com:takemikami/chef-oraclejdk.git oraclejdk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ダウンロードしたrpmを、&lt;br&gt;
+「~/jdksetup/cookbooks/oraclejdk/files/default/」以下にコピーする。  &lt;/p&gt;
+
+&lt;h1&gt;Oracle版JDKセットアップ用のcookbookを適用&lt;/h1&gt;
+
+&lt;p&gt;knife-soloで接続できるCentOSの環境が用意されているとして、&lt;br&gt;
+以下のコマンドで、knifeの環境を準備します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/jdksetup/
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo prepare &amp;lt;接続先マシン名&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;次のファイルに適用時の設定（JDKのバージョン）を追記します。  &lt;/p&gt;
+
+&lt;p&gt;nodes/&amp;lt;接続先マシン名&amp;gt;.json  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{
+&amp;quot;run_list&amp;quot;:[&amp;quot;recipe[oraclejdk]&amp;quot;],
+&amp;quot;default_attributes&amp;quot;: {
+&amp;quot;oraclejdk&amp;quot;: {
+&amp;quot;version&amp;quot;: &amp;quot;7u25&amp;quot;
+}
+}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドで、knifeでcookbookを適用をします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo cook &amp;lt;接続先マシン名&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;セットアップ確認&lt;/h1&gt;
+
+&lt;p&gt;以下のコマンドで、&lt;br&gt;
+JDKをセットアップしたマシンに、JDKがセットアップされている事を確認します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &amp;lt;接続先マシン名&amp;gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;java -version
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここまででOracle版JDKのセットアップは完了です。  &lt;/p&gt;
+
+&lt;p&gt;この手順で作成した（rpmが含まれた）「oraclejdk」を、&lt;br&gt;
+社内のgitリポジトリなどにおいて管理しておけば、&lt;br&gt;
+以後、Oracle版JDKが必要なマシンをchefでセットアップするのが楽になると思います。  &lt;/p&gt;
+</description>
+        <pubDate>Tue, 03 Jun 2014 20:20:32 +0900</pubDate>
+        <link>http://takemikami.com/archives/1478</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1478</guid>
+        
+        <category>chef</category>
+        
+        <category>jdk</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
+    
+      <item>
+        <title>「良いものを作れば売れる」は違うかも知れないけれど</title>
+        <description>&lt;p&gt;意識の高いビジネスマンの方とお話をすると、
+技術者の仕事に対する姿勢を、
+「良い物を作れば売れると思っている」
+という指摘する方に、会うことが度々ある。&lt;/p&gt;
+
+&lt;p&gt;「良い物を作れば売れる」というのは、
+間違ってはいないけれど、それだけでは足りないのは確かだと思う。
+「良い売り方」、言い換えると良いマーケティングが無ければ物は売れない。&lt;/p&gt;
+
+&lt;p&gt;単によい「物」を作っても、
+その「物」をどのように使うかが、お客さんに伝わらなければ、
+その「物」が良いかどうかすらお客さんには分からない。
+だから、
+「良い物を作れば売れる」という姿勢では問題がある。
+こういうロジックで、
+「良い物を作れば売れると思っている」
+という指摘で、仕事に対する姿勢に疑問を投げかけるのだろう。&lt;/p&gt;
+
+&lt;p&gt;ただ、このような指摘をするビジネスマンに対して、
+僕はよく疑問を感じる。
+「良い物を作る」という姿勢は素晴らしいし、それは技術者の仕事だ。
+意識の高いビジネスマンであれば、
+技術者が頑張って作った「良い物」を「良い売り方」で売ればいいのではないだろうか？
+技術者が「良い物を作る」という事に集中できるように、
+「良い売り方」でサポートすることこそが、ビジネスマンの仕事だと思うのだ。&lt;/p&gt;
+
+&lt;p&gt;もちろん「良い売り方」まで出来る技術者もいると思うが、
+人が出来ることには時間的・体力的に限りがあるし、
+得意な部分で上手く分業してスピード感持って仕事した方が、
+お客さんも、ビジネスマンも、技術者も幸せになれるはずだと思う。&lt;/p&gt;
+
+&lt;p&gt;「良い物を作れば売れると思っている」
+という指摘を聞くたびに、こんなことを考えてしまう。&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Jun 2014 08:41:21 +0900</pubDate>
+        <link>http://takemikami.com/archives/1475</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1475</guid>
+        
+        
+        <category>日記</category>
+        
+      </item>
+    
+      <item>
+        <title>MacOSX上でFORTRAN環境を作った手順メモ</title>
+        <description>&lt;p&gt;ちょっと野暮用で、FORTRANを使う機会があったため、&lt;br&gt;
+MacOSX上でFORTRAN環境を作ったので、手順をメモしておきます。&lt;br&gt;
+ここではHomebrewを使ってgfortranをインストールします。  &lt;/p&gt;
+
+&lt;p&gt;実行したOS： MacOSX v10.9.2 (Mavericks)  &lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;strong&gt;■Homebrewのインストール&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;以下のHomebrewのサイトの「Install Homebrew」部分に記載されている&lt;br&gt;
+セットアップコマンドをターミナルから実行します。  &lt;/p&gt;
+
+&lt;p&gt;Homebrew&lt;br&gt;
+　&lt;a href=&quot;http://brew.sh&quot;&gt;&lt;a href=&quot;http://brew.sh&quot;&gt;http://brew.sh&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ruby -e &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;※XcodeとCommandLineToolsはインストールしておく前提です。  &lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;strong&gt;■gfortranのインストール&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Homebrewがインストール出来たら、&lt;br&gt;
+以下のコマンドでgfortranをインストールします。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;brew install gfortran
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;インストールが完了したら、以下のコマンドで、&lt;br&gt;
+gfortranがインストール出来ていることを確認します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which gfortran
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;strong&gt;■HelloWorldプログラムの作成と実行&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;エディタで以下の内容のファイルを作成します。  &lt;/p&gt;
+
+&lt;p&gt;test.f  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;program hellofortran
+print *, &amp;#39;Hello Fortran&amp;#39;
+end program hellofortran
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;作成したファイルを配置したディレクトリに移動し、&lt;br&gt;
+以下のコマンドを実行し、HelloWorldプログラムを実行します。  &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gfortran test.f
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./a.out
+Hello Fortran
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以上。&lt;br&gt;
+なんて事は無いですが、FORTRANとか久しぶりにさわった。&lt;br&gt;
+多分、学生の時代以来ww  &lt;/p&gt;
+</description>
+        <pubDate>Thu, 22 May 2014 10:28:48 +0900</pubDate>
+        <link>http://takemikami.com/archives/1469</link>
+        <guid isPermaLink="true">http://takemikami.com/archives/1469</guid>
+        
+        <category>fortran</category>
+        
+        
+        <category>it技術</category>
         
       </item>
     

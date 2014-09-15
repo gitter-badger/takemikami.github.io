@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Chefを使ったfluentd(treasure-data-agent)のセットアップ手順 | takemikami's note</title>
+    <meta name="description" content="読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="canonical" href="http://takemikami.com/archives/1437">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+
+  <body>
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=214236895371631&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">takemikami's note</a>
+
+<div class="site-search">
+<script>
+  (function() {
+    var cx = '001111401147268864293:eygh6uuznk8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/categories/it技術/">IT</a>
+        <a class="page-link" href="/categories/アプリ/">Apps</a>
+        <a class="page-link" href="/categories/文芸/">Literary</a>
+        <a class="page-link" href="/categories/読書ノート/">Bookworm</a>
+        <a class="page-link" href="/categories/日記/">Diary</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-main">
+      <div class="wrapper">
+        <div class="main-col-wrapper">
+          <div class="main-col main-col-1">
+            <div class="page-content">
+              <div class="post">
+
+  <header class="post-header">
+    <a class="post-category" href="/categories/it技術">IT技術</a>
+
+
+
+    <h1 class="post-title">Chefを使ったfluentd(treasure-data-agent)のセットアップ手順</h1>
+    <p class="post-metainfo">
+      
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/chef.html">chef</a>
+      
+        <a href="/tag/fluentd.html">fluentd</a>
+      </div>
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2013/11/13 17:42:39</div>
+    </p>
+  </header>
+
+
+  <article class="post-content">
+    
+      <p>Chefを使ってCentOSにfluentdをセットアップしてみたので、<br>
+手順を書き残しておきます。  </p>
+
+<p>Installing Fluentd Using Chef | Fluentd<br>
+　<a href="http://docs.fluentd.org/articles/install-by-chef"><a href="http://docs.fluentd.org/articles/install-by-chef">http://docs.fluentd.org/articles/install-by-chef</a></a>  </p>
+
+<p>基本的に上記サイトに記載されている手順に沿いますが、<br>
+このエントリでは、<br>
+nginxをセットアップし、そのログをS3(AWS)にログを送ってみます。  </p>
+
+<p>以下エントリのように、<br>
+KnifeSolo+Berkshelfの環境があることを前提に説明します。  </p>
+
+<p>Chef(Knife)+Berkshelfを使ってサーバを自動構築する手順<br>
+　<a href="http://takemikami.com/archives/1423"><a href="http://takemikami.com/archives/1423">http://takemikami.com/archives/1423</a></a>  </p>
+
+<h1>Berkshelfを用いてfluentdのCookbookを取得する</h1>
+
+<p>Berksfileを以下の用に変更（nginx/iptablesを追加）します。  </p>
+
+<p>Berksfile  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">site</span> <span class="ss">:opscode</span>
+<span class="n">cookbook</span> <span class="s1">&#39;nginx&#39;</span>
+<span class="n">cookbook</span> <span class="s1">&#39;td_agent&#39;</span><span class="p">,</span> <span class="ss">git</span><span class="p">:</span> <span class="s1">&#39;https://github.com/treasure-data/chef-td-agent.git&#39;</span>
+</code></pre></div>
+<p>以下のコマンドで、opscodeのリポジトリからnginx,fluentdと依存するcookbookを取得します。  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="err">$</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">berks</span> <span class="o">--</span><span class="n">path</span><span class="o">=</span><span class="n">cookbooks</span>
+</code></pre></div>
+<h1>fluentdをセットアップするレシピを作成する</h1>
+
+<p>以下のコマンドを実行し、mycookbookというcookbookを作成します。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>knife cookbook create mycookbook -o site-cookbooks/
+** Creating cookbook mycookbook
+** Creating README <span class="k">for</span> cookbook: mycookbook
+** Creating CHANGELOG <span class="k">for</span> cookbook: mycookbook
+** Creating metadata <span class="k">for</span> cookbook: mycookbook
+</code></pre></div>
+<p>作成したCookbookのmetadata.rbにnginx,fluentdへの依存情報を追記します。  </p>
+
+<p>site-cookbooks/mycookbook/metadata.rb  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">depends</span>          <span class="s1">&#39;nginx&#39;</span>
+<span class="n">depends</span>          <span class="s1">&#39;td_agent&#39;</span>
+</code></pre></div>
+<p>attributesで、fluentdインストール時のパラメータを指定します。  </p>
+
+<p>site-cookbooks/mycookbook/attributes/default.rb  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">default</span><span class="o">[</span><span class="ss">:td_agent</span><span class="o">]</span> <span class="o">=</span> <span class="p">{</span>
+<span class="ss">:api_key</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo_bar_buz&#39;</span><span class="p">,</span>
+<span class="ss">:plugins</span> <span class="o">=&gt;</span> <span class="o">[</span>
+<span class="s1">&#39;s3&#39;</span>
+<span class="o">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>nginx, fluentdをインストールするレシピを作成します。  </p>
+
+<p>site-cookbooks/mycookbook/recipes/default.rb  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">include_recipe</span> <span class="s2">&quot;nginx&quot;</span>
+<span class="n">include_recipe</span> <span class="s2">&quot;td_agent&quot;</span>
+</code></pre></div>
+<p>以上のレシピで、nginxとfluentd及びS3用pluginがインストールできます。  </p>
+
+<h1>レシピを適用しfluentdをセットアップする</h1>
+
+<p>対象ノード用のjsonファイルを作成します。  </p>
+
+<p>nodes/&lt;対象ノートのホスト名&gt;.json  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">{ &quot;run_list&quot;: [ &quot;recipe[mycookbook]&quot; ] }
+</code></pre></div>
+<p>以下のコマンドを実行し、レシピを対象ノードに適用します。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>knife solo cook &lt;対象ノートのホスト名&gt;
+Running Chef on pwebap02...
+Checking Chef version...
+※省略※
+Chef Client finished, <span class="m">14</span> resources updated
+</code></pre></div>
+<p>適用が終わったら、対象ノードにsshで接続して、<br>
+以下のコマンドを実行すると、サービスが追加されていることが確認できます。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo chkconfig --list
+※省略※
+nginx           0:off   1:off   2:on    3:on    4:on    5:on    6:off
+※省略※
+td-agent        0:off   1:off   2:on    3:on    4:on    5:on    6:off
+※省略※
+</code></pre></div>
+<h1>fluentdでS3にログを送る設定を追加する</h1>
+
+<p>fluentd設定ファイルのテンプレートを作成します。<br>
+以下のように、<br>
+source部で収集するログの情報を設定、<br>
+match部で収集したログの転送先を設定します。  </p>
+
+<p>site-cookbooks/mycookbook/templates/default/td-agent-nginx.erb  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;source&gt;
+type tail
+format /^(?&lt;remote_addr&gt;[^ ]*) - (?&lt;remote_user&gt;[^ ]*) \[(?&lt;time_local&gt;[^\]]*)\] &quot;(?&lt;request_method&gt;[^ ]*) (?&lt;request_path&gt;[^ ]*) (?&lt;http_version&gt;[^&quot;]*)&quot; (?&lt;response_code&gt;[^ ]*) (?&lt;response_size&gt;[^ ]*) &quot;(?&lt;http_referer&gt;[^&quot;]*)&quot; &quot;(?&lt;remote_client&gt;[^&quot;]*)&quot;/
+path /var/log/nginx/access.log
+pos_file /var/log/td-agent/nginx-access-log.pos
+tag nginx.access
+&lt;/source&gt;
+
+&lt;match nginx.access&gt;
+type s3
+
+aws_key_id  &lt;%= @aws_access_key_id %&gt;
+aws_sec_key &lt;%= @aws_secret_access_key %&gt;
+s3_bucket &lt;%= @aws_s3_bucket %&gt;
+s3_endpoint &lt;%= @aws_s3_end_point %&gt;
+path logs/
+time_slice_format nginx/%Y%m/access.log.%Y%m%d%H
+time_slice_wait 10m
+
+buffer_type file
+buffer_path /var/log/td-agent/buffer/nginx-access
+&lt;/match&gt;
+</code></pre></div>
+<p>レシピに、先ほどのテンプレートを適用する処理を追記します。<br>
+# td_agentのレシピを適用すると設定ファイルをデフォルトに戻してしまうので、<br>
+# ここでは、fluentd未インストール時のみ適用するようにしています。<br>
+# もっとエレガントなやり方があるような気がしますが、、    </p>
+
+<p>site-cookbooks/mycookbook/recipes/default.rb  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">include_recipe</span> <span class="s2">&quot;nginx&quot;</span>
+
+<span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="s2">&quot;/etc/init.d/td-agent&quot;</span><span class="p">)</span>
+<span class="n">include_recipe</span> <span class="s2">&quot;td_agent&quot;</span>
+<span class="k">end</span>
+
+<span class="n">template</span> <span class="s2">&quot;/etc/td-agent/td-agent.conf&quot;</span> <span class="k">do</span>
+<span class="n">source</span> <span class="s2">&quot;td-agent-nginx.erb&quot;</span>
+<span class="n">mode</span> <span class="mi">644</span>
+<span class="n">owner</span> <span class="s2">&quot;root&quot;</span>
+<span class="n">group</span> <span class="s2">&quot;root&quot;</span>
+<span class="n">variables</span><span class="p">({</span>
+<span class="ss">:aws_access_key_id</span> <span class="o">=&gt;</span> <span class="s2">&quot;&lt;ここにaccess_key_idを入れる&gt;&quot;</span><span class="p">,</span>
+<span class="ss">:aws_secret_access_key</span> <span class="o">=&gt;</span> <span class="s2">&quot;&lt;ここにsecret_access_keyを入れる&gt;&quot;</span><span class="p">,</span>
+<span class="ss">:aws_s3_end_point</span> <span class="o">=&gt;</span> <span class="s2">&quot;&lt;ここにs3のendpointを入れる&gt;&quot;</span><span class="p">,</span>
+<span class="ss">:aws_s3_bucket</span> <span class="o">=&gt;</span> <span class="s2">&quot;&lt;ここにbucket名を入れる&gt;&quot;</span>
+<span class="p">})</span>
+<span class="n">notifies</span> <span class="ss">:restart</span><span class="p">,</span> <span class="s2">&quot;service[td-agent]&quot;</span>
+<span class="k">end</span>
+
+<span class="n">service</span> <span class="s2">&quot;td-agent&quot;</span>
+</code></pre></div>
+<p>次に、以下のコマンドを実行し、レシピを対象ノードに適用します。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>knife solo cook &lt;対象ノートのホスト名&gt;
+Running Chef on pwebap02...
+Checking Chef version...
+※省略※
+Chef Client finished, <span class="m">3</span> resources updated
+</code></pre></div>
+<h1>fluentdでログが転送される動作を確認する</h1>
+
+<p>適用が終わったら、<br>
+対象ノードにsshで接続し、fluentdのログを確認してみます。  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ tail /var/log/td-agent/td-agent.log
+※省略※
+2013-11-13 08:18:30 +0000 [info]: adding source type=&quot;tail&quot;
+2013-11-13 08:18:30 +0000 [info]: adding match pattern=&quot;nginx.access&quot; type=&quot;s3&quot;
+2013-11-13 08:18:33 +0000 [info]: following tail of /var/log/nginx/access.log
+</code></pre></div>
+<p>以下のコマンドを実行し、nginxにhttpでアクセスします。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl http://127.0.0.1/
+&lt;!DOCTYPE html PUBLIC <span class="s2">&quot;-//W3C//DTD XHTML 1.1//EN&quot;</span> <span class="s2">&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;</span>&gt;
+※省略※
+&lt;/html&gt;
+</code></pre></div>
+<p>httpでアクセスすると「/var/log/td-agent/buffer/」配下に、<br>
+「nginx-access.nginx」で始まる長いファイル名のファイルができているはずです。<br>
+ファイルの中身を見てみると以下のようになっています。  </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">2013-11-13T08:30:51+00:00   nginx.access    {&quot;remote_addr&quot;:&quot;127.0.0.1&quot;,&quot;remote_user&quot;:&quot;-&quot;,&quot;time_local&quot;:&quot;13/Nov/2013:08:30:51 +0000&quot;,&quot;request_method&quot;:&quot;GET&quot;,&quot;request_path&quot;:&quot;/&quot;,&quot;http_version&quot;:&quot;HTTP/1.1&quot;,&quot;response_code&quot;:&quot;200&quot;,&quot;response_size&quot;:&quot;3698&quot;,&quot;http_referer&quot;:&quot;-&quot;,&quot;remote_client&quot;:&quot;curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.13.6.0 zlib/1.2.3 libidn/1.18 libssh2/1.4.2&quot;}
+</code></pre></div>
+<p>このファイルが一定時間経過すると、指定したS3のbucketに転送されます。<br>
+あとは、S3に転送さればファイルを、<br>
+ElasticMapReduceを使って集計したりすれば美しいですねww  </p>
+
+    
+  </article>
+
+  <footer class="post-header">
+    <p class="post-metainfo">
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2013/11/13 17:42:39</div>
+      <div class="post-meta-category"><i class="fa fa-folder"></i> カテゴリ：
+        <a href="/categories/it技術">IT技術</a>
+      </div>
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/chef.html">chef</a>
+      
+        <a href="/tag/fluentd.html">fluentd</a>
+      </div>
+      
+      
+      
+    </p>
+  </footer>
+
+<div style="margin-bottom:0.5em;"><!-- sns button -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="takemikami" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- twitter-->
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ja'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- google plus -->
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><!-- hatena blog -->
+<br/>
+<div class="fb-like" data-href="http://takemikami.com/archives/1437" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div><!-- facebook -->
+</div><!-- .sns button -->
+
+
+<div class="nav-links">
+	<div class="nav-previous">&laquo; <a href="/archives/1430">Chefを使ったiptablesで解放するTCP/UDPポート管理の手順</a></div>
+	<div class="nav-next">&raquo; <a href="/archives/1446">Eclipse4.3で、HibernateによるMySQLへの永続化を行う開発の流れ</a></div>
+</div>
+
+<div class="page-widget-header">[PR]</div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:60px"
+     data-ad-client="ca-pub-6279684021251205"
+     data-ad-slot="1274582921"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'takemikami'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+            </div>
+          </div><!-- main-col-1 -->
+          <div class="main-col main-col-2">
+            <div class="site-widgets">
+              <div class="widget-header">Author</div>
+<div class="widget-content">
+<a href="/about/profile.html"><img src="/images/common/portrait_takemikami.jpg" width="72" height="72" style="float:right;"/></a>
+<b><a href="/about/profile.html">takemikami</a></b><br/>
+読書や創作が趣味なITエンジニア<br/>
+・データ分析及びアプリ開発<br/>
+・創作はショートショート<br/>
+・YUI/FLOWER FLOWERファン<br/>
+・<a href="/about/techworks.html">研究発表履歴</a> |
+<a href="/about/litworks.html">創作発表履歴</a>
+<br clear="all" />
+<table width="100%"><tr>
+ <td width="50%" valign="top">
+<a href="http://google.com/+TakeshiMikami"
+   rel="publisher" target="_top" style="text-decoration:none;">
+<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/> Google+
+</a><br/>
+<a href="http://twitter.com/takemikami"><img src="/images/common/favicon_twitter.png"> twitter</a><br/>
+<a href="http://www.linkedin.com/in/takemikami"><img src="/images/common/favicon_linkedin.png"> LinkedIn</a><br/>
+<a href="http://play.google.com/store/apps/developer?id=Takeshi+Mikami"><img src="/images/common/favicon_googleplay.png"> Google Play</a><br/>
+ <td>
+ <td width="50%" valign="top">
+<a href="http://booklog.jp/users/takemikami"><img src="/images/common/favicon_booklog.png"> ブクログ</a><br/>
+<a href="http://github.com/takemikami"><img src="/images/common/favicon_github.png"> github</a><br/>
+<a href="http://www.slideshare.net/takemikami"><img src="/images/common/favicon_slideshare.png"> slideshare</a><br/>
+<a href="http://b.hatena.ne.jp/takemikami/"><img src="/images/common/favicon_hateb.png"> Hatena::Bookmark</a><br/>
+ <td>
+</tr></table>
+
+</div>
+
+<div class="widget-header">Recent Posts</div>
+<div class="widget-content">
+<ul class="recent-post-list">
+  
+    <li>
+     <a href="/archives/1518">PusherとRubyOnRailsでチャットアプリを作ってみた</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1516">MacOSXでAngularJS開発環境を構築する手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1512">MacOSXでのrbenvを使ってrubyをインストールする手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1492">母校で後輩が書いた小説の合評してきました</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1490">「期末に予算を消化する」ことに正義はあるか？</a>
+    </li>
+  
+</ul>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar 1*/
+google_ad_slot = "3350215728";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">タグ</div>
+<div class="widget-content">
+<div id="tag-cloud">
+<a href="/tag/AngularJS.html" class="set-1">AngularJS</a> <a href="/tag/Excel.html" class="set-1">Excel</a> <a href="/tag/GoogleChartTools.html" class="set-1">GoogleChartTools</a> <a href="/tag/MySQL.html" class="set-1">MySQL</a> <a href="/tag/android.html" class="set-1">android</a> <a href="/tag/aws.html" class="set-2">aws</a> <a href="/tag/bi.html" class="set-1">bi</a> <a href="/tag/bitbucket.html" class="set-1">bitbucket</a> <a href="/tag/capistrano.html" class="set-1">capistrano</a> <a href="/tag/chef.html" class="set-4">chef</a> <a href="/tag/css.html" class="set-1">css</a> <a href="/tag/designpattern.html" class="set-1">designpattern</a> <a href="/tag/devise.html" class="set-1">devise</a> <a href="/tag/ec2.html" class="set-1">ec2</a> <a href="/tag/eclipse.html" class="set-1">eclipse</a> <a href="/tag/emr.html" class="set-1">emr</a> <a href="/tag/fluent.html" class="set-1">fluent</a> <a href="/tag/fluentd.html" class="set-1">fluentd</a> <a href="/tag/fortran.html" class="set-1">fortran</a> <a href="/tag/git.html" class="set-1">git</a> <a href="/tag/github.html" class="set-1">github</a> <a href="/tag/hadoop.html" class="set-1">hadoop</a> <a href="/tag/hibernate.html" class="set-1">hibernate</a> <a href="/tag/hive.html" class="set-1">hive</a> <a href="/tag/igo.html" class="set-1">igo</a> <a href="/tag/infobright.html" class="set-1">infobright</a> <a href="/tag/iptables.html" class="set-1">iptables</a> <a href="/tag/java.html" class="set-5">java</a> <a href="/tag/javascript.html" class="set-1">javascript</a> <a href="/tag/jdk.html" class="set-1">jdk</a> <a href="/tag/jmeter.html" class="set-1">jmeter</a> <a href="/tag/mathML.html" class="set-1">mathML</a> <a href="/tag/maven.html" class="set-1">maven</a> <a href="/tag/nginx.html" class="set-1">nginx</a> <a href="/tag/nodejs.html" class="set-1">nodejs</a> <a href="/tag/nokogiri.html" class="set-1">nokogiri</a> <a href="/tag/pentaho.html" class="set-1">pentaho</a> <a href="/tag/perl.html" class="set-1">perl</a> <a href="/tag/php.html" class="set-1">php</a> <a href="/tag/pusher.html" class="set-1">pusher</a> <a href="/tag/r.html" class="set-1">r</a> <a href="/tag/rails3.html" class="set-2">rails3</a> <a href="/tag/rails4.html" class="set-1">rails4</a> <a href="/tag/rbenv.html" class="set-1">rbenv</a> <a href="/tag/rstudio.html" class="set-1">rstudio</a> <a href="/tag/ruby.html" class="set-4">ruby</a> <a href="/tag/s3.html" class="set-1">s3</a> <a href="/tag/servlet.html" class="set-2">servlet</a> <a href="/tag/springMVC.html" class="set-1">springMVC</a> <a href="/tag/subversion.html" class="set-1">subversion</a> <a href="/tag/tortoisegit.html" class="set-1">tortoisegit</a> <a href="/tag/twitter.html" class="set-1">twitter</a> <a href="/tag/vagrant.html" class="set-1">vagrant</a> <a href="/tag/websocket.html" class="set-1">websocket</a> <a href="/tag/wordpress.html" class="set-1">wordpress</a> <a href="/tag/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%90.html" class="set-1">形態素解析</a> <a href="/tag/%E8%B2%A0%E8%8D%B7%E3%83%86%E3%82%B9%E3%83%88.html" class="set-1">負荷テスト</a> <a href="/tag/%E9%96%8B%E7%99%BA%E7%AE%A1%E7%90%86.html" class="set-1">開発管理</a>
+</div>
+
+</div>
+
+<div class="widget-content">
+<table>
+<tr><td>
+    <script type="text/javascript" src="http://widget.booklog.jp/blogparts/js/booklog_minishelf_3col.js?default" id="booklog_minishelf_3col"></script>
+    <script type="text/javascript" src="http://api.booklog.jp/json/takemikami?category=0&count=6&callback=booklog_minishelf_3col"></script>
+</td><td>
+<a href="http://user.awasete.com/user/1003533_4c6ed/"><img src="http://awasete.nakanohito.jp/img/?u=1003533&amp;h=3e850aae&amp;s=160" width="160" height="140" border="" alt="あわせて読みたい" /></a>
+</td></tr></table>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar2 */
+google_ad_slot = "9848917726";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">RSS</div>
+<div class="widget-content">
+<p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
+
+            </div>
+          </div><!-- main-col-2 -->
+        </div><!-- main-col-wrapper -->
+      </div><!-- wrapper -->
+    </div><!-- page-main -->
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    Copyright (C) 1999-2014 Takeshi Mikami. All rights reserved.
+  </div>
+</div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-32149053-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </body>
+
+</html>

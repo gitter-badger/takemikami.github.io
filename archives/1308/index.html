@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Rails3チュートリアル　（はじめてのRails3 | takemikami's note</title>
+    <meta name="description" content="読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="canonical" href="http://takemikami.com/archives/1308">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+
+  <body>
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=214236895371631&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">takemikami's note</a>
+
+<div class="site-search">
+<script>
+  (function() {
+    var cx = '001111401147268864293:eygh6uuznk8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/categories/it技術/">IT</a>
+        <a class="page-link" href="/categories/アプリ/">Apps</a>
+        <a class="page-link" href="/categories/文芸/">Literary</a>
+        <a class="page-link" href="/categories/読書ノート/">Bookworm</a>
+        <a class="page-link" href="/categories/日記/">Diary</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-main">
+      <div class="wrapper">
+        <div class="main-col-wrapper">
+          <div class="main-col main-col-1">
+            <div class="page-content">
+              <div class="post">
+
+  <header class="post-header">
+    <a class="post-category" href="/categories/it技術">IT技術</a>
+
+
+
+    <h1 class="post-title">Rails3チュートリアル　（はじめてのRails3</h1>
+    <p class="post-metainfo">
+      
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/rails3.html">rails3</a>
+      
+        <a href="/tag/ruby.html">ruby</a>
+      </div>
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2012/08/17 18:25:24</div>
+    </p>
+  </header>
+
+
+  <article class="post-content">
+    
+      <p>はじめてRails3で開発をするエンジニア向けに作成したメモ#2です。  </p>
+
+<p>Ruby on Rails3をインストールして、generatorでモデルやビューを作ってみる。<br>
+注： railsのバージョン3.1.3で記載しています（最新ではないです）  </p>
+
+<h2>Ruby on Railsをインストールする</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install <span class="nv">rails</span>
+<span class="o">=</span> 途中省略 <span class="o">=</span>
+Successfully installed rails-3.1.3
+</code></pre></div>
+<h2>アプリを作る</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails new myapp
+create
+create  README
+create  Rakefile
+create  config.ru
+create  .gitignore
+create  Gemfile
+create  app
+create  app/assets/images/rails.png
+create  app/assets/javascripts/application.js
+create  app/assets/stylesheets/application.css
+create  app/controllers/application_controller.rb
+create  app/helpers/application_helper.rb
+create  app/mailers
+create  app/models
+create  app/views/layouts/application.html.erb
+create  app/mailers/.gitkeep
+create  app/models/.gitkeep
+create  config
+create  config/routes.rb
+create  config/application.rb
+create  config/environment.rb
+create  config/environments
+create  config/environments/development.rb
+create  config/environments/production.rb
+create  config/environments/test.rb
+create  config/initializers
+create  config/initializers/backtrace_silencers.rb
+create  config/initializers/inflections.rb
+create  config/initializers/mime_types.rb
+create  config/initializers/secret_token.rb
+create  config/initializers/session_store.rb
+create  config/initializers/wrap_parameters.rb
+create  config/locales
+create  config/locales/en.yml
+create  config/boot.rb
+create  config/database.yml
+create  db
+create  db/seeds.rb
+create  doc
+create  doc/README_FOR_APP
+create  lib
+create  lib/tasks
+create  lib/tasks/.gitkeep
+create  lib/assets
+create  lib/assets/.gitkeep
+create  log
+create  log/.gitkeep
+create  public
+create  public/404.html
+create  public/422.html
+create  public/500.html
+create  public/favicon.ico
+create  public/index.html
+create  public/robots.txt
+create  script
+create  script/rails
+create  <span class="nb">test</span>/fixtures
+create  <span class="nb">test</span>/fixtures/.gitkeep
+create  <span class="nb">test</span>/functional
+create  <span class="nb">test</span>/functional/.gitkeep
+create  <span class="nb">test</span>/integration
+create  <span class="nb">test</span>/integration/.gitkeep
+create  <span class="nb">test</span>/unit
+create  <span class="nb">test</span>/unit/.gitkeep
+create  <span class="nb">test</span>/performance/browsing_test.rb
+create  <span class="nb">test</span>/test_helper.rb
+create  tmp/cache
+create  tmp/cache/assets
+create  vendor/assets/stylesheets
+create  vendor/assets/stylesheets/.gitkeep
+create  vendor/plugins
+create  vendor/plugins/.gitkeep
+run  bundle install
+Fetching <span class="nb">source </span>index <span class="k">for</span> http://rubygems.org/
+<span class="o">=</span> 途中省略 <span class="o">=</span>
+Your bundle is <span class="nb">complete</span>! Use <span class="sb">`</span>bundle show <span class="o">[</span>gemname<span class="o">]</span><span class="sb">`</span> to see where a bundled gem is installed.
+</code></pre></div>
+<h2>アプリを起動する</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd </span>myapp
+</code></pre></div>
+<p>※javascriptのライブラリ不足でエラーになるので以下を追記<br>
+・「Gemfile」を編集  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">gem</span> <span class="s1">&#39;execjs&#39;</span>
+<span class="n">gem</span> <span class="s1">&#39;therubyracer&#39;</span>
+</code></pre></div>
+<p>・Gemfileに指定されたライブラリをインストール  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle install
+</code></pre></div>
+<p>・サーバを起動（この例ではポート番号を3002で起動）  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails s -p <span class="nv">3002</span>
+<span class="o">=</span>&gt; Booting <span class="nv">WEBrick</span>
+<span class="o">=</span>&gt; Rails 3.1.3 application starting in development on http://0.0.0.0:3002
+<span class="o">=</span>&gt; Call with -d to <span class="nv">detach</span>
+<span class="o">=</span>&gt; Ctrl-C to shutdown server
+<span class="o">[</span>2012-01-11 03:01:46<span class="o">]</span> INFO  WEBrick 1.3.1
+</code></pre></div>
+<p>[2012-01-11 03:01:46] INFO  WEBrick::HTTPServer#start: pid=12238 port=3002<br>
+```</p>
+
+<h2>ブラウザからリクエスト</h2>
+
+<p>http://&lt;ホスト名&gt;:3002/
+　↑これでリクエストすると標準の画面が表示される</p>
+
+<p>※ここまでで空っぽのアプリができた状態※
+※以降の作業では基本的にrails serverは起動したままの状態でよい※</p>
+
+<h2>Scaffoldで足場を作る</h2>
+
+<p>・generatorを実行</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails g scaffold blog title:string body:string public:boolean  
+invoke  active_record  
+create    db/migrate/20120111031521_create_blogs.rb  
+create    app/models/blog.rb  
+invoke    test_unit  
+create      <span class="nb">test</span>/unit/blog_test.rb  
+create      <span class="nb">test</span>/fixtures/blogs.yml  
+route  resources :blogs  
+invoke  scaffold_controller  
+create    app/controllers/blogs_controller.rb  
+invoke    erb  
+create      app/views/blogs  
+create      app/views/blogs/index.html.erb  
+create      app/views/blogs/edit.html.erb  
+create      app/views/blogs/show.html.erb  
+create      app/views/blogs/new.html.erb  
+create      app/views/blogs/_form.html.erb  
+invoke    test_unit  
+create      <span class="nb">test</span>/functional/blogs_controller_test.rb  
+invoke    helper  
+create      app/helpers/blogs_helper.rb  
+invoke      test_unit  
+create        <span class="nb">test</span>/unit/helpers/blogs_helper_test.rb  
+invoke  assets  
+invoke    coffee  
+create      app/assets/javascripts/blogs.js.coffee  
+invoke    scss  
+create      app/assets/stylesheets/blogs.css.scss  
+invoke  scss  
+create    app/assets/stylesheets/scaffolds.css.scss  
+</code></pre></div>
+<p>※モデル、ビュー、コントローラが生成されることに注目
+　・app/models/blog.rb
+　・app/views/blogs
+　・app/controllers/blogs_controller.rb</p>
+
+<p>・DBにテーブル作成</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rake db:migrate  
+<span class="o">==</span>  CreateBlogs: <span class="nv">migrating</span> <span class="o">====================================================</span>  
+-- create_table<span class="o">(</span>:blogs<span class="o">)</span>  
+-<span class="p">&amp;</span>gt<span class="p">;</span> 0.0016s  
+<span class="o">==</span>  CreateBlogs: migrated <span class="o">(</span>0.0018s<span class="o">)</span> <span class="o">===========================================</span>  
+</code></pre></div>
+<p>・ブラウザでアクセス
+http://&lt;ホスト名&gt;:3002/blogs
+　→作成・削除・更新・参照の一通りのことができる</p>
+
+<h2>routeを設定する</h2>
+
+<p>・「config/routes.rb」を編集</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">match</span>  <span class="s1">&#39;/test&#39;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">blogs</span><span class="c1">#index&amp;quot;  </span>
+</code></pre></div>
+<p>http://&lt;ホスト名&gt;:3002/test
+　↑が「http://&lt;ホスト名&gt;:3002/blogs」と同じになる</p>
+
+<h2>Controller/Viewのみを作る</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails g controller about index profile  
+create  app/controllers/about_controller.rb  
+route  get <span class="p">&amp;</span>quot<span class="p">;</span>about/profile<span class="p">&amp;</span>quot<span class="p">;</span>  
+route  get <span class="p">&amp;</span>quot<span class="p">;</span>about/index<span class="p">&amp;</span>quot<span class="p">;</span>  
+invoke  erb  
+create    app/views/about  
+create    app/views/about/index.html.erb  
+create    app/views/about/profile.html.erb  
+invoke  test_unit  
+create    <span class="nb">test</span>/functional/about_controller_test.rb  
+invoke  helper  
+create    app/helpers/about_helper.rb  
+invoke    test_unit  
+create      <span class="nb">test</span>/unit/helpers/about_helper_test.rb  
+invoke  assets  
+invoke    coffee  
+create      app/assets/javascripts/about.js.coffee  
+invoke    scss  
+create      app/assets/stylesheets/about.css.scss  
+</code></pre></div>
+<p>※ビュー、コントローラが生成されることに注目
+　・app/views/about
+　・app/controllers/about_controller.rb</p>
+
+<h2>★少し詳しく見る</h2>
+
+<p>・「app/controllers/about_controller.rb」を参照</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">AboutController</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">ApplicationController</span>  
+<span class="k">def</span> <span class="nf">index</span>  
+<span class="k">end</span>  
+
+<span class="k">def</span> <span class="nf">profile</span>  
+<span class="k">end</span>  
+
+<span class="k">end</span>  
+</code></pre></div>
+<p>※指定した「index」「profile」メソッドが生成されていることに注目</p>
+
+<p>・「config/routes.rb」を参照</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="no">Myapp</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>  
+<span class="n">get</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">about</span><span class="o">/</span><span class="n">index</span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span>  
+
+<span class="n">get</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">about</span><span class="o">/</span><span class="n">profile</span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span>  
+
+<span class="n">resources</span> <span class="ss">:blogs</span>  
+
+<span class="n">match</span>  <span class="s1">&#39;/test&#39;</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">blogs</span><span class="c1">#index&amp;quot;  </span>
+
+<span class="err">※＝＝＝＝省略＝＝＝＝</span>  
+
+<span class="k">end</span>  
+</code></pre></div>
+<p>・「app/views/about/index.html.erb」を参照</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="ni">&amp;lt;</span>h1<span class="ni">&amp;gt;</span>About#index<span class="ni">&amp;lt;</span>/h1<span class="ni">&amp;gt;</span>  
+<span class="ni">&amp;lt;</span>p<span class="ni">&amp;gt;</span>Find me in app/views/about/index.html.erb<span class="ni">&amp;lt;</span>/p<span class="ni">&amp;gt;</span>  
+</code></pre></div>
+<p>・「app/helpers/about_helper.rb」を参照</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">AboutHelper</span>  
+<span class="k">end</span>  
+</code></pre></div>
+<h2>Modelのみを作る</h2>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails g model comment author:string body:string  
+invoke  active_record  
+create    db/migrate/20120111034456_create_comments.rb  
+create    app/models/comment.rb  
+invoke    test_unit  
+create      <span class="nb">test</span>/unit/comment_test.rb  
+create      <span class="nb">test</span>/fixtures/comments.yml  
+
+<span class="nv">$ </span>rake db:migrate  
+<span class="o">==</span>  CreateComments: <span class="nv">migrating</span> <span class="o">=================================================</span>  
+-- create_table<span class="o">(</span>:comments<span class="o">)</span>  
+-<span class="p">&amp;</span>gt<span class="p">;</span> 0.0055s  
+<span class="o">==</span>  CreateComments: migrated <span class="o">(</span>0.0056s<span class="o">)</span> <span class="o">========================================</span>  
+</code></pre></div>
+<p>※モデルが生成されることに注目
+　・app/models/comment.rb</p>
+
+<h2>★少し詳しく見る</h2>
+
+<p>・「app/models/comment.rb」を参照</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Comment</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>  
+<span class="k">end</span>  
+</code></pre></div>
+<p>・「db/migrate/20120111034456<em>create</em>comments.rb」を参照</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">CreateComments</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>  
+<span class="k">def</span> <span class="nf">change</span>  
+<span class="n">create_table</span> <span class="ss">:comments</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>  
+<span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:author</span>  
+<span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:body</span>  
+
+<span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>  
+<span class="k">end</span>  
+<span class="k">end</span>  
+<span class="k">end</span>  
+</code></pre></div>
+    
+  </article>
+
+  <footer class="post-header">
+    <p class="post-metainfo">
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2012/08/17 18:25:24</div>
+      <div class="post-meta-category"><i class="fa fa-folder"></i> カテゴリ：
+        <a href="/categories/it技術">IT技術</a>
+      </div>
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/rails3.html">rails3</a>
+      
+        <a href="/tag/ruby.html">ruby</a>
+      </div>
+      
+      
+      
+    </p>
+  </footer>
+
+<div style="margin-bottom:0.5em;"><!-- sns button -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="takemikami" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- twitter-->
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ja'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- google plus -->
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><!-- hatena blog -->
+<br/>
+<div class="fb-like" data-href="http://takemikami.com/archives/1308" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div><!-- facebook -->
+</div><!-- .sns button -->
+
+
+<div class="nav-links">
+	<div class="nav-previous">&laquo; <a href="/archives/1306">Ruby on Railsを特徴付けるキーワード　（はじめてのRails3</a></div>
+	<div class="nav-next">&raquo; <a href="/archives/1310">capistranoでのRails3アプリ配備チュートリアル</a></div>
+</div>
+
+<div class="page-widget-header">[PR]</div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:60px"
+     data-ad-client="ca-pub-6279684021251205"
+     data-ad-slot="1274582921"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'takemikami'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+            </div>
+          </div><!-- main-col-1 -->
+          <div class="main-col main-col-2">
+            <div class="site-widgets">
+              <div class="widget-header">Author</div>
+<div class="widget-content">
+<a href="/about/profile.html"><img src="/images/common/portrait_takemikami.jpg" width="72" height="72" style="float:right;"/></a>
+<b><a href="/about/profile.html">takemikami</a></b><br/>
+読書や創作が趣味なITエンジニア<br/>
+・データ分析及びアプリ開発<br/>
+・創作はショートショート<br/>
+・YUI/FLOWER FLOWERファン<br/>
+・<a href="/about/techworks.html">研究発表履歴</a> |
+<a href="/about/litworks.html">創作発表履歴</a>
+<br clear="all" />
+<table width="100%"><tr>
+ <td width="50%" valign="top">
+<a href="http://google.com/+TakeshiMikami"
+   rel="publisher" target="_top" style="text-decoration:none;">
+<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/> Google+
+</a><br/>
+<a href="http://twitter.com/takemikami"><img src="/images/common/favicon_twitter.png"> twitter</a><br/>
+<a href="http://www.linkedin.com/in/takemikami"><img src="/images/common/favicon_linkedin.png"> LinkedIn</a><br/>
+<a href="http://play.google.com/store/apps/developer?id=Takeshi+Mikami"><img src="/images/common/favicon_googleplay.png"> Google Play</a><br/>
+ <td>
+ <td width="50%" valign="top">
+<a href="http://booklog.jp/users/takemikami"><img src="/images/common/favicon_booklog.png"> ブクログ</a><br/>
+<a href="http://github.com/takemikami"><img src="/images/common/favicon_github.png"> github</a><br/>
+<a href="http://www.slideshare.net/takemikami"><img src="/images/common/favicon_slideshare.png"> slideshare</a><br/>
+<a href="http://b.hatena.ne.jp/takemikami/"><img src="/images/common/favicon_hateb.png"> Hatena::Bookmark</a><br/>
+ <td>
+</tr></table>
+
+</div>
+
+<div class="widget-header">Recent Posts</div>
+<div class="widget-content">
+<ul class="recent-post-list">
+  
+    <li>
+     <a href="/archives/1518">PusherとRubyOnRailsでチャットアプリを作ってみた</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1516">MacOSXでAngularJS開発環境を構築する手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1512">MacOSXでのrbenvを使ってrubyをインストールする手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1492">母校で後輩が書いた小説の合評してきました</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1490">「期末に予算を消化する」ことに正義はあるか？</a>
+    </li>
+  
+</ul>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar 1*/
+google_ad_slot = "3350215728";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">タグ</div>
+<div class="widget-content">
+<div id="tag-cloud">
+<a href="/tag/AngularJS.html" class="set-1">AngularJS</a> <a href="/tag/Excel.html" class="set-1">Excel</a> <a href="/tag/GoogleChartTools.html" class="set-1">GoogleChartTools</a> <a href="/tag/MySQL.html" class="set-1">MySQL</a> <a href="/tag/android.html" class="set-1">android</a> <a href="/tag/aws.html" class="set-2">aws</a> <a href="/tag/bi.html" class="set-1">bi</a> <a href="/tag/bitbucket.html" class="set-1">bitbucket</a> <a href="/tag/capistrano.html" class="set-1">capistrano</a> <a href="/tag/chef.html" class="set-4">chef</a> <a href="/tag/css.html" class="set-1">css</a> <a href="/tag/designpattern.html" class="set-1">designpattern</a> <a href="/tag/devise.html" class="set-1">devise</a> <a href="/tag/ec2.html" class="set-1">ec2</a> <a href="/tag/eclipse.html" class="set-1">eclipse</a> <a href="/tag/emr.html" class="set-1">emr</a> <a href="/tag/fluent.html" class="set-1">fluent</a> <a href="/tag/fluentd.html" class="set-1">fluentd</a> <a href="/tag/fortran.html" class="set-1">fortran</a> <a href="/tag/git.html" class="set-1">git</a> <a href="/tag/github.html" class="set-1">github</a> <a href="/tag/hadoop.html" class="set-1">hadoop</a> <a href="/tag/hibernate.html" class="set-1">hibernate</a> <a href="/tag/hive.html" class="set-1">hive</a> <a href="/tag/igo.html" class="set-1">igo</a> <a href="/tag/infobright.html" class="set-1">infobright</a> <a href="/tag/iptables.html" class="set-1">iptables</a> <a href="/tag/java.html" class="set-5">java</a> <a href="/tag/javascript.html" class="set-1">javascript</a> <a href="/tag/jdk.html" class="set-1">jdk</a> <a href="/tag/jmeter.html" class="set-1">jmeter</a> <a href="/tag/mathML.html" class="set-1">mathML</a> <a href="/tag/maven.html" class="set-1">maven</a> <a href="/tag/nginx.html" class="set-1">nginx</a> <a href="/tag/nodejs.html" class="set-1">nodejs</a> <a href="/tag/nokogiri.html" class="set-1">nokogiri</a> <a href="/tag/pentaho.html" class="set-1">pentaho</a> <a href="/tag/perl.html" class="set-1">perl</a> <a href="/tag/php.html" class="set-1">php</a> <a href="/tag/pusher.html" class="set-1">pusher</a> <a href="/tag/r.html" class="set-1">r</a> <a href="/tag/rails3.html" class="set-2">rails3</a> <a href="/tag/rails4.html" class="set-1">rails4</a> <a href="/tag/rbenv.html" class="set-1">rbenv</a> <a href="/tag/rstudio.html" class="set-1">rstudio</a> <a href="/tag/ruby.html" class="set-4">ruby</a> <a href="/tag/s3.html" class="set-1">s3</a> <a href="/tag/servlet.html" class="set-2">servlet</a> <a href="/tag/springMVC.html" class="set-1">springMVC</a> <a href="/tag/subversion.html" class="set-1">subversion</a> <a href="/tag/tortoisegit.html" class="set-1">tortoisegit</a> <a href="/tag/twitter.html" class="set-1">twitter</a> <a href="/tag/vagrant.html" class="set-1">vagrant</a> <a href="/tag/websocket.html" class="set-1">websocket</a> <a href="/tag/wordpress.html" class="set-1">wordpress</a> <a href="/tag/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%90.html" class="set-1">形態素解析</a> <a href="/tag/%E8%B2%A0%E8%8D%B7%E3%83%86%E3%82%B9%E3%83%88.html" class="set-1">負荷テスト</a> <a href="/tag/%E9%96%8B%E7%99%BA%E7%AE%A1%E7%90%86.html" class="set-1">開発管理</a>
+</div>
+
+</div>
+
+<div class="widget-content">
+<table>
+<tr><td>
+    <script type="text/javascript" src="http://widget.booklog.jp/blogparts/js/booklog_minishelf_3col.js?default" id="booklog_minishelf_3col"></script>
+    <script type="text/javascript" src="http://api.booklog.jp/json/takemikami?category=0&count=6&callback=booklog_minishelf_3col"></script>
+</td><td>
+<a href="http://user.awasete.com/user/1003533_4c6ed/"><img src="http://awasete.nakanohito.jp/img/?u=1003533&amp;h=3e850aae&amp;s=160" width="160" height="140" border="" alt="あわせて読みたい" /></a>
+</td></tr></table>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar2 */
+google_ad_slot = "9848917726";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">RSS</div>
+<div class="widget-content">
+<p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
+
+            </div>
+          </div><!-- main-col-2 -->
+        </div><!-- main-col-wrapper -->
+      </div><!-- wrapper -->
+    </div><!-- page-main -->
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    Copyright (C) 1999-2014 Takeshi Mikami. All rights reserved.
+  </div>
+</div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-32149053-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </body>
+
+</html>

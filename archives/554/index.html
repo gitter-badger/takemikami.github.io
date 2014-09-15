@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>プログラミング言語とインターネットにみるJava言語の歴史 | takemikami's note</title>
+    <meta name="description" content="読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="canonical" href="http://takemikami.com/archives/554">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+
+  <body>
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=214236895371631&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">takemikami's note</a>
+
+<div class="site-search">
+<script>
+  (function() {
+    var cx = '001111401147268864293:eygh6uuznk8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/categories/it技術/">IT</a>
+        <a class="page-link" href="/categories/アプリ/">Apps</a>
+        <a class="page-link" href="/categories/文芸/">Literary</a>
+        <a class="page-link" href="/categories/読書ノート/">Bookworm</a>
+        <a class="page-link" href="/categories/日記/">Diary</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-main">
+      <div class="wrapper">
+        <div class="main-col-wrapper">
+          <div class="main-col main-col-1">
+            <div class="page-content">
+              <div class="post">
+
+  <header class="post-header">
+    <a class="post-category" href="/categories/it技術">IT技術</a>
+
+
+
+    <h1 class="post-title">プログラミング言語とインターネットにみるJava言語の歴史</h1>
+    <p class="post-metainfo">
+      
+      
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2000/08/23 00:00:00</div>
+    </p>
+  </header>
+
+
+  <article class="post-content">
+    
+      <p>　ここでは、Java言語が情報技術のどのような歴史の中で生まれたのか、と言うこととJava言語がどのように発展してきているかについてまとめています。  </p>
+
+<ul>
+<li>プログラミング言語とインターネットに関する年表  
+<li>オブジェクト指向とJava言語  
+<li>WWW(World Wide Web)とJava言語  
+</ul>
+  
+
+<h2>プログラミング言語とインターネットに関する年表</h2>
+
+<p>　ここでは、Java言語がどのような歴史の中で生まれたのかを年代で把握するためにプログラミング言語とインターネットに関する簡単な年表を示します。 Java言語はオブジェクト指向言語とインターネットの発展の中で生まれ、またそれらの情報技術と深い関わりを持ちながら発展してきている言語であり、それらの歴史を示すことがJava言語の歴史を把握する上で有効であると考えられるからです。  </p>
+
+<table>
+<tr>
+<th colspan="2">年</th>
+<th>プログラミング言語に関して</th>
+<th>インターネットに関して</th>
+</tr>
+  
+<tr>
+<td colspan="2">1960年代</td>
+<td>プログラミング言語黎明期</td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1968</td>
+<td>GOTO命令有害論(Dijkstra)</td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1969</td>
+<td></td>
+<td>ARPANET誕生</td>
+</tr>
+  
+<tr>
+<td colspan="2">1970年代</td>
+<td>構造化プログラミング言語の時代</td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1975</td>
+<td></td>
+<td>TCP/IP誕生</td>
+</tr>
+  
+<tr>
+<td colspan="2">1980年代</td>
+<td>オブジェクト指向言語の時代<br/>C++言語誕生(Bjarne Stroustrup)</td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1983</td>
+<td></td>
+<td>ARPANETのプロトコルがTCP/IPに<br/>SunOSとBSDがTCP/IPを実装</td>
+</tr>
+  
+<tr>
+<td colspan="2">1990年代</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1990</td>
+<td></td>
+<td>WWWが誕生</td>
+</tr>
+<tr>
+<td></td><td>1991</td>
+<td>Oak(Javaの開発コードネーム)の開発が始まる</td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1993</td>
+<td></td>
+<td>MOSAICが普及(Marc Andressen)</td>
+</tr>
+<tr>
+<td></td><td>1994</td>
+<td></td>
+<td>Netscape Navigator発表</td>
+</tr>
+<tr>
+<td></td><td>1995</td>
+<td>Java言語発表(James Gosling)</td>
+<td></td>
+</tr>
+<tr>
+<td></td><td>1996</td>
+<td>Jeeves(現JavaWebServer)発表</td>
+<td>CSS1発表(W3C)</td>
+</tr>
+<tr>
+<td></td><td>1997</td>
+<td>C++言語標準化(ISO,ANSI)</td>
+<td>HTML4.0(W3C),ECMAScript(ECMA)発表</td>
+</tr>
+<tr>
+<td></td><td>1998</td>
+<td>Java2発表</td>
+<td>CSS2発表(W3C)</td>
+</tr>
+  
+</table>
+  
+
+<h2>オブジェクト指向とJava言語</h2>
+
+<p>　Java 言語は、オブジェクト指向プログラミング言語です。オブジェクト指向プログラミング言語にはJava言語以外にも、C++, Smalltalk, Objective-C, Object Pascal, Eiffelなど様々な言語があります。私なりに、オブジェクト指向言語の特徴を一言で言うとすれば、プログラムモジュールの再利用を行うのに優れた言語だといえます。もちろん、オブジェクト指向言語であるJava言語もこの特徴を持っています。また、その結果がJava言語の優れたAPIなどに現れていると考えられます。<br>
+　ところで、そもそもプログラミング言語とは何なのでしょう。それは「ある手続き的な処理を記述する言語」だと言えます。また、プログラミング言語は「ある手続き的な処理を効率化する」ために書かれます。平たく言えば、人間がやるには面倒なことをコンピュータにやらせるための言語、人間からコンピュータへの命令の集合、と考えればわかりやすいかと思います。<br>
+　このようなプログラミング言語によって、人間はコンピュータに面倒な仕事をやらせることができます。しかしコンピュータに仕事をやらせるためには、コンピュータの仕組みを理解する必要があります。しかし多くの人々にとってこの仕組みを理解することは困難であり、またコンピュータの仕組みにあわせて一々命令を記述するのも面倒です。そこで、プログラミング言語はより人間に近い形に発展しました。このように発展した言語を高級言語と言い、コンピュータのの命令に一々対応したプログラミング言語を低級言語と言います。<br>
+　人間の言葉に近づいたプログラミング言語によって、多くの人がプログラミングを行うことができるようになりました。しかしながら、プログラミング言語が人間の言葉に近づいただけでは、プログラミングの生産性は満足行くものにはなりませんでした。そこで、多くのプログラマー達は、構造化プログラミング技法と言うプログラミング技法を用いてプログラミングを行うようになりました。構造化プログラミング技法とは処理の流れがわかりやすいようにプログラムを書き、手続き処理を分離（サブルーチン化）し、プログラムの可読性を高める技法です。この技法を採用することで一度書いたプログラムが読みやすくなり、修正や再利用を行いやすくなりました。また、サブルーチン化した手続き処理を体系化しまとめたプログラムモジュール（ライブラリ）を作成することで一度作成した処理を有効に再利用することができるようになりました。プログラミング言語とはそもそも手続き処理を記述するための言語なので、ライブラリはプログラミング言語のためのプログラムと考えるととらえやすいかもしれません。<br>
+　このように構造化プログラミング技法によってプログラミング言語は非常に生産性の高いものへと発展してきました。特にライブラリを有効に使うことで短時間に生産性の高いプログラムを書くことができるようになりました。しかしながら、ライブラリが巨大化しまた、コンピュータの扱う情報量が多くなるにつれて、このようなプログラミング技法にも問題点が見えてきました。その問題点とは、ライブラリによって処理を簡単に記述できるようになっても、管理する情報（データ）が大きくなりプログラマーがそのデータを把握できなく（できたとしてもミスを犯しやすく）なってきたという点です。また、ライブラリ自体も巨大化しプログラマがそれを把握できなくなってきたと言う問題点もあります。このような問題点を解決すべく現れたプログラミング言語がオブジェクト指向プログラミング言語です。オブジェクト指向言語では情報とその情報に関する処理をまとめて管理することでプログラマが把握しなければならない情報（データ）の量を少なくし、大きなプログラムでも簡単に作成することができるようになっています。<br>
+　さて、ここまでの話の中でオブジェクト指向言語が生まれてきた背景を説明してきましたが、私が冒頭でオブジェクト指向言語は「プログラムモジュールの再利用を行うのに優れた言語」と述べた理由がおわかりでしょうか。これまでの流れの中で、新しいプログラミング言語はそれ以前の言語よりも、楽にプログラムを組むことができるようになってきていると言うことがわかったかと思います。もしもオブジェクト指向でない言語を使っていたプログラマがオブジェクト指向言語に移行して、プログラムの作成に時間がかかるようになったとしたら、それはまだ新しい言語に慣れていないか、オブジェクト指向言語の使い方を間違えているかのどちらかです。<br>
+　さて次は、オブジェクト指向言語の中でJavaがどのような特徴を持っているかという話題です。Java言語にもっともよく似たオブジェクト指向言語に C++言語があります。C++はその名前の通りC言語にオブジェクト指向言語の機能を拡張した言語です。そういった経緯から、C++ではCのプログラムを含めることができます。そのために情報と処理（データとその操作）がまとまっているというオブジェクト指向の特徴（利点）を無視したプログラムを書くことができてしまうなどの問題点があります。しかしながらC++はCのプログラマにとっては非常に習得しやすいと言う利点もあります。<br>
+　ところでJavaはよくC++の複雑な機能を除いてシンプルにした言語と言うような表現を聞くことがあります。このような表現は的を得た表現だと思います。C++にあってJavaにない複雑な機能とは、先程述べたCとの高い互換性や多重継承・演算子のオーバーロード・ポインタ演算などが当たるかと思います。確かにこのような機能を使いこなすためにはある程度の習熟が必要で複雑な機能かと思われます。このような機能を省略することで、Javaはより習得しやすい言語となっているわけです。  </p>
+
+<h2>WWW(World Wide Web)とJava言語</h2>
+
+<p>　Java 言語は、元々組み込み用の言語として開発されました。しかし今日、Javaはインターネットのためのプログラミング言語として知られています。それは、 Javaの高い互換性と安全性が、システムの停止を許さず、異機種間の接続を要求するネットワークシステムのニーズに応えた結果と言えます。<br>
+　インターネットで連想される代表的なものの一つにWWW(World Wide Web)があります。WWWとは情報を公開したい人がサーバ上にその情報を登録し、その情報を閲覧しようとする人はブラウザと言うソフトでその内容をインターネットを通じて閲覧すると言うシステムです。このシステムによって個人が簡単に情報を発信できるようになり、またこのシステムがインターネットの爆発的な普及のきっかけになったと考えられています。<br>
+　当初はWWWは情報の公開と閲覧と言う単純な形でしたが、そのシステムは速い速度で進化してきました。閲覧する側が情報の公開側に情報を送ることができるようになったり、閲覧者同士がコミュニケーションをとれる電子掲示板システムが用意されたりしました。これらの技術を発展させブラウザソフトからデータベースを操作することなども行われるようになり、WWWはインターネットの世界だけでなく、組織内のイントラネット上で基幹業務を支えることができるシステムとして注目されるようになります。~<br>
+　このようにWWWが発展する中で、ブラウザのみでデータベースへの操作を行うのは手間がかかり難しいと言う問題も現れるようになってきました。そこで、クライアント側に専用のソフトがあれば使いやすくなり手間も省けると考えられるかもしれませんが、ネットワーク上には様々なマシンやOSが存在します。それぞれのマシンやOS用にたくさんのソフトを開発するには手間がかかります。そこでブラウザにJavaの動作環境を組み込むと言うことが考えられました。これによってブラウザでデータベースにアクセスする事ができ、また優れたインターフェイスを実現することが可能になりました。また、Javaのプログラムは利用する度にサーバからダウンロードされるのでクライアントのアプリケーションを常に最新のヴァージョンに保つことにも成功しました。このような Javaのプログラムをアプレットと呼びます。<br>
+　アプレットだけでなくJava言語はWWWサーバの機能も拡張します。前述の通りWWWサーバはその発展の中で、電子掲示板システムやデータベース接続などのために、動的に文書を生成する機能を要求されるようになりました。そこでWWWサーバはSSI(Server Side Include)やCGI(Common Gateway Interface)などの技術を用いることになります。しかしSSIはWWWサーバに、CGIはOSに依存するため、ネットワーク上では扱いにくいと言う面がありました。そこでWWWサーバに動的に生成した文書を送るシステムとしてサーブレットと言うシステムが考えられました。これによって、WWWサーバやOSに依存することなく、動的に文書を生成するシステムを構築することができるようになりました。また、動的に生成した複数の文書を一つの文書としてまとめ、閲覧者にとって見やすい形で複数の情報を提供できるポートレットと言う技術も存在します。このシステムはその名前の通りポータルサイト（ユーザがネットサーフィンを開始する起点となるホームページ）を作成するために用いられています。  </p>
+
+    
+  </article>
+
+  <footer class="post-header">
+    <p class="post-metainfo">
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2000/08/23 00:00:00</div>
+      <div class="post-meta-category"><i class="fa fa-folder"></i> カテゴリ：
+        <a href="/categories/it技術">IT技術</a>
+      </div>
+      
+      
+      
+      
+    </p>
+  </footer>
+
+<div style="margin-bottom:0.5em;"><!-- sns button -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="takemikami" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- twitter-->
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ja'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- google plus -->
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><!-- hatena blog -->
+<br/>
+<div class="fb-like" data-href="http://takemikami.com/archives/554" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div><!-- facebook -->
+</div><!-- .sns button -->
+
+
+<div class="nav-links">
+	<div class="nav-previous">&laquo; <a href="/archives/552">統合型教育環境システムのモデリングとその実装方法</a></div>
+	<div class="nav-next">&raquo; <a href="/archives/556">「グリム童話構成研究」を通して</a></div>
+</div>
+
+<div class="page-widget-header">[PR]</div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:60px"
+     data-ad-client="ca-pub-6279684021251205"
+     data-ad-slot="1274582921"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'takemikami'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+            </div>
+          </div><!-- main-col-1 -->
+          <div class="main-col main-col-2">
+            <div class="site-widgets">
+              <div class="widget-header">Author</div>
+<div class="widget-content">
+<a href="/about/profile.html"><img src="/images/common/portrait_takemikami.jpg" width="72" height="72" style="float:right;"/></a>
+<b><a href="/about/profile.html">takemikami</a></b><br/>
+読書や創作が趣味なITエンジニア<br/>
+・データ分析及びアプリ開発<br/>
+・創作はショートショート<br/>
+・YUI/FLOWER FLOWERファン<br/>
+・<a href="/about/techworks.html">研究発表履歴</a> |
+<a href="/about/litworks.html">創作発表履歴</a>
+<br clear="all" />
+<table width="100%"><tr>
+ <td width="50%" valign="top">
+<a href="http://google.com/+TakeshiMikami"
+   rel="publisher" target="_top" style="text-decoration:none;">
+<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/> Google+
+</a><br/>
+<a href="http://twitter.com/takemikami"><img src="/images/common/favicon_twitter.png"> twitter</a><br/>
+<a href="http://www.linkedin.com/in/takemikami"><img src="/images/common/favicon_linkedin.png"> LinkedIn</a><br/>
+<a href="http://play.google.com/store/apps/developer?id=Takeshi+Mikami"><img src="/images/common/favicon_googleplay.png"> Google Play</a><br/>
+ <td>
+ <td width="50%" valign="top">
+<a href="http://booklog.jp/users/takemikami"><img src="/images/common/favicon_booklog.png"> ブクログ</a><br/>
+<a href="http://github.com/takemikami"><img src="/images/common/favicon_github.png"> github</a><br/>
+<a href="http://www.slideshare.net/takemikami"><img src="/images/common/favicon_slideshare.png"> slideshare</a><br/>
+<a href="http://b.hatena.ne.jp/takemikami/"><img src="/images/common/favicon_hateb.png"> Hatena::Bookmark</a><br/>
+ <td>
+</tr></table>
+
+</div>
+
+<div class="widget-header">Recent Posts</div>
+<div class="widget-content">
+<ul class="recent-post-list">
+  
+    <li>
+     <a href="/archives/1518">PusherとRubyOnRailsでチャットアプリを作ってみた</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1516">MacOSXでAngularJS開発環境を構築する手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1512">MacOSXでのrbenvを使ってrubyをインストールする手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1492">母校で後輩が書いた小説の合評してきました</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1490">「期末に予算を消化する」ことに正義はあるか？</a>
+    </li>
+  
+</ul>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar 1*/
+google_ad_slot = "3350215728";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">タグ</div>
+<div class="widget-content">
+<div id="tag-cloud">
+<a href="/tag/AngularJS.html" class="set-1">AngularJS</a> <a href="/tag/Excel.html" class="set-1">Excel</a> <a href="/tag/GoogleChartTools.html" class="set-1">GoogleChartTools</a> <a href="/tag/MySQL.html" class="set-1">MySQL</a> <a href="/tag/android.html" class="set-1">android</a> <a href="/tag/aws.html" class="set-2">aws</a> <a href="/tag/bi.html" class="set-1">bi</a> <a href="/tag/bitbucket.html" class="set-1">bitbucket</a> <a href="/tag/capistrano.html" class="set-1">capistrano</a> <a href="/tag/chef.html" class="set-4">chef</a> <a href="/tag/css.html" class="set-1">css</a> <a href="/tag/designpattern.html" class="set-1">designpattern</a> <a href="/tag/devise.html" class="set-1">devise</a> <a href="/tag/ec2.html" class="set-1">ec2</a> <a href="/tag/eclipse.html" class="set-1">eclipse</a> <a href="/tag/emr.html" class="set-1">emr</a> <a href="/tag/fluent.html" class="set-1">fluent</a> <a href="/tag/fluentd.html" class="set-1">fluentd</a> <a href="/tag/fortran.html" class="set-1">fortran</a> <a href="/tag/git.html" class="set-1">git</a> <a href="/tag/github.html" class="set-1">github</a> <a href="/tag/hadoop.html" class="set-1">hadoop</a> <a href="/tag/hibernate.html" class="set-1">hibernate</a> <a href="/tag/hive.html" class="set-1">hive</a> <a href="/tag/igo.html" class="set-1">igo</a> <a href="/tag/infobright.html" class="set-1">infobright</a> <a href="/tag/iptables.html" class="set-1">iptables</a> <a href="/tag/java.html" class="set-5">java</a> <a href="/tag/javascript.html" class="set-1">javascript</a> <a href="/tag/jdk.html" class="set-1">jdk</a> <a href="/tag/jmeter.html" class="set-1">jmeter</a> <a href="/tag/mathML.html" class="set-1">mathML</a> <a href="/tag/maven.html" class="set-1">maven</a> <a href="/tag/nginx.html" class="set-1">nginx</a> <a href="/tag/nodejs.html" class="set-1">nodejs</a> <a href="/tag/nokogiri.html" class="set-1">nokogiri</a> <a href="/tag/pentaho.html" class="set-1">pentaho</a> <a href="/tag/perl.html" class="set-1">perl</a> <a href="/tag/php.html" class="set-1">php</a> <a href="/tag/pusher.html" class="set-1">pusher</a> <a href="/tag/r.html" class="set-1">r</a> <a href="/tag/rails3.html" class="set-2">rails3</a> <a href="/tag/rails4.html" class="set-1">rails4</a> <a href="/tag/rbenv.html" class="set-1">rbenv</a> <a href="/tag/rstudio.html" class="set-1">rstudio</a> <a href="/tag/ruby.html" class="set-4">ruby</a> <a href="/tag/s3.html" class="set-1">s3</a> <a href="/tag/servlet.html" class="set-2">servlet</a> <a href="/tag/springMVC.html" class="set-1">springMVC</a> <a href="/tag/subversion.html" class="set-1">subversion</a> <a href="/tag/tortoisegit.html" class="set-1">tortoisegit</a> <a href="/tag/twitter.html" class="set-1">twitter</a> <a href="/tag/vagrant.html" class="set-1">vagrant</a> <a href="/tag/websocket.html" class="set-1">websocket</a> <a href="/tag/wordpress.html" class="set-1">wordpress</a> <a href="/tag/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%90.html" class="set-1">形態素解析</a> <a href="/tag/%E8%B2%A0%E8%8D%B7%E3%83%86%E3%82%B9%E3%83%88.html" class="set-1">負荷テスト</a> <a href="/tag/%E9%96%8B%E7%99%BA%E7%AE%A1%E7%90%86.html" class="set-1">開発管理</a>
+</div>
+
+</div>
+
+<div class="widget-content">
+<table>
+<tr><td>
+    <script type="text/javascript" src="http://widget.booklog.jp/blogparts/js/booklog_minishelf_3col.js?default" id="booklog_minishelf_3col"></script>
+    <script type="text/javascript" src="http://api.booklog.jp/json/takemikami?category=0&count=6&callback=booklog_minishelf_3col"></script>
+</td><td>
+<a href="http://user.awasete.com/user/1003533_4c6ed/"><img src="http://awasete.nakanohito.jp/img/?u=1003533&amp;h=3e850aae&amp;s=160" width="160" height="140" border="" alt="あわせて読みたい" /></a>
+</td></tr></table>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar2 */
+google_ad_slot = "9848917726";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">RSS</div>
+<div class="widget-content">
+<p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
+
+            </div>
+          </div><!-- main-col-2 -->
+        </div><!-- main-col-wrapper -->
+      </div><!-- wrapper -->
+    </div><!-- page-main -->
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    Copyright (C) 1999-2014 Takeshi Mikami. All rights reserved.
+  </div>
+</div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-32149053-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </body>
+
+</html>

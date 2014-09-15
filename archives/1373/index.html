@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>MySQL上のデータをExcelのピボットテーブルでクロス集計する手順 | takemikami's note</title>
+    <meta name="description" content="読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="canonical" href="http://takemikami.com/archives/1373">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+
+  <body>
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=214236895371631&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">takemikami's note</a>
+
+<div class="site-search">
+<script>
+  (function() {
+    var cx = '001111401147268864293:eygh6uuznk8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/categories/it技術/">IT</a>
+        <a class="page-link" href="/categories/アプリ/">Apps</a>
+        <a class="page-link" href="/categories/文芸/">Literary</a>
+        <a class="page-link" href="/categories/読書ノート/">Bookworm</a>
+        <a class="page-link" href="/categories/日記/">Diary</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-main">
+      <div class="wrapper">
+        <div class="main-col-wrapper">
+          <div class="main-col main-col-1">
+            <div class="page-content">
+              <div class="post">
+
+  <header class="post-header">
+    <a class="post-category" href="/categories/it技術">IT技術</a>
+
+
+
+    <h1 class="post-title">MySQL上のデータをExcelのピボットテーブルでクロス集計する手順</h1>
+    <p class="post-metainfo">
+      
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/Excel.html">Excel</a>
+      
+        <a href="/tag/MySQL.html">MySQL</a>
+      </div>
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2013/09/20 15:38:11</div>
+    </p>
+  </header>
+
+
+  <article class="post-content">
+    
+      <p>MySQL上のデータにExcelからODBC接続して、<br>
+ピボットテーブルでクロス集計する手順を紹介したいと思います。  </p>
+
+<p>Excelのピボットテーブル機能は便利ですが、<br>
+複数人でいろいろな角度から集計していたりする場合に、<br>
+元データを保存したマスタExcelファイルの管理に手間やミスが発生したり、<br>
+古いバージョンのExcelだと行数の上限(65536行)以上の集計ができなかったり、<br>
+というような問題が発生するのではないかと、思います。  </p>
+
+<p>ここで紹介する手順では、<br>
+・サーバ上のMySQLに、マスターデータを保存する<br>
+・PC上のExcelから、MySQLに接続してデータを取り込みピボットテーブル作成<br>
+という構成を想定します。<br>
+サーバ上のMySQLの環境と対象テーブル・データは存在している前提で、<br>
+クライアントPC側の設定の手順を示します。  </p>
+
+<p>手順は以下の流れで行います。<br>
+1. MySQLのODBCドライバをインストール<br>
+2. ODBCの接続を作成する<br>
+3. Excelでピボットテーブルを作る  </p>
+
+<h1>MySQLのODBCドライバをインストール</h1>
+
+<p>MySQLのサイトからODBCドライバをダウンロードする  </p>
+
+<p>MySQL Download Connector/ODBC<br>
+　URL: <a href="http://dev.mysql.com/downloads/connector/odbc/">http://dev.mysql.com/downloads/connector/odbc/</a><br>
+　ファイル: mysql-connector-odbc-5.2.5-win32.msi  </p>
+
+<p>ここでは32bit版を利用していますが、<br>
+構築する環境に適したバージョンを選んでください。  </p>
+
+<p>ダウンロードしたファイルを開きダブルクリックして、<br>
+インストーラの指示に従ってインストールを実行します。<br>
+# たいていの場合は、デフォルトの設定で問題ないはず。    </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831878915" title="View 'MySQL&ExcelPivot01' on Flickr.com"><img height="376" title="MySQL&ExcelPivot01" alt="MySQL&ExcelPivot01" border="0" src="http://farm6.staticflickr.com/5497/9831878915_3710e964f6.jpg" width="500"/></a></p>
+
+<h1>ODBCの接続を作成する</h1>
+
+<p>「スタート」→「管理ツール」→「データソース(ODBC)」<br>
+と選択して、「ODBC データソース アドミニストレータ」を開きます。  </p>
+
+<p>「追加」を押下し、「データソースの新規作成」を開きます。<br>
+「MySQL ODBC 5.2 Unicode Driver」を選んで「完了」を押下します。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831878845" title="View 'MySQL&ExcelPivot02' on Flickr.com"><img height="279" title="MySQL&ExcelPivot02" alt="MySQL&ExcelPivot02" border="0" src="http://farm8.staticflickr.com/7284/9831878845_a0d7aaa9f9.jpg" width="500"/></a></p>
+
+<p>「MySQL Connector/ODBC Data Source Configuration」で、<br>
+接続したいMySQLデータベースの、以下の各設定項目を入力し「OK」を押下すると、<br>
+MySQLへのODBC接続が作成できます。  </p>
+
+<p>※各設定項目は次のとおり。<br>
+　Data Source Name: データソースを識別するための名称、任意の名称でよい<br>
+　TCP/IP Server: MySQLサーバのIPアドレス<br>
+　Port: MySQLサーバの接続ポート番号（変更していなければ既定値）<br>
+　User: MySQLDBのユーザ名<br>
+　Passowrd: MySQLDBのパスワード<br>
+　Database: MySQLDBのデータベース名  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831878795" title="View 'MySQL&ExcelPivot03' on Flickr.com"><img height="403" title="MySQL&ExcelPivot03" alt="MySQL&ExcelPivot03" border="0" src="http://farm8.staticflickr.com/7370/9831878795_11ab93c7dc.jpg" width="425"/></a></p>
+
+<h1>Excelでピボットテーブルを作る</h1>
+
+<p>Microsoft Excelを起動します。<br>
+# 非常に古いですがExcel2002SP3使っています。<br>
+# まぁ、古くても大丈夫ということで^^;    </p>
+
+<p>「データ」→「外部データの取り込み」→「データの取り込み」と選択し、<br>
+「データファイルの選択」で「新しいデータソースへの接続.odc」をダブルクリックします。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831848604" title="View 'MySQL&ExcelPivot04' on Flickr.com"><img height="301" title="MySQL&ExcelPivot04" alt="MySQL&ExcelPivot04" border="0" src="http://farm4.staticflickr.com/3754/9831848604_3590d037cd.jpg" width="500"/></a></p>
+
+<p>「データ接続ウィザード」で「その他/詳細」を選択する。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831848584" title="View 'MySQL&ExcelPivot05' on Flickr.com"><img height="330" title="MySQL&ExcelPivot05" alt="MySQL&ExcelPivot05" border="0" src="http://farm6.staticflickr.com/5471/9831848584_e8e446a1fe.jpg" width="498"/></a></p>
+
+<p>「データリンク プロパティ」の「接続」タブを開き、<br>
+「データソース名を使用する」選択し、<br>
+作成したODBC接続の「Data Source Name」を指定して、「OK」をクリックします。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831955353" title="View 'MySQL&ExcelPivot06' on Flickr.com"><img height="427" title="MySQL&ExcelPivot06" alt="MySQL&ExcelPivot06" border="0" src="http://farm8.staticflickr.com/7293/9831955353_654dfa0111.jpg" width="425"/></a></p>
+
+<p>「データ接続ウィザード」でピボットテーブルに利用したいテーブルを選び、<br>
+「次へ」をクリックします。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831848484" title="View 'MySQL&ExcelPivot07' on Flickr.com"><img height="350" title="MySQL&ExcelPivot07" alt="MySQL&ExcelPivot07" border="0" src="http://farm4.staticflickr.com/3734/9831848484_e327ece06d.jpg" width="498"/></a></p>
+
+<p>次の画面で「完了」をクリックします。<br>
+# 必要に応じて、ファイル名や説明を指定してください。    </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831878615" title="View 'MySQL&ExcelPivot08' on Flickr.com"><img height="320" title="MySQL&ExcelPivot08" alt="MySQL&ExcelPivot08" border="0" src="http://farm4.staticflickr.com/3671/9831878615_de7503e8d0.jpg" width="500"/></a></p>
+
+<p>「データのインポート」画面で「ピボットテーブル レポートの作成」をクリックします。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831895846" title="View 'MySQL&ExcelPivot09' on Flickr.com"><img height="198" title="MySQL&ExcelPivot09" alt="MySQL&ExcelPivot09" border="0" src="http://farm8.staticflickr.com/7342/9831895846_a9d6a33b1d.jpg" width="354"/></a></p>
+
+<p>「ピボットテーブル/ピボットグラフ ウィザード」で「完了」をクリックします。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831895906" title="View 'MySQL&ExcelPivot10' on Flickr.com"><img height="202" title="MySQL&ExcelPivot10" alt="MySQL&ExcelPivot10" border="0" src="http://farm3.staticflickr.com/2831/9831895906_efb88ba2d2.jpg" width="500"/></a></p>
+
+<p>後は、通常のピボットテーブル同様の操作データを参照できます。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9831896036" title="View 'MySQL&ExcelPivot11' on Flickr.com"><img height="368" title="MySQL&ExcelPivot11" alt="MySQL&ExcelPivot11" border="0" src="http://farm8.staticflickr.com/7402/9831896036_922140deeb.jpg" width="500"/></a>
+# この画面イメージは、<br>
+# 売上番号, 販売日, 商品点数, 売上合計, 利益合計<br>
+# というカラムがあるテーブル元にピボットテーブルを表示している例です。    </p>
+
+<p>データベースのデータが更新された時は、<br>
+「データ」→「データの更新」を選んで、最新データを取得します。<br>
+<br/>
+この方法を使うと、<br>
+Excel2002の上限(65536行)を超えるレコードのテーブルでも、<br>
+ピボットテーブルが利用可能になります。<br>
+が、データが大きくなるとメモリ不足になったりするので、<br>
+MySQL側でカラムやレコードを絞り込んだ、Viewを作った方が現実的かと思います。  </p>
+
+<p># 試したものは60カラムx50万レコード程のデータ量で試したところ、<br>
+# 最初のデータ取得及びデータ更新に時間がかかるものの、<br>
+# ピボット操作は、現実的なスピードで利用できていました。<br>
+# Core2Duo, メモリ2GB, WindowsXP, Excel2002という環境でも、    </p>
+
+<p>ピボットテーブルでいろいろな切り口の集計を行っていて、<br>
+その切り口ごとにExcelファイルが存在していたとしても、<br>
+「データの更新」を選べば、元データを最新に揃えられるのは、<br>
+「数字が合わない…」というような無駄な混乱が減って、便利ではないかと思います。  </p>
+
+    
+  </article>
+
+  <footer class="post-header">
+    <p class="post-metainfo">
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2013/09/20 15:38:11</div>
+      <div class="post-meta-category"><i class="fa fa-folder"></i> カテゴリ：
+        <a href="/categories/it技術">IT技術</a>
+      </div>
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/Excel.html">Excel</a>
+      
+        <a href="/tag/MySQL.html">MySQL</a>
+      </div>
+      
+      
+      
+    </p>
+  </footer>
+
+<div style="margin-bottom:0.5em;"><!-- sns button -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="takemikami" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- twitter-->
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ja'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- google plus -->
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><!-- hatena blog -->
+<br/>
+<div class="fb-like" data-href="http://takemikami.com/archives/1373" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div><!-- facebook -->
+</div><!-- .sns button -->
+
+
+<div class="nav-links">
+	<div class="nav-previous">&laquo; <a href="/archives/1370">夏休みの課題は8月31日にやればいい</a></div>
+	<div class="nav-next">&raquo; <a href="/archives/1387">AWS(EC2)でEphemeral Disk（揮発性ディスク）を使ってみた</a></div>
+</div>
+
+<div class="page-widget-header">[PR]</div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:60px"
+     data-ad-client="ca-pub-6279684021251205"
+     data-ad-slot="1274582921"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'takemikami'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+            </div>
+          </div><!-- main-col-1 -->
+          <div class="main-col main-col-2">
+            <div class="site-widgets">
+              <div class="widget-header">Author</div>
+<div class="widget-content">
+<a href="/about/profile.html"><img src="/images/common/portrait_takemikami.jpg" width="72" height="72" style="float:right;"/></a>
+<b><a href="/about/profile.html">takemikami</a></b><br/>
+読書や創作が趣味なITエンジニア<br/>
+・データ分析及びアプリ開発<br/>
+・創作はショートショート<br/>
+・YUI/FLOWER FLOWERファン<br/>
+・<a href="/about/techworks.html">研究発表履歴</a> |
+<a href="/about/litworks.html">創作発表履歴</a>
+<br clear="all" />
+<table width="100%"><tr>
+ <td width="50%" valign="top">
+<a href="http://google.com/+TakeshiMikami"
+   rel="publisher" target="_top" style="text-decoration:none;">
+<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/> Google+
+</a><br/>
+<a href="http://twitter.com/takemikami"><img src="/images/common/favicon_twitter.png"> twitter</a><br/>
+<a href="http://www.linkedin.com/in/takemikami"><img src="/images/common/favicon_linkedin.png"> LinkedIn</a><br/>
+<a href="http://play.google.com/store/apps/developer?id=Takeshi+Mikami"><img src="/images/common/favicon_googleplay.png"> Google Play</a><br/>
+ <td>
+ <td width="50%" valign="top">
+<a href="http://booklog.jp/users/takemikami"><img src="/images/common/favicon_booklog.png"> ブクログ</a><br/>
+<a href="http://github.com/takemikami"><img src="/images/common/favicon_github.png"> github</a><br/>
+<a href="http://www.slideshare.net/takemikami"><img src="/images/common/favicon_slideshare.png"> slideshare</a><br/>
+<a href="http://b.hatena.ne.jp/takemikami/"><img src="/images/common/favicon_hateb.png"> Hatena::Bookmark</a><br/>
+ <td>
+</tr></table>
+
+</div>
+
+<div class="widget-header">Recent Posts</div>
+<div class="widget-content">
+<ul class="recent-post-list">
+  
+    <li>
+     <a href="/archives/1518">PusherとRubyOnRailsでチャットアプリを作ってみた</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1516">MacOSXでAngularJS開発環境を構築する手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1512">MacOSXでのrbenvを使ってrubyをインストールする手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1492">母校で後輩が書いた小説の合評してきました</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1490">「期末に予算を消化する」ことに正義はあるか？</a>
+    </li>
+  
+</ul>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar 1*/
+google_ad_slot = "3350215728";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">タグ</div>
+<div class="widget-content">
+<div id="tag-cloud">
+<a href="/tag/AngularJS.html" class="set-1">AngularJS</a> <a href="/tag/Excel.html" class="set-1">Excel</a> <a href="/tag/GoogleChartTools.html" class="set-1">GoogleChartTools</a> <a href="/tag/MySQL.html" class="set-1">MySQL</a> <a href="/tag/android.html" class="set-1">android</a> <a href="/tag/aws.html" class="set-2">aws</a> <a href="/tag/bi.html" class="set-1">bi</a> <a href="/tag/bitbucket.html" class="set-1">bitbucket</a> <a href="/tag/capistrano.html" class="set-1">capistrano</a> <a href="/tag/chef.html" class="set-4">chef</a> <a href="/tag/css.html" class="set-1">css</a> <a href="/tag/designpattern.html" class="set-1">designpattern</a> <a href="/tag/devise.html" class="set-1">devise</a> <a href="/tag/ec2.html" class="set-1">ec2</a> <a href="/tag/eclipse.html" class="set-1">eclipse</a> <a href="/tag/emr.html" class="set-1">emr</a> <a href="/tag/fluent.html" class="set-1">fluent</a> <a href="/tag/fluentd.html" class="set-1">fluentd</a> <a href="/tag/fortran.html" class="set-1">fortran</a> <a href="/tag/git.html" class="set-1">git</a> <a href="/tag/github.html" class="set-1">github</a> <a href="/tag/hadoop.html" class="set-1">hadoop</a> <a href="/tag/hibernate.html" class="set-1">hibernate</a> <a href="/tag/hive.html" class="set-1">hive</a> <a href="/tag/igo.html" class="set-1">igo</a> <a href="/tag/infobright.html" class="set-1">infobright</a> <a href="/tag/iptables.html" class="set-1">iptables</a> <a href="/tag/java.html" class="set-5">java</a> <a href="/tag/javascript.html" class="set-1">javascript</a> <a href="/tag/jdk.html" class="set-1">jdk</a> <a href="/tag/jmeter.html" class="set-1">jmeter</a> <a href="/tag/mathML.html" class="set-1">mathML</a> <a href="/tag/maven.html" class="set-1">maven</a> <a href="/tag/nginx.html" class="set-1">nginx</a> <a href="/tag/nodejs.html" class="set-1">nodejs</a> <a href="/tag/nokogiri.html" class="set-1">nokogiri</a> <a href="/tag/pentaho.html" class="set-1">pentaho</a> <a href="/tag/perl.html" class="set-1">perl</a> <a href="/tag/php.html" class="set-1">php</a> <a href="/tag/pusher.html" class="set-1">pusher</a> <a href="/tag/r.html" class="set-1">r</a> <a href="/tag/rails3.html" class="set-2">rails3</a> <a href="/tag/rails4.html" class="set-1">rails4</a> <a href="/tag/rbenv.html" class="set-1">rbenv</a> <a href="/tag/rstudio.html" class="set-1">rstudio</a> <a href="/tag/ruby.html" class="set-4">ruby</a> <a href="/tag/s3.html" class="set-1">s3</a> <a href="/tag/servlet.html" class="set-2">servlet</a> <a href="/tag/springMVC.html" class="set-1">springMVC</a> <a href="/tag/subversion.html" class="set-1">subversion</a> <a href="/tag/tortoisegit.html" class="set-1">tortoisegit</a> <a href="/tag/twitter.html" class="set-1">twitter</a> <a href="/tag/vagrant.html" class="set-1">vagrant</a> <a href="/tag/websocket.html" class="set-1">websocket</a> <a href="/tag/wordpress.html" class="set-1">wordpress</a> <a href="/tag/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%90.html" class="set-1">形態素解析</a> <a href="/tag/%E8%B2%A0%E8%8D%B7%E3%83%86%E3%82%B9%E3%83%88.html" class="set-1">負荷テスト</a> <a href="/tag/%E9%96%8B%E7%99%BA%E7%AE%A1%E7%90%86.html" class="set-1">開発管理</a>
+</div>
+
+</div>
+
+<div class="widget-content">
+<table>
+<tr><td>
+    <script type="text/javascript" src="http://widget.booklog.jp/blogparts/js/booklog_minishelf_3col.js?default" id="booklog_minishelf_3col"></script>
+    <script type="text/javascript" src="http://api.booklog.jp/json/takemikami?category=0&count=6&callback=booklog_minishelf_3col"></script>
+</td><td>
+<a href="http://user.awasete.com/user/1003533_4c6ed/"><img src="http://awasete.nakanohito.jp/img/?u=1003533&amp;h=3e850aae&amp;s=160" width="160" height="140" border="" alt="あわせて読みたい" /></a>
+</td></tr></table>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar2 */
+google_ad_slot = "9848917726";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">RSS</div>
+<div class="widget-content">
+<p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
+
+            </div>
+          </div><!-- main-col-2 -->
+        </div><!-- main-col-wrapper -->
+      </div><!-- wrapper -->
+    </div><!-- page-main -->
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    Copyright (C) 1999-2014 Takeshi Mikami. All rights reserved.
+  </div>
+</div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-32149053-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </body>
+
+</html>

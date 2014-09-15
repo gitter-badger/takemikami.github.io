@@ -107,38 +107,6 @@ pre {
     padding-left: 0; }
 
 /**
- * Preformat for Literary Arts
- */
-pre.poem {
-  border: none;
-  padding: 0px 0px;
-  background-color: transparent; }
-
-pre.novel {
-  border: none;
-  padding: 0px 0px;
-  background-color: transparent;
-  white-space: pre-wrap; }
-
-pre.essay {
-  border: none;
-  padding: 0px 0px;
-  background-color: transparent;
-  white-space: pre-wrap; }
-
-pre.diary {
-  border: none;
-  padding: 0px 0px;
-  background-color: transparent;
-  white-space: pre-wrap; }
-
-pre.reading {
-  border: none;
-  padding: 0px 0px;
-  background-color: transparent;
-  white-space: pre-wrap; }
-
-/**
  * Wrapper
  */
 .wrapper {

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Rails3+devise,nginx,fluent,S3構成でのアクセスログ収集と蓄積 | takemikami's note</title>
+    <meta name="description" content="読書記録やオリジナル文芸創作（小説、詩、エッセイなど）、IT技術の個人的なノート、 その他にコラムや日記を書き綴っている、takemikami個人運営のブログです。
+">
+
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="canonical" href="http://takemikami.com/archives/1314">
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
+    </script>
+    <script type="text/javascript"
+            src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</head>
+
+
+  <body>
+
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&appId=214236895371631&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">takemikami's note</a>
+
+<div class="site-search">
+<script>
+  (function() {
+    var cx = '001111401147268864293:eygh6uuznk8';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//www.google.com/cse/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+    <nav class="site-nav">
+      <div class="trigger">
+        <a class="page-link" href="/categories/it技術/">IT</a>
+        <a class="page-link" href="/categories/アプリ/">Apps</a>
+        <a class="page-link" href="/categories/文芸/">Literary</a>
+        <a class="page-link" href="/categories/読書ノート/">Bookworm</a>
+        <a class="page-link" href="/categories/日記/">Diary</a>
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-main">
+      <div class="wrapper">
+        <div class="main-col-wrapper">
+          <div class="main-col main-col-1">
+            <div class="page-content">
+              <div class="post">
+
+  <header class="post-header">
+    <a class="post-category" href="/categories/it技術">IT技術</a>
+
+
+
+    <h1 class="post-title">Rails3+devise,nginx,fluent,S3構成でのアクセスログ収集と蓄積</h1>
+    <p class="post-metainfo">
+      
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/devise.html">devise</a>
+      
+        <a href="/tag/fluent.html">fluent</a>
+      
+        <a href="/tag/nginx.html">nginx</a>
+      
+        <a href="/tag/rails3.html">rails3</a>
+      
+        <a href="/tag/ruby.html">ruby</a>
+      
+        <a href="/tag/s3.html">s3</a>
+      </div>
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2012/08/22 11:02:09</div>
+    </p>
+  </header>
+
+
+  <article class="post-content">
+    
+      <p>ユーザ認証が存在するWebアプリのアクセスログを有効に分析するためには、<br>
+・Webサーバからアクセスログを集める<br>
+・Webアプリのユーザとアクセスログを紐付ける<br>
+の２つを行う必要があります。  </p>
+
+<p>この記事では、<br>
+・Webサーバ： nginx<br>
+・開発フレームワーク： Ruby on Rails （認証プラグインとしてdevise）<br>
+・ログ集約： fluentd<br>
+・ログの格納先： Amazon S3<br>
+という構成のWebアプリケーションで、<br>
+「アクセスログの収集と蓄積」を行う流れについて説明します。<br>
+サーバOSは、CentOSを利用します。  </p>
+
+<p>アクセスログの収集から蓄積までは以下の図の流れになります。  </p>
+
+<p><a href="http://www.flickr.com/photos/62769571@N03/9710078010" title="View 'nginxfluentd-accesslog' on Flickr.com"><img height="375" title="nginxfluentd-accesslog" alt="nginxfluentd-accesslog" border="0" src="http://farm6.staticflickr.com/5455/9710078010_0755e4810a.jpg" width="500"/></a></p>
+
+<p>アクセスログの出力：<br>
+　①ユーザの訪問<br>
+　②アプリから会員ID情報を送信<br>
+　　→RailsアプリからHTTPヘッダに会員IDを付加して返却<br>
+　　　付加したヘッダはnginxでログ出力後に削除（ユーザに付加した情報は見えない）<br>
+　③アクセスログに会員ID・トラッキング用cookie情報を出力<br>
+　④tracking用のcookie情報を送信<br>
+　　→会員でない場合でもクライアントを特定できるよう<br>
+　　　tracking用のCookie情報を付加  </p>
+
+<p>アクセスログの収集・分析：<br>
+　①ログを監視し、条件に合うログを抽出<br>
+　②定期的にS3に転送<br>
+　　→fluentdでログを監視、定期的にS3に転送  </p>
+
+<p>文章だけではわかりにくいかと思ったので、概要についてスライドにもまとめています。  </p>
+
+<p><iframe src="http://www.slideshare.net/slideshow/embed_code/14034829" width="512" height="421" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe> <a href="http://www.slideshare.net/takemikami/nginxfluentd-accesslog" title="Rails3+devise,nginx,fluent,S3構成でのアクセスログ収集と蓄積" target="_blank">Rails3+devise,nginx,fluent,S3構成でのアクセスログ収集と蓄積</a> from <a href="http://www.slideshare.net/takemikami" target="_blank">Takeshi Mikami</a> <br /></p>
+
+<p>この構成を構築する手順を次の順で説明していきます。<br>
+1. CentOSへのnginx、rubyのインストール<br>
+2. Railsアプリ作成とdeviseによる認証機能の作成<br>
+3. 詳細なログを出力するためのnginxの設定<br>
+4. fluentdの導入とログ収集・S3への転送設定  </p>
+
+<!--nextpage-->
+
+<h2>1. CentOSへのnginx、rubyのインストール</h2>
+
+<h2>EPELの追加</h2>
+
+<p>CentOS標準のリポジトリだとnginxが入っていないので、<br>
+以下のように、EPELをリポジトリに追加します。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo wget http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-5.noarch.rpm
+<span class="nv">$ </span>sudo rpm -ivh epel-release-6-5.noarch.rpm
+</code></pre></div>
+<p>参考）CentOS 外部レポジトリの追加(EPEL)<br>
+　<a href="http://www.tooyama.org/yum-addrepo-epel.html">http://www.tooyama.org/yum-addrepo-epel.html</a>  </p>
+
+<h2>nginxのインストール</h2>
+
+<p>EPELの追加が終わったら、以下のコマンドでnginxをインストールします。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo yum install nginx
+</code></pre></div>
+<h2>Rubyのインストール</h2>
+
+<p>ここでは最新版のRubyを利用したいので、ソースからコンパイルします。  </p>
+
+<p>まずはコンパイルに必要なパッケージ群をインストールします。<br>
+（おそらく、このくらい入れとけば大丈夫じゃないかなと思います）  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo yum install gcc-c++ patch readline readline-devel zlib zlib-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison sqlite-devel mysql-devel libxslt-devel httpd-devel curl-devel ncurses-devel gdbm-devel
+<span class="nv">$ </span>sudo yum install libyaml-devel
+</code></pre></div>
+<p>Rubyのソースをダウンロード、コンパイル＆インストールします。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p125.tar.gz
+<span class="nv">$ </span>tar zxf ruby-1.9.3-p125.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>ruby-1.9.3-p125
+<span class="nv">$ </span>./configure --prefix<span class="o">=</span>/usr
+<span class="nv">$ </span>make
+<span class="nv">$ </span>sudo make install
+</code></pre></div>
+<!--nextpage-->
+
+<h2>2. Railsアプリ作成とdeviseによる認証機能の作成</h2>
+
+<p># このページの流れの大部分はこの記事と同じです。<br>
+# 説明を省いているので、不明なところはこちらの記事も参照してください。<br>
+# 　<a href="http://takemikami.com/technote/archives/653"><a href="http://takemikami.com/technote/archives/653">http://takemikami.com/technote/archives/653</a></a>    </p>
+
+<h2>Railsのインストール</h2>
+
+<p>最新のRuby on Railsをインストールします。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install <span class="nv">rails</span>
+<span class="o">==</span> 略 <span class="o">==</span>
+Successfully installed rails-3.2.8
+<span class="o">==</span> 略 <span class="o">==</span>
+</code></pre></div>
+<h2>Railsアプリの作成</h2>
+
+<p>rails newでrailsアプリを作成します。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails new app
+create
+create  README.rdoc
+create  <span class="nv">Rakefile</span>
+<span class="o">==</span> 略 <span class="o">==</span>
+</code></pre></div>
+<p>Gemfileのtherubyracerのgemを以下のようにコメントアウトして、有効化。  </p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">==</span> <span class="err">略</span> <span class="o">==</span>
+<span class="c1"># See https://github.com/sstephenson/execjs#readme for more supported runtimes</span>
+<span class="n">gem</span> <span class="s1">&#39;therubyracer&#39;</span><span class="p">,</span> <span class="ss">:platforms</span> <span class="o">=&gt;</span> <span class="ss">:ruby</span>
+<span class="o">==</span> <span class="err">略</span> <span class="o">==</span>
+</code></pre></div>
+<p>bundle installして、rails sでサーバを起動します。  </p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nv">install</span>
+<span class="o">==</span> 略 <span class="o">==</span>
+Installing therubyracer <span class="o">(</span>0.10.2<span class="o">)</span> with native <span class="nv">extensions</span>
+<span class="o">==</span> 略 <span class="o">==</span>
+<span class="nv">$ </span>rails <span class="nv">s</span>
+<span class="o">=</span>&gt; Booting <span class="nv">WEBrick</span>
+<span class="o">=</span>&gt; Rails 3.2.8 application starting in development on http://0.0.0.0:3000
+<span class="o">=</span>&gt; Call with -d to <span class="nv">detach</span>
+<span class="o">=</span>&gt; Ctrl-C to shutdown server
+<span class="o">[</span>2012-08-21 11:16:47<span class="o">]</span> INFO  WEBrick 1.3.1
+</code></pre></div>
+<p>[2012-08-21 11:16:47] INFO  WEBrick::HTTPServer#start: pid=1837 port=3000<br>
+```</p>
+
+<p>この状態で、ブラウザから
+　http://(ホスト名orIPアドレス):3000/
+でアクセスして「Welcome aboard」が表示されることを確認します。
+ここまでで、素のrailsアプリ作成が完了。</p>
+
+<h2>deviseによる認証機能の追加</h2>
+
+<p>次にdeviseを使って、ユーザの認証機能を追加します。
+まずは、Gemfileにdeviseのgemを追記。</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">==</span> <span class="err">略</span> <span class="o">==</span>  
+<span class="n">gem</span> <span class="s1">&#39;devise&#39;</span>  
+<span class="o">==</span> <span class="err">略</span> <span class="o">==</span>  
+</code></pre></div>
+<p>その後、bundle install, devise:installしてdeviseをインストールします。
+ユーザ用のモデルとビューを生成します。
+ここでは「user」というモデルを作っています。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>bundle <span class="nv">install</span>  
+<span class="o">==</span> 略 <span class="o">==</span>  
+Installing orm_adapter <span class="o">(</span>0.4.0<span class="o">)</span>  
+Installing warden <span class="o">(</span>1.2.1<span class="o">)</span>  
+Installing devise <span class="o">(</span>2.1.2<span class="o">)</span>  
+<span class="o">==</span> 略 <span class="o">==</span>  
+<span class="nv">$ </span>rails generate devise:install  
+create  config/initializers/devise.rb  
+create  config/locales/devise.en.yml  
+<span class="o">==</span> 略 <span class="o">==</span>  
+<span class="nv">$ </span>rails generate devise:views  
+invoke  Devise::Generators::SharedViewsGenerator  
+create    app/views/devise/shared  
+create    app/views/devise/shared/_links.erb  
+<span class="o">==</span> 略 <span class="o">==</span>  
+<span class="nv">$ </span>rails generate devise user  
+invoke  active_record  
+create    db/migrate/20120821023255_devise_create_users.rb  
+create    app/models/user.rb  
+<span class="o">==</span> 略 <span class="o">==</span>  
+<span class="nv">$ </span>rake db:migrate  
+<span class="o">==</span>  DeviseCreateUsers: <span class="nv">migrating</span> <span class="o">==============================================</span>  
+-- create_table<span class="o">(</span>:users<span class="o">)</span>  
+-<span class="p">&amp;</span>gt<span class="p">;</span> 0.0059s  
+-- add_index<span class="o">(</span>:users, :email, <span class="o">{</span>:unique<span class="o">=</span><span class="p">&amp;</span>gt<span class="p">;</span><span class="nb">true</span><span class="o">})</span>  
+-<span class="p">&amp;</span>gt<span class="p">;</span> 0.0138s  
+-- add_index<span class="o">(</span>:users, :reset_password_token, <span class="o">{</span>:unique<span class="o">=</span><span class="p">&amp;</span>gt<span class="p">;</span><span class="nb">true</span><span class="o">})</span>  
+-<span class="p">&amp;</span>gt<span class="p">;</span> 0.0010s  
+<span class="o">==</span>  DeviseCreateUsers: migrated <span class="o">(</span>0.0210s<span class="o">)</span> <span class="o">=====================================</span>  
+</code></pre></div>
+<p>各ページにdeviseに関するアラートを表示するように、
+「app/views/layouts/application.html.erb」に
+以下のように、notice, alert表示の２行を追記します。</p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="ni">&amp;lt;</span>body<span class="ni">&amp;gt;</span>  
+<span class="ni">&amp;lt;</span>p class=<span class="ni">&amp;quot;</span>notice<span class="ni">&amp;quot;&amp;gt;&amp;lt;</span>%= notice %<span class="ni">&amp;gt;&amp;lt;</span>/p<span class="ni">&amp;gt;</span>  
+<span class="ni">&amp;lt;</span>p class=<span class="ni">&amp;quot;</span>alert<span class="ni">&amp;quot;&amp;gt;&amp;lt;</span>%= alert %<span class="ni">&amp;gt;&amp;lt;</span>/p<span class="ni">&amp;gt;</span>  
+<span class="ni">&amp;lt;</span>%= yield %<span class="ni">&amp;gt;</span>  
+<span class="ni">&amp;lt;</span>/body<span class="ni">&amp;gt;</span>  
+</code></pre></div>
+<p>ログイン状態に応じて、
+ログイン・ログアウトボタンを表示するトップページを作成します。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rails g controller home index  
+create  app/controllers/home_controller.rb  
+route  get <span class="p">&amp;</span>quot<span class="p">;</span>home/index<span class="p">&amp;</span>quot<span class="p">;</span>  
+<span class="o">==</span> 略 <span class="o">==</span>  
+</code></pre></div>
+<p>「app/views/home/index.html.erb」を以下のように編集し、
+ログイン・ログアウトボタンを設置します。</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">%</span> <span class="k">if</span> <span class="n">user_signed_in?</span> <span class="sx">%&amp;gt;  </span>
+<span class="sx">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="sx">%= link_to &amp;quot;ログアウト&amp;quot;, destroy_user_session_path, :method =</span><span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="s1">&#39;delete&#39;</span> <span class="sx">%&amp;gt;  </span>
+<span class="sx">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="sx">%= link_to &amp;quot;ユーザ情報の編集&amp;quot;, edit_user_registration_path %&amp;gt;  </span>
+<span class="sx">&amp;lt;% else %&amp;gt;  </span>
+<span class="sx">&amp;lt;%=</span> <span class="n">link_to</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="err">ログイン</span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;,</span> <span class="n">new_user_session_path</span> <span class="sx">%&amp;gt;  </span>
+<span class="sx">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">%=</span> <span class="n">link_to</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="err">登録</span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;,</span> <span class="n">new_user_registration_path</span> <span class="sx">%&amp;gt;  </span>
+<span class="sx">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">%</span> <span class="k">end</span> <span class="o">%&amp;</span><span class="n">gt</span><span class="p">;</span>  
+</code></pre></div>
+<p>「config/route.rb」に以下の行を追加して、ルートページを「/home/index」にします。</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">home</span><span class="c1">#index&amp;quot;  </span>
+</code></pre></div>
+<p>デフォルトのルートページは、リネームしておきます。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mv public/index.html public/index.html.bak  
+</code></pre></div>
+<p>ここまで生成したら、再度「rails s」でrailsを起動。
+以下のURLにアクセスすると
+ログイン・登録と表示されたルーとページが参照できます。
+　http://(ホスト名orIPアドレス):3000/
+登録から進み、メールアドレスとパスワードを入力して会員登録します。</p>
+
+<p>会員登録後、ログイン・ログアウトができることを確認します。</p>
+
+<h2>HTTPヘッダにユーザIDを追加</h2>
+
+<p>railsアプリからnginxに対してユーザIDの情報を引き渡すため
+HTTPヘッダーにユーザIDの情報を付加します。</p>
+
+<h1>ここで追加したヘッダーはnginxで削除してブラウザに返却するので、</h1>
+
+<h1>ユーザには見えません（インターネット上の経路には流出しません）。</h1>
+
+<p>「app/controllers/application_controller.rb」を以下のように編集します。</p>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>  
+<span class="n">protect_from_forgery</span>  
+<span class="n">after_filter</span> <span class="ss">:add_userid_toheader</span>  
+<span class="k">def</span> <span class="nf">add_userid_toheader</span>  
+<span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">[&amp;</span><span class="n">quot</span><span class="p">;</span><span class="n">X</span><span class="o">-</span><span class="no">App</span><span class="o">-</span><span class="no">Userid</span><span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="o">]</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">quot</span><span class="p">;</span><span class="c1">#{user_signed_in? ? session[&#39;warden.user.user.key&#39;][1][0] : nil}&amp;quot;  </span>
+<span class="k">end</span>  
+<span class="k">end</span>  
+</code></pre></div>
+<p>以下のコマンドを入力し、「X-App-Userid」ヘッダが返却されることを確認します。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>curl -I http://<span class="o">(</span>ホスト名orIPアドレス<span class="o">)</span>:3000/  
+HTTP/1.1 <span class="m">200</span> OK  
+X-App-Userid:  
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8  
+X-Ua-Compatible: <span class="nv">IE</span><span class="o">=</span><span class="nv">Edge</span>  
+<span class="o">==</span> 略 <span class="o">==</span>  
+</code></pre></div>
+<!--nextpage-->
+
+<h2>3. 詳細なログを出力するためのnginxの設定</h2>
+
+<h2>railsアプリのフロントにnginxを設置</h2>
+
+<p>「/etc/nginx/conf.d/default.conf」を以下のとおり編集し、
+railsアプリのフロントにnginxを設置します。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">\#    
+\# The default server    
+\#    
+upstream rails_app {  
+server 127.0.0.1:3000;  
+}  
+server {  
+listen       80;  
+server_name  _;  
+
+location / {  
+proxy_pass http://rails_app/;  
+\#        root   /usr/share/nginx/html;    
+\#        index  index.html index.htm;    
+}  
+
+error_page  404              /404.html;  
+location = /404.html {  
+root   /usr/share/nginx/html;  
+}  
+
+\# redirect server error pages to the static page /50x.html    
+\#    
+error_page   500 502 503 504  /50x.html;  
+location = /50x.html {  
+root   /usr/share/nginx/html;  
+}  
+}  
+</code></pre></div>
+<p>nginxを再起動して設定変更を有効にします。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>service nginx restart  
+</code></pre></div>
+<p>この状態で、ブラウザから
+　http://(ホスト名orIPアドレス)/
+でアクセスしてrailsアプリのルートが表示されることを確認します。</p>
+
+<h2>nginxに詳細ログの出力設定を追加</h2>
+
+<p>「/etc/nginx/conf.d/default.conf」を以下のとおり編集し、
+nginxで詳細ログを出力するように設定します。
+この設定ファイルで、次の設定を行っています。
+①tracking用のCookie情報を付加
+　→userid on;
+　　userid<em>name uid;
+　　userid</em>path /;
+　　userid<em>expires 365d;
+②Railsアプリで付加した会員ID情報を削除
+　→proxy</em>hide<em>header X-App-Userid;
+③詳細ログを出力
+　→log</em>format detail<em>accesslog .....
+　　access</em>log /var/log/nginx/detail<em>access.log detail</em>accesslog;</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">\#    
+\# The default server    
+\#    
+upstream rails_app {  
+server 127.0.0.1:3000;  
+}  
+server {  
+listen       80;  
+server_name  _;  
+
+location / {  
+proxy_pass http://rails_app/;  
+\#        root   /usr/share/nginx/html;    
+\#        index  index.html index.htm;    
+}  
+
+error_page  404              /404.html;  
+location = /404.html {  
+root   /usr/share/nginx/html;  
+}  
+
+\# redirect server error pages to the static page /50x.html    
+\#    
+error_page   500 502 503 504  /50x.html;  
+location = /50x.html {  
+root   /usr/share/nginx/html;  
+}  
+
+userid on;  
+userid_name uid;  
+userid_path /;  
+userid_expires 365d;  
+proxy_hide_header X-App-Userid;  
+
+log_format detail_accesslog &#39;&amp;quot;$time_local&amp;quot;,&amp;quot;$remote_addr&amp;quot;,&amp;quot;$uid_got&amp;quot;,&amp;quot;$upstream_http_x_app_userid&amp;quot;,&amp;quot;$remote_user&amp;quot;,&amp;quot;$request&amp;quot;,&amp;quot;$status&amp;quot;,&amp;quot;$body_bytes_sent&amp;quot;,&amp;quot;$http_referer&amp;quot;,&amp;quot;$http_user_agent&amp;quot;,&amp;quot;$http_x_forwarded_for&amp;quot;,&amp;quot;$gzip_ratio&amp;quot;&#39;;  
+access_log /var/log/nginx/detail_access.log detail_accesslog;  
+}  
+</code></pre></div>
+<p>nginxを再起動して設定変更を有効にします。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>service nginx restart  
+</code></pre></div>
+<p>この状態で、ブラウザから
+　http://(ホスト名orIPアドレス)/
+でアクセスして、次のようなログが出力されることを確認します。</p>
+
+<p>&quot;21/Aug/2012:14:10:09 +0900&quot;,&quot;192.168.199.1&quot;,&quot;uid=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot;,&quot;2&quot;,&quot;-&quot;,&quot;GET / HTTP/1.1&quot;,&quot;304&quot;,&quot;0&quot;,&quot;-&quot;,&quot;Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.79 Safari/537.1&quot;,&quot;-&quot;,&quot;-&quot;</p>
+
+<p>注目する出力値：
+・&quot;uid=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX&quot; ← trackingのcookie情報
+・&quot;2&quot; ← 会員ID</p>
+
+<p>ここまでで、nginxからのログの出力設定は完了です。</p>
+
+<!--nextpage-->
+
+<h2>4. fluentdの導入とログ収集・S3への転送設定</h2>
+
+<h2>fluentdのインストール</h2>
+
+<p>fluentd及びS3用プラグインをインストールします。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>gem install <span class="nv">fluentd</span>  
+<span class="o">=</span> 略 <span class="o">=</span>  
+Successfully installed fluentd-0.10.25  
+<span class="o">=</span> 略 <span class="o">=</span>  
+<span class="nv">$ </span>gem install fluent-plugin-s3  
+<span class="o">=</span> 略 <span class="o">=</span>  
+Successfully installed fluent-plugin-s3-0.2.2  
+<span class="o">=</span> 略 <span class="o">=</span>  
+</code></pre></div>
+<h2>fluentdへのログ収集・転送設定</h2>
+
+<p>「/etc/fluent/fluent.conf」を以下の通り編集し、
+ログの収集とS3への転送を設定します。
+・source部で、収集対象となるログを設定
+　・pathに対象ファイルを指定
+　・formatで収集する行を正規表現で指定
+・match部で、収集したログの転送先を指定
+　・aws<em>key</em>id, aws<em>sec</em>key, s3<em>bucket, s3</em>endpointで転送先bucketを指定
+　・path, buffer<em>path, time</em>slice_formatで転送先パス・ファイル名を指定</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&amp;lt;source&amp;gt;  
+type tail  
+format /^&amp;quot;(?&amp;lt;time_local&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;remote_addr&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;uid_got&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;upstream_http_x_app_userid&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;remote_user&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;request&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;status&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;body_bytes_sent&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;http_referer&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;http_user_agent&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;http_x_forwarded_for&amp;gt;[^&amp;quot;]*)&amp;quot;,&amp;quot;(?&amp;lt;gzip_ratio&amp;gt;[^&amp;quot;]*)&amp;quot;$/  
+path /var/log/nginx/detail_access.log  
+pos_file /tmp/td-agent/apache-web.pos  
+tag nginx.access  
+&amp;lt;/source&amp;gt;  
+
+&amp;lt;match nginx.access&amp;gt;  
+type s3  
+
+aws_key_id &amp;lt;ここにaccess_key_idを入れる&amp;gt;  
+aws_sec_key &amp;lt;ここにsecret_access_keyを入れる&amp;gt;  
+s3_bucket &amp;lt;ここにbucket名を入れる&amp;gt;  
+s3_endpoint s3-ap-northeast-1.amazonaws.com  
+path log/  
+buffer_path /var/log/fluent/s3  
+
+time_slice_format /nginx/%Y%m/detail_access.www-web.log.%Y%m%d%H  
+time_slice_wait 10m  
+&amp;lt;/match&amp;gt;  
+</code></pre></div>
+<p>以下のコマンドで、
+posファイルの保存用にテンポラリディレクトリを作ります。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir /tmp/td-agent/  
+</code></pre></div>
+<h2>fluentdの起動</h2>
+
+<p>以下のコマンドを入力しfluentdを起動します。</p>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>fluentd  
+2012-08-21 16:54:05 +0900: starting fluentd-0.10.25  
+2012-08-21 16:54:05 +0900: reading config file <span class="nv">path</span><span class="o">=</span><span class="p">&amp;</span>quot<span class="p">;</span>/etc/fluent/fluent.conf<span class="p">&amp;</span>quot<span class="p">;</span>  
+<span class="o">=</span> 略 <span class="o">=</span>  
+</code></pre></div>
+<p>この状態で、ブラウザから以下のURLにアクセスします。
+　http://(ホスト名orIPアドレス)/
+アクセスしたログが、
+「/var/log/fluent/s3」以下にコピーされていることを確認します。</p>
+
+<p>ここにコピーされたファイルが一時間ごとに、
+指定したS3のbucketにコピーされます（最大１時間待って確認します）。</p>
+
+    
+  </article>
+
+  <footer class="post-header">
+    <p class="post-metainfo">
+      <div class="post-meta-update"><i class="fa fa-calendar"></i> 投稿日時：2012/08/22 11:02:09</div>
+      <div class="post-meta-category"><i class="fa fa-folder"></i> カテゴリ：
+        <a href="/categories/it技術">IT技術</a>
+      </div>
+      <div class="post-meta-tags"><i class="fa fa-tag"></i> タグ: 
+        <a href="/tag/devise.html">devise</a>
+      
+        <a href="/tag/fluent.html">fluent</a>
+      
+        <a href="/tag/nginx.html">nginx</a>
+      
+        <a href="/tag/rails3.html">rails3</a>
+      
+        <a href="/tag/ruby.html">ruby</a>
+      
+        <a href="/tag/s3.html">s3</a>
+      </div>
+      
+      
+      
+    </p>
+  </footer>
+
+<div style="margin-bottom:0.5em;"><!-- sns button -->
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="takemikami" data-lang="ja">ツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- twitter-->
+<!-- Place this tag where you want the +1 button to render. -->
+<div class="g-plusone"></div>
+<!-- Place this tag after the last +1 button tag. -->
+<script type="text/javascript">
+  window.___gcfg = {lang: 'ja'};
+
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script><!-- google plus -->
+<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><!-- hatena blog -->
+<br/>
+<div class="fb-like" data-href="http://takemikami.com/archives/1314" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div><!-- facebook -->
+</div><!-- .sns button -->
+
+
+<div class="nav-links">
+	<div class="nav-previous">&laquo; <a href="/archives/1312">deviseによる認証を組み込んだRails3アプリの作成</a></div>
+	<div class="nav-next">&raquo; <a href="/archives/1316">ruby, nokogiriを使ったgoogle検索結果のスクレイピング</a></div>
+</div>
+
+<div class="page-widget-header">[PR]</div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:468px;height:60px"
+     data-ad-client="ca-pub-6279684021251205"
+     data-ad-slot="1274582921"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'takemikami'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+            </div>
+          </div><!-- main-col-1 -->
+          <div class="main-col main-col-2">
+            <div class="site-widgets">
+              <div class="widget-header">Author</div>
+<div class="widget-content">
+<a href="/about/profile.html"><img src="/images/common/portrait_takemikami.jpg" width="72" height="72" style="float:right;"/></a>
+<b><a href="/about/profile.html">takemikami</a></b><br/>
+読書や創作が趣味なITエンジニア<br/>
+・データ分析及びアプリ開発<br/>
+・創作はショートショート<br/>
+・YUI/FLOWER FLOWERファン<br/>
+・<a href="/about/techworks.html">研究発表履歴</a> |
+<a href="/about/litworks.html">創作発表履歴</a>
+<br clear="all" />
+<table width="100%"><tr>
+ <td width="50%" valign="top">
+<a href="http://google.com/+TakeshiMikami"
+   rel="publisher" target="_top" style="text-decoration:none;">
+<img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/> Google+
+</a><br/>
+<a href="http://twitter.com/takemikami"><img src="/images/common/favicon_twitter.png"> twitter</a><br/>
+<a href="http://www.linkedin.com/in/takemikami"><img src="/images/common/favicon_linkedin.png"> LinkedIn</a><br/>
+<a href="http://play.google.com/store/apps/developer?id=Takeshi+Mikami"><img src="/images/common/favicon_googleplay.png"> Google Play</a><br/>
+ <td>
+ <td width="50%" valign="top">
+<a href="http://booklog.jp/users/takemikami"><img src="/images/common/favicon_booklog.png"> ブクログ</a><br/>
+<a href="http://github.com/takemikami"><img src="/images/common/favicon_github.png"> github</a><br/>
+<a href="http://www.slideshare.net/takemikami"><img src="/images/common/favicon_slideshare.png"> slideshare</a><br/>
+<a href="http://b.hatena.ne.jp/takemikami/"><img src="/images/common/favicon_hateb.png"> Hatena::Bookmark</a><br/>
+ <td>
+</tr></table>
+
+</div>
+
+<div class="widget-header">Recent Posts</div>
+<div class="widget-content">
+<ul class="recent-post-list">
+  
+    <li>
+     <a href="/archives/1518">PusherとRubyOnRailsでチャットアプリを作ってみた</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1516">MacOSXでAngularJS開発環境を構築する手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1512">MacOSXでのrbenvを使ってrubyをインストールする手順</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1492">母校で後輩が書いた小説の合評してきました</a>
+    </li>
+  
+    <li>
+     <a href="/archives/1490">「期末に予算を消化する」ことに正義はあるか？</a>
+    </li>
+  
+</ul>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar 1*/
+google_ad_slot = "3350215728";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">タグ</div>
+<div class="widget-content">
+<div id="tag-cloud">
+<a href="/tag/AngularJS.html" class="set-1">AngularJS</a> <a href="/tag/Excel.html" class="set-1">Excel</a> <a href="/tag/GoogleChartTools.html" class="set-1">GoogleChartTools</a> <a href="/tag/MySQL.html" class="set-1">MySQL</a> <a href="/tag/android.html" class="set-1">android</a> <a href="/tag/aws.html" class="set-2">aws</a> <a href="/tag/bi.html" class="set-1">bi</a> <a href="/tag/bitbucket.html" class="set-1">bitbucket</a> <a href="/tag/capistrano.html" class="set-1">capistrano</a> <a href="/tag/chef.html" class="set-4">chef</a> <a href="/tag/css.html" class="set-1">css</a> <a href="/tag/designpattern.html" class="set-1">designpattern</a> <a href="/tag/devise.html" class="set-1">devise</a> <a href="/tag/ec2.html" class="set-1">ec2</a> <a href="/tag/eclipse.html" class="set-1">eclipse</a> <a href="/tag/emr.html" class="set-1">emr</a> <a href="/tag/fluent.html" class="set-1">fluent</a> <a href="/tag/fluentd.html" class="set-1">fluentd</a> <a href="/tag/fortran.html" class="set-1">fortran</a> <a href="/tag/git.html" class="set-1">git</a> <a href="/tag/github.html" class="set-1">github</a> <a href="/tag/hadoop.html" class="set-1">hadoop</a> <a href="/tag/hibernate.html" class="set-1">hibernate</a> <a href="/tag/hive.html" class="set-1">hive</a> <a href="/tag/igo.html" class="set-1">igo</a> <a href="/tag/infobright.html" class="set-1">infobright</a> <a href="/tag/iptables.html" class="set-1">iptables</a> <a href="/tag/java.html" class="set-5">java</a> <a href="/tag/javascript.html" class="set-1">javascript</a> <a href="/tag/jdk.html" class="set-1">jdk</a> <a href="/tag/jmeter.html" class="set-1">jmeter</a> <a href="/tag/mathML.html" class="set-1">mathML</a> <a href="/tag/maven.html" class="set-1">maven</a> <a href="/tag/nginx.html" class="set-1">nginx</a> <a href="/tag/nodejs.html" class="set-1">nodejs</a> <a href="/tag/nokogiri.html" class="set-1">nokogiri</a> <a href="/tag/pentaho.html" class="set-1">pentaho</a> <a href="/tag/perl.html" class="set-1">perl</a> <a href="/tag/php.html" class="set-1">php</a> <a href="/tag/pusher.html" class="set-1">pusher</a> <a href="/tag/r.html" class="set-1">r</a> <a href="/tag/rails3.html" class="set-2">rails3</a> <a href="/tag/rails4.html" class="set-1">rails4</a> <a href="/tag/rbenv.html" class="set-1">rbenv</a> <a href="/tag/rstudio.html" class="set-1">rstudio</a> <a href="/tag/ruby.html" class="set-4">ruby</a> <a href="/tag/s3.html" class="set-1">s3</a> <a href="/tag/servlet.html" class="set-2">servlet</a> <a href="/tag/springMVC.html" class="set-1">springMVC</a> <a href="/tag/subversion.html" class="set-1">subversion</a> <a href="/tag/tortoisegit.html" class="set-1">tortoisegit</a> <a href="/tag/twitter.html" class="set-1">twitter</a> <a href="/tag/vagrant.html" class="set-1">vagrant</a> <a href="/tag/websocket.html" class="set-1">websocket</a> <a href="/tag/wordpress.html" class="set-1">wordpress</a> <a href="/tag/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%90.html" class="set-1">形態素解析</a> <a href="/tag/%E8%B2%A0%E8%8D%B7%E3%83%86%E3%82%B9%E3%83%88.html" class="set-1">負荷テスト</a> <a href="/tag/%E9%96%8B%E7%99%BA%E7%AE%A1%E7%90%86.html" class="set-1">開発管理</a>
+</div>
+
+</div>
+
+<div class="widget-content">
+<table>
+<tr><td>
+    <script type="text/javascript" src="http://widget.booklog.jp/blogparts/js/booklog_minishelf_3col.js?default" id="booklog_minishelf_3col"></script>
+    <script type="text/javascript" src="http://api.booklog.jp/json/takemikami?category=0&count=6&callback=booklog_minishelf_3col"></script>
+</td><td>
+<a href="http://user.awasete.com/user/1003533_4c6ed/"><img src="http://awasete.nakanohito.jp/img/?u=1003533&amp;h=3e850aae&amp;s=160" width="160" height="140" border="" alt="あわせて読みたい" /></a>
+</td></tr></table>
+
+</div>
+
+<div class="widget-header">[PR]</div>
+<div class="widget-content">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6279684021251205";
+/* sidebar2 */
+google_ad_slot = "9848917726";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+</div>
+
+<div class="widget-header">RSS</div>
+<div class="widget-content">
+<p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+
+</div>
+
+            </div>
+          </div><!-- main-col-2 -->
+        </div><!-- main-col-wrapper -->
+      </div><!-- wrapper -->
+    </div><!-- page-main -->
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    Copyright (C) 1999-2014 Takeshi Mikami. All rights reserved.
+  </div>
+</div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-32149053-1', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+
+</script>
+
+
+  </body>
+
+</html>
