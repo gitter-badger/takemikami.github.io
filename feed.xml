@@ -6,9 +6,146 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 16 Sep 2014 02:52:37 +0900</pubDate>
-    <lastBuildDate>Tue, 16 Sep 2014 02:52:37 +0900</lastBuildDate>
+    <pubDate>Wed, 17 Sep 2014 22:25:22 +0900</pubDate>
+    <lastBuildDate>Wed, 17 Sep 2014 22:25:22 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Railsアプリのエラー発生をHeroku上のerrbitで監視する手順</title>
+        <description>&lt;p&gt;このエントリでは、RailsアプリのエラーをErrbitで監視する手順の作業ログをまとめています。Errbitではエラーの監視を行うことができます。ErrbitはAirbrakeというサービスのオープンソース版で、この手順ではErrbitをHerokuにセットアップすることにします。&lt;/p&gt;
+
+&lt;p&gt;errbit&lt;br&gt;
+　&lt;a href=&quot;https://github.com/errbit/errbit&quot;&gt;https://github.com/errbit/errbit&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Airbrake&lt;br&gt;
+　&lt;a href=&quot;https://airbrake.io&quot;&gt;https://airbrake.io&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;ErrBitのセットアップ&lt;/h1&gt;
+
+&lt;p&gt;以下のerrbitのページ「Deploying to Heroku:」という部分に手順が書いてあるので、この通りに実施します。&lt;/p&gt;
+
+&lt;p&gt;errbit&lt;br&gt;
+　&lt;a href=&quot;https://github.com/errbit/errbit&quot;&gt;https://github.com/errbit/errbit&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;PC上での準備&lt;/h2&gt;
+
+&lt;p&gt;PCにruby,bundlerはセットアップされている前提で、errbitのcloneとbundle installを実行します。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ git clone http://github.com/errbit/errbit.git
+$ cd errbit
+$ bundle install --path vendor/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;db/seeds.rb&lt;/code&gt;を修正します。以下の３点を自分用に変更。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;*** 省略 ***
+admin_username = &amp;quot;errbit&amp;quot;
+admin_email = &amp;quot;errbit@#{Errbit::Config.host}&amp;quot;
+admin_pass  = &amp;#39;password&amp;#39;
+*** 省略 ***
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;修正したらcommitしておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ git commit db/seeds.rb -m &amp;quot;setup admin id/password&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;herokuへの登録&lt;/h2&gt;
+
+&lt;p&gt;herokuへのユーザ登録・クレジットカード登録・heroku Toolbeltはセットアップは出来ている前提で、以下のようにコマンドを入力してherokuに、errbitをデプロイします。（※ここでは無料のAdd-onを利用しているので基本的に費用はかからないはず）&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ heroku login
+$ heroku create ※設定したいアプリ名（省略してもOK）※
+$ heroku addons:add mongolab:sandbox
+$ heroku addons:add sendgrid:starter
+$ heroku config:add HEROKU=true
+$ heroku config:add SECRET_TOKEN=&amp;quot;$(bundle exec rake secret)&amp;quot;
+$ heroku config:add ERRBIT_HOST=※errbitのホスト名※
+$ heroku config:add ERRBIT_EMAIL_FROM=※通知メールの送信元※
+$ git push heroku master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のコマンドでHeroku上のDBにシードデータ登録・インデックス生成します。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ heroku run rake db:seed
+$ heroku run rake db:mongoid:create_indexes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;herokuのDBを無料範囲内で利用するために、定期的に対応済みエラーをクリアするスケジューラーを追加しておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ heroku addons:add scheduler:standard
+$ heroku addons:open scheduler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;heroku Schedulerの設定画面が出てくるので、Add Jobを選んでtaskに&lt;code&gt;rake errbit:db:clear_resolved&lt;/code&gt;を指定します。&lt;/p&gt;
+
+&lt;p&gt;ここまで設定してから、HerokuのアプリのURLにアクセスすると次のような画面が出てくるので、設定した管理ユーザでログインします。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5579/15080651199_97f646de03.jpg&quot; alt=&quot;errbit-login&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;ログイン後の画面はこんな感じです。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://farm4.staticflickr.com/3918/15267383235_7fd9a32cd1.jpg&quot; alt=&quot;errbi-start&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;この画面の「AddNewApp」からRailsアプリを追加していきますが、そこから先はRailsのアプリを作った後で実施します。&lt;/p&gt;
+
+&lt;h1&gt;監視対象のRailsアプリを作る&lt;/h1&gt;
+
+&lt;h2&gt;Railsアプリの準備&lt;/h2&gt;
+
+&lt;p&gt;以下のコマンドのようにして、Railsアプリの基本を作ります。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ mkdir sample
+$ cd sample
+$ echo &amp;quot;source &amp;#39;https://rubygems.org&amp;#39;&amp;quot; &amp;gt; Gemfile
+$ echo &amp;quot;gem &amp;#39;rails&amp;#39;&amp;quot; &amp;gt;&amp;gt; Gemfile
+$ bundle install --path vendor/bundle
+$ bundle exec rails new . --skip-bundle
+$ rm Gemfile.lock
+$ bundle install --path vendor/bundle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;RailsアプリへのErrbitの設定&lt;/h2&gt;
+
+&lt;p&gt;Errbitの管理画面「AddNewApp」から、アプリ名を指定してアプリを作成します（それ以外は、ひとまず既定値で）。作成後画面の「No errs have been caught yet, make sure you setup your app」に、Railsアプリに設定すべき情報が表示されます。&lt;/p&gt;
+
+&lt;p&gt;作成後の画面に表示されている内容で&lt;code&gt;config/initializers/errbit.rb&lt;/code&gt;を作成し。また、&lt;code&gt;Gemfile&lt;/code&gt;に以下を追記。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;gem &amp;#39;airbrake&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;gemを追加したので、bundle installしておきます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Errbitの動作確認&lt;/h2&gt;
+
+&lt;p&gt;ここで、次のコマンドを入力すると動作確認を行うことが出来ます。このコマンドを入力した後、errbitの画面を見ると以下のようにエラーが発生している事が確認できます。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle exec rake airbrake:test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5557/15244382906_7d7f632df5.jpg&quot; alt=&quot;errbit-err&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;slackへのエラー通知&lt;/h2&gt;
+
+&lt;p&gt;エラー発生時にslackにも通知するように設定してみます。slackへのユーザ登録は出来ている前提で、手順を記載します。&lt;/p&gt;
+
+&lt;p&gt;Slackの「Configure Integrations」で「Integration」の設定画面に行き、「Incoming Webhooks」を追加します。ここで生成されるTOKEN文字列をコピーしておきます。（左側のno「REGENERATE TOKEN」ボタンの上側に出ている文字列です）&lt;/p&gt;
+
+&lt;p&gt;次にerrbitのアプリ設定画面の「NOTIFICATION SERVICE」のところで、「SLACK」を選び、「SUBDOMAIN」「TOKEN」「ROOM」を指定します。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5576/15080685530_2f863d1c20.jpg&quot; alt=&quot;errbit-slack&quot;&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;SUBDOMAIN: 自分が使っているチャット画面の「[subdomain].slack.com」の「[subdomain]」の部分を指定&lt;/li&gt;
+&lt;li&gt;TOKEN: 先ほどの生成した文字列&lt;/li&gt;
+&lt;li&gt;ROOM: 通知したいCHANNELを指定&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;設定後にもう一度、&lt;code&gt;bundle exec rake airbrake:test&lt;/code&gt;すると、slackへのエラー通知が確認出来ます。&lt;/p&gt;
+
+&lt;p&gt;この手順でerrbitを構築して開発サーバ等に仕込んでおけば、開発時のバグ消化などがスムーズにできるのでは無いかなと思いました。（もちろん、本番環境のエラー管理にも利用すべきですが）&lt;/p&gt;
+
+&lt;p&gt;以上。。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 17 Sep 2014 22:20:51 +0900</pubDate>
+        <link>http://takemikami.com/2014/09/17/RailsHerokuerrbit.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/09/17/RailsHerokuerrbit.html</guid>
+        
+        <category>heroku</category>
+        
+        <category>errbit</category>
+        
+        <category>rails</category>
+        
+        <category>slack</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>blog用にjekyllを設定したメモ</title>
@@ -1042,121 +1179,6 @@ Oracle版JDKがセットアップ済みのCentOSの環境が用意されてい�
         <category>infobright</category>
         
         <category>pentaho</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>Oracle版JDKをchef-soloを使ってセットアップする方法</title>
-        <description>&lt;p&gt;chef-soloを使ってOracle版Javaのセットアップしようとしても、&lt;br&gt;
-Oracleのサイトから利用規約に合意して、&lt;br&gt;
-JDKをダウンロードという手順を踏む必要があるので、&lt;br&gt;
-そのままでは、自動化することが出来ません。  &lt;/p&gt;
-
-&lt;p&gt;そこで、以下の２つの方法を考えました、&lt;br&gt;
-①社内用のyumリポジトリを用意して、ダウンロードしたJDKのrpmを配置&lt;br&gt;
-　社内用yumリポジトリからchefでセットアップする&lt;br&gt;
-②chefのcookbookの中に、ダウンロードしたJDKのrpmを配置&lt;br&gt;
-　cookbookの中のrpmを使ってセットアップする  &lt;/p&gt;
-
-&lt;p&gt;①の方法が素直ですが、&lt;br&gt;
-小規模な場合は社内用yumリポジトリを作るのも面倒なので、&lt;br&gt;
-ここでは②の方法でOracle版JDKをセットアップします。  &lt;/p&gt;
-
-&lt;p&gt;rpmが含まれていないOracle版JDK用セットアップ用のcookbookを、&lt;br&gt;
-githubに作ったので、これをcloneして作業を進めます。&lt;br&gt;
-　&lt;a href=&quot;https://github.com/takemikami/chef-oraclejdk&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chef-oraclejdk&quot;&gt;https://github.com/takemikami/chef-oraclejdk&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
-
-&lt;h1&gt;Knife Soloのインストール&lt;/h1&gt;
-
-&lt;p&gt;管理用のマシンで、&lt;br&gt;
-以下のコマンドから、Knife Soloの作業用ディレクトリを作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ~/jdksetup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;作業用ディレクトリに以下ファイルを作成します。  &lt;/p&gt;
-
-&lt;p&gt;Gemfile  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chef&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;knife-solo&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、KnifeSoloをインストールします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vendor/bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、knifeのディレクトリ構成を作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo init .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここまでで、以下のような構成になります。&lt;br&gt;
-　+ Gemfile&lt;br&gt;
-　+ Gemfile.lock&lt;br&gt;
-　+ cookbooks&lt;br&gt;
-　+ data_bags&lt;br&gt;
-　+ environments&lt;br&gt;
-　+ nodes&lt;br&gt;
-　+ roles&lt;br&gt;
-　+ site-cookbooks&lt;br&gt;
-　+ vendor  &lt;/p&gt;
-
-&lt;h1&gt;Oracle版JDK用セットアップ用のcookbookの作成&lt;/h1&gt;
-
-&lt;p&gt;以下のサイトからJavaSDKをダウンロードします。  &lt;/p&gt;
-
-&lt;p&gt;Java SE Downloads&lt;br&gt;
-　&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;&lt;a href=&quot;http://www.oracle.com/technetwork/java/javase/downloads/index.html&quot;&gt;http://www.oracle.com/technetwork/java/javase/downloads/index.html&lt;/a&gt;&lt;/a&gt;&lt;br&gt;
-ファイル名：jdk-7u25-linux-x64.rpm (Linux x64の場合)  &lt;/p&gt;
-
-&lt;p&gt;以下のコマンドで、&lt;br&gt;
-Oracle版JDK用セットアップ用のcookbook雛形をcloneする。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/jdksetup/cookbooks
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git clone git@github.com:takemikami/chef-oraclejdk.git oraclejdk
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ダウンロードしたrpmを、&lt;br&gt;
-「~/jdksetup/cookbooks/oraclejdk/files/default/」以下にコピーする。  &lt;/p&gt;
-
-&lt;h1&gt;Oracle版JDKセットアップ用のcookbookを適用&lt;/h1&gt;
-
-&lt;p&gt;knife-soloで接続できるCentOSの環境が用意されているとして、&lt;br&gt;
-以下のコマンドで、knifeの環境を準備します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/jdksetup/
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo prepare &amp;lt;接続先マシン名&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のファイルに適用時の設定（JDKのバージョン）を追記します。  &lt;/p&gt;
-
-&lt;p&gt;nodes/&amp;lt;接続先マシン名&amp;gt;.json  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{
-&amp;quot;run_list&amp;quot;:[&amp;quot;recipe[oraclejdk]&amp;quot;],
-&amp;quot;default_attributes&amp;quot;: {
-&amp;quot;oraclejdk&amp;quot;: {
-&amp;quot;version&amp;quot;: &amp;quot;7u25&amp;quot;
-}
-}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、knifeでcookbookを適用をします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo cook &amp;lt;接続先マシン名&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;セットアップ確認&lt;/h1&gt;
-
-&lt;p&gt;以下のコマンドで、&lt;br&gt;
-JDKをセットアップしたマシンに、JDKがセットアップされている事を確認します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &amp;lt;接続先マシン名&amp;gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;java -version
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここまででOracle版JDKのセットアップは完了です。  &lt;/p&gt;
-
-&lt;p&gt;この手順で作成した（rpmが含まれた）「oraclejdk」を、&lt;br&gt;
-社内のgitリポジトリなどにおいて管理しておけば、&lt;br&gt;
-以後、Oracle版JDKが必要なマシンをchefでセットアップするのが楽になると思います。  &lt;/p&gt;
-</description>
-        <pubDate>Tue, 03 Jun 2014 20:20:32 +0900</pubDate>
-        <link>http://takemikami.com/archives/1478</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1478</guid>
-        
-        <category>chef</category>
-        
-        <category>jdk</category>
         
         
         <category>it技術</category>
