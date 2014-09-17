@@ -6,8 +6,8 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Sep 2014 05:37:09 +0900</pubDate>
-    <lastBuildDate>Thu, 18 Sep 2014 05:37:09 +0900</lastBuildDate>
+    <pubDate>Thu, 18 Sep 2014 05:45:51 +0900</pubDate>
+    <lastBuildDate>Thu, 18 Sep 2014 05:45:51 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -61,9 +61,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;この状態で、&lt;code&gt;bundle exec rails s&lt;/code&gt;で起動して&lt;code&gt;http://localhost:3000/&lt;/code&gt;にアクセスすると、商品等何も無い状態のページが表示出来ます。&lt;/p&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;画面&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5566/15084575120_5c5ef0d604.jpg&quot; alt=&quot;spree-plain&quot;&gt;&lt;/p&gt;
 
 &lt;p&gt;※この手順では実施しませんが、以下を入力するとサンプルデータを投入できます。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle exec rake db:seed
@@ -143,9 +141,7 @@ $color-ste-error-text:         #6788A2 !default;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;再び&lt;code&gt;http://localhost:3000/admin&lt;/code&gt;にアクセスすると、管理画面が出てきました。&lt;/p&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;画面&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5580/15084575300_95d10ef70f.jpg&quot; alt=&quot;spree-admin&quot;&gt;&lt;/p&gt;
 
 &lt;h1&gt;国際化モジュール(spree_i18n)のインストール&lt;/h1&gt;
 
@@ -161,9 +157,7 @@ $color-ste-error-text:         #6788A2 !default;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;管理画面も日本語になりました。（※railsの再起動必要です）&lt;/p&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;画面&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;https://farm4.staticflickr.com/3900/15270893312_463b3e763c.jpg&quot; alt=&quot;spree-adminjp&quot;&gt;&lt;/p&gt;
 
 &lt;h1&gt;商品の作成&lt;/h1&gt;
 
