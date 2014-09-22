@@ -225,7 +225,7 @@ buffer_path /var/log/td-agent/buffer/nginx-access
 <p>レシピに、先ほどのテンプレートを適用する処理を追記します。<br>
 # td_agentのレシピを適用すると設定ファイルをデフォルトに戻してしまうので、<br>
 # ここでは、fluentd未インストール時のみ適用するようにしています。<br>
-# もっとエレガントなやり方があるような気がしますが、、    </p>
+# もっとエレガントなやり方があるような気がしますが、、  </p>
 
 <p>site-cookbooks/mycookbook/recipes/default.rb  </p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">include_recipe</span> <span class="s2">&quot;nginx&quot;</span>

@@ -140,7 +140,7 @@ Amazon EC2 Instance Store<br>
 「+Add」ボタンを押すとインスタンスにEphemeral Diskを追加します。<br>
 # インスタンスタイプ「m1.small」で試していて、<br>
 # 管理画面上では４台追加できてしまい、<br>
-# 「？」と思ってたのですが、起動して確認すると１台でしたww    </p>
+# 「？」と思ってたのですが、起動して確認すると１台でしたww  </p>
 
 <p>ここからの手順は、CentOS6.4で実施したものです。  </p>
 
@@ -151,7 +151,7 @@ SSHでログインし、以下のコマンドでデバイスを確認します�
 brw-rw----.  <span class="m">1</span> root disk    202,  <span class="m">80</span> 2013-09-26 04:11 xvdf
 ※省略※
 </code></pre></div>
-<p># sdbに追加した場合です。    </p>
+<p># sdbに追加した場合です。  </p>
 
 <p>以下のコマンドで、ストレージをフォーマットします。  </p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>sudo mkfs.ext4 /dev/xvdf

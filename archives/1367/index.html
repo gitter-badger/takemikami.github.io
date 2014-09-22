@@ -113,7 +113,7 @@
 
 <p>ちなみに、Vagrantとは、ざっくり言うと、<br>
 VirtualBoxをコントロールして便利に開発用の環境を構築するためのツールです。<br>
-# バージョン1.1以降はVirtualBox以外(VMwareとか)も使えるようになっています。    </p>
+# バージョン1.1以降はVirtualBox以外(VMwareとか)も使えるようになっています。  </p>
 
 <p>以前はChef Soloのみを使って構築していたのですが、<br>
 気づけば、世の中便利になっていたので、今回はKnife SoloとBerkshelfも使ってみました。  </p>
@@ -212,7 +212,7 @@ Vagrant version 1.2.7
 + vendor  </p>
 
 <p>ひとまず、このディレクトリ構成をgitにcommitしておきます。<br>
-# .gitignoreに「/vendor/」を追加しておいた方がよいです。    </p>
+# .gitignoreに「/vendor/」を追加しておいた方がよいです。  </p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>git init
 <span class="nv">$ </span>git add .
 <span class="nv">$ </span>git commit -a -m <span class="s2">&quot;initial commit&quot;</span>
@@ -226,7 +226,7 @@ Vagrant version 1.2.7
 ここではCentOS6.4 64bitをベースとして使用しています。<br>
 # 利用可能なBoxのリストが、以下のサイトに掲載されています。<br>
 # Vagrantbox.es<br>
-# 　<a href="http://www.vagrantbox.es">http://www.vagrantbox.es</a>    </p>
+# 　<a href="http://www.vagrantbox.es">http://www.vagrantbox.es</a>  </p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vagrant box add CentOS64_x64 http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box
 </code></pre></div>
 <p>以下のコマンドで、Vagrantfileを作成します。  </p>
@@ -242,7 +242,7 @@ Vagrant version 1.2.7
 <span class="k">end</span>
 </code></pre></div>
 <p>以下のコマンドで、仮想マシンの起動及びChefレシピの適用を行います。<br>
-# 仮想マシンの起動やChefレシピ適用のログが出力されます。    </p>
+# 仮想マシンの起動やChefレシピ適用のログが出力されます。  </p>
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>vagrant up
 </code></pre></div>
 <p>以下のコマンドで、仮想マシンにsshで接続します。  </p>

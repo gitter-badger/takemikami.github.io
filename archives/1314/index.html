@@ -200,7 +200,7 @@
 
 <p># このページの流れの大部分はこの記事と同じです。<br>
 # 説明を省いているので、不明なところはこちらの記事も参照してください。<br>
-# 　<a href="http://takemikami.com/technote/archives/653"><a href="http://takemikami.com/technote/archives/653">http://takemikami.com/technote/archives/653</a></a>    </p>
+# 　<a href="http://takemikami.com/technote/archives/653"><a href="http://takemikami.com/technote/archives/653">http://takemikami.com/technote/archives/653</a></a>  </p>
 
 <h2>Railsのインストール</h2>
 
@@ -360,9 +360,9 @@ X-Ua-Compatible: <span class="nv">IE</span><span class="o">=</span><span class="
 
 <p>「/etc/nginx/conf.d/default.conf」を以下のとおり編集し、
 railsアプリのフロントにnginxを設置します。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">\#    
-\# The default server    
-\#    
+<div class="highlight"><pre><code class="language-text" data-lang="text">\#  
+\# The default server  
+\#  
 upstream rails_app {  
 server 127.0.0.1:3000;  
 }  
@@ -372,8 +372,8 @@ server_name  _;
 
 location / {  
 proxy_pass http://rails_app/;  
-\#        root   /usr/share/nginx/html;    
-\#        index  index.html index.htm;    
+\#        root   /usr/share/nginx/html;  
+\#        index  index.html index.htm;  
 }  
 
 error_page  404              /404.html;  
@@ -381,8 +381,8 @@ location = /404.html {
 root   /usr/share/nginx/html;  
 }  
 
-\# redirect server error pages to the static page /50x.html    
-\#    
+\# redirect server error pages to the static page /50x.html  
+\#  
 error_page   500 502 503 504  /50x.html;  
 location = /50x.html {  
 root   /usr/share/nginx/html;  
@@ -411,9 +411,9 @@ nginxで詳細ログを出力するように設定します。
 ③詳細ログを出力
 　→log_format detail_accesslog .....
 　　access_log /var/log/nginx/detail_access.log detail_accesslog;</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">\#    
-\# The default server    
-\#    
+<div class="highlight"><pre><code class="language-text" data-lang="text">\#  
+\# The default server  
+\#  
 upstream rails_app {  
 server 127.0.0.1:3000;  
 }  
@@ -423,8 +423,8 @@ server_name  _;
 
 location / {  
 proxy_pass http://rails_app/;  
-\#        root   /usr/share/nginx/html;    
-\#        index  index.html index.htm;    
+\#        root   /usr/share/nginx/html;  
+\#        index  index.html index.htm;  
 }  
 
 error_page  404              /404.html;  
@@ -432,8 +432,8 @@ location = /404.html {
 root   /usr/share/nginx/html;  
 }  
 
-\# redirect server error pages to the static page /50x.html    
-\#    
+\# redirect server error pages to the static page /50x.html  
+\#  
 error_page   500 502 503 504  /50x.html;  
 location = /50x.html {  
 root   /usr/share/nginx/html;  

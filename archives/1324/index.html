@@ -120,7 +120,7 @@
 また、chefのcookbookはS3上に配置することにします。<br>
 # cookbookをgitサーバを立てて配置してもよいのですが、<br>
 # 構築する環境によっては、gitサーバの冗長化なども考える必要があるので、<br>
-# S3に配置した方が構成がすっきりするのではないかと思います（個人的に）。    </p>
+# S3に配置した方が構成がすっきりするのではないかと思います（個人的に）。  </p>
 
 <p>インスタンス起動すると、<br>
 自動的に次のプロセスが実行されるようなAMIを作ります。<br>
@@ -402,7 +402,7 @@ rc.localに以下を追記して、サーバ起動後に自動的にレシピを
 <div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ps -ef  <span class="p">|</span> grep httpd
 </code></pre></div>
 <p>とすると、httpdが起動しているのが確認できます。<br>
-# 上手くいかない場合は「/var/log/execute-chef.log」を見て原因を確認。    </p>
+# 上手くいかない場合は「/var/log/execute-chef.log」を見て原因を確認。  </p>
 
 <p>このような流れで、レシピを作成し・S3に登録していけば、<br>
 一つのAMIから様々な役割のサーバを自動的に構築することが出来ます。  </p>

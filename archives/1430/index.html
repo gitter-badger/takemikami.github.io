@@ -158,7 +158,7 @@ KnifeSolo+Berkshelfの環境があることを前提に手順を示します。<
 <span class="n">depends</span>          <span class="s1">&#39;iptables&#39;</span>
 </code></pre></div>
 <p>解放するポート用のテンプレートファイル(SSH用とHTTP用)を作成します。<br>
-# /etc/sysconfig/iptables　に記載する内容の一部になります    </p>
+# /etc/sysconfig/iptables　に記載する内容の一部になります  </p>
 
 <p>site-cookbooks/mycookbook/templates/default/ssh.erb  </p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="c1"># Port 22 for ssh</span>
@@ -193,7 +193,7 @@ Chef Client finished, <span class="m">30</span> resources updated
 </code></pre></div>
 <p>適用が終わったら、ブラウザで対象ホストにアクセスして<br>
 「Welcome to nginx on EPEL!」が表示されることを確認します。<br>
-# curlとか、でもいいですが    </p>
+# curlとか、でもいいですが  </p>
 
 <h1>iptablesのCookbookが何をやっているか？</h1>
 
@@ -237,7 +237,7 @@ all_established, all_icmp, http, ssh　というファイルがあります。<b
 <p>ここからレシピ適用時には、以下の処理が流れていることが想像できます。<br>
 1. /etc/iptables.d に定義のパーツを作成<br>
 2. パーツを元に/etc/sysconfig/iptablesを再生成<br>
-# 2の実体は、/usr/sbin/rebuild-iptablesというスクリプト    </p>
+# 2の実体は、/usr/sbin/rebuild-iptablesというスクリプト  </p>
 
 <p>うまく設定できない場合などは、<br>
 このあたりのファイルがどうなっているかなどを追ってみると良いかと思います。  </p>

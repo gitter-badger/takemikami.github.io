@@ -6,8 +6,8 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Sep 2014 05:45:51 +0900</pubDate>
-    <lastBuildDate>Thu, 18 Sep 2014 05:45:51 +0900</lastBuildDate>
+    <pubDate>Tue, 23 Sep 2014 01:38:55 +0900</pubDate>
+    <lastBuildDate>Tue, 23 Sep 2014 01:38:55 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -982,7 +982,7 @@ var pusher = new Pusher(&amp;#39;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/
 
 &lt;p&gt;まず、nodeのversion管理ツールとしてnodebrewをインストールします。&lt;br&gt;
 # 世間にはいくつかnodeのversion管理ツールがあるようですが、&lt;br&gt;
-# なんとなくactiveっぽいので、ここではnodebrewを選びました。    &lt;/p&gt;
+# なんとなくactiveっぽいので、ここではnodebrewを選びました。  &lt;/p&gt;
 
 &lt;p&gt;nodebrew:&lt;br&gt;
 &lt;a href=&quot;https://github.com/hokaccha/nodebrew&quot;&gt;&lt;a href=&quot;https://github.com/hokaccha/nodebrew&quot;&gt;https://github.com/hokaccha/nodebrew&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
@@ -1010,11 +1010,11 @@ var pusher = new Pusher(&amp;#39;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/
 &lt;p&gt;表示されたバージョンの中から、インストールしたいバージョンを指定して、&lt;br&gt;
 nodeのインストールを実行。&lt;br&gt;
 ここでは、最新の「v0.11.13」を指定します。&lt;br&gt;
-# しばらく時間がかかります。    &lt;/p&gt;
+# しばらく時間がかかります。  &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew install v0.11.13
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以下のコマンドでインストールされたことを確認。&lt;br&gt;
-# インストールしたnodeのバージョンが表示されるはずです。    &lt;/p&gt;
+# インストールしたnodeのバージョンが表示されるはずです。  &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew list
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以下のコマンドで、利用するnodeのバージョンを指定します。  &lt;/p&gt;
@@ -1067,7 +1067,7 @@ nodeのインストールを実行。&lt;br&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15027881561&quot; title=&quot;View &#39;angularjs01&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;324&quot; title=&quot;angularjs01&quot; alt=&quot;angularjs01&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5581/15027881561_c81342553f.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;# 本番はここからですけどね    &lt;/p&gt;
+&lt;p&gt;# 本番はここからですけどね  &lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Aug 2014 21:42:57 +0900</pubDate>
         <link>http://takemikami.com/archives/1516</link>
@@ -1133,11 +1133,11 @@ To &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;shims and autocompletion
 &lt;p&gt;表示されたバージョンの中から、インストールしたいバージョンを指定して、&lt;br&gt;
 rubyのインストールを実行。&lt;br&gt;
 ここでは、「2.1.2」を指定します。&lt;br&gt;
-# しばらく時間がかかります。    &lt;/p&gt;
+# しばらく時間がかかります。  &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv install 2.1.2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以下のコマンドでインストールされたことを確認。&lt;br&gt;
-# インストールしたrubyのバージョンが表示されるはずです。    &lt;/p&gt;
+# インストールしたrubyのバージョンが表示されるはずです。  &lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv versions
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以下のコマンドで、利用するrubyのバージョンを指定します。  &lt;/p&gt;
