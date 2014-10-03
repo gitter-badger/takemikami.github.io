@@ -6,9 +6,148 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 24 Sep 2014 03:48:52 +0900</pubDate>
-    <lastBuildDate>Wed, 24 Sep 2014 03:48:52 +0900</lastBuildDate>
+    <pubDate>Fri, 03 Oct 2014 23:55:13 +0900</pubDate>
+    <lastBuildDate>Fri, 03 Oct 2014 23:55:13 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>WebRTC Meetup Tokyo #4 に行ってきました</title>
+        <description>&lt;p&gt;10/3(金)に、WebRTC Meetup Tokyo #4 に行ってきました。&lt;br&gt;
+　&lt;a href=&quot;http://peatix.com/event/51641&quot;&gt;http://peatix.com/event/51641&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ということで、個人的なメモと思ったことをまとめます。&lt;/p&gt;
+
+&lt;p&gt;ちなみに、WebRTC Meetup Tokyoとは、
+WebRTCを流行らせてたくて仕方が無い人たちの勉強会です(^_^)&lt;/p&gt;
+
+&lt;p&gt;今回は、21Cafeというイベントスペースで開催でした。&lt;br&gt;
+　&lt;a href=&quot;http://www.ni-ichicafe.com&quot;&gt;http://www.ni-ichicafe.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;次回は12月開催予定とのことです。&lt;/p&gt;
+
+&lt;h1&gt;ortcの仕様を読む！（Tukimikageさん）&lt;/h1&gt;
+
+&lt;p&gt;&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/39837629&quot; width=&quot;427&quot; height=&quot;356&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;https://www.slideshare.net/yusukenaka52/ortc-39837629&quot; title=&quot;ORTCの仕様書をざっくり斜め読みする&quot; target=&quot;_blank&quot;&gt;ORTCの仕様書をざっくり斜め読みする&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&quot;http://www.slideshare.net/yusukenaka52&quot; target=&quot;_blank&quot;&gt;Yusuke NAKA&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
+
+&lt;h2&gt;ObjectRTCとは&lt;/h2&gt;
+
+&lt;p&gt;ORTCとは、WebRTCと同様のブラウザ上でP2P通信を行う仕様。
+Microsoft, Google, TokBoxなどが仕様策定に関わっているようで、
+今後、WebRTC2.0で統合する方向で検討されているとのことです。&lt;/p&gt;
+
+&lt;p&gt;今後、IEに実装されるかどうか分からないが。既に、IEで動くリファレンスコードはある様子。&lt;/p&gt;
+
+&lt;h2&gt;仕様&lt;/h2&gt;
+
+&lt;p&gt;オブジェクトごとに、&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;RTCDtlsTransport ... DTLSによるデータ転送を司るオブジェクト&lt;/li&gt;
+&lt;li&gt;RTCIceTransport ... ICEで相互コネクションを確立するオブジェクト&lt;/li&gt;
+&lt;li&gt;RTCIceTransportController ... 帯域幅の推定の共有を行うオブジェクト？&lt;/li&gt;
+&lt;li&gt;RTCIceListner ... ローカルのICE候補を取得するためのイベントリスナー&lt;/li&gt;
+&lt;li&gt;RTCRtpSender ... MediaStreamの送信、停止を行うオブジェクト&lt;/li&gt;
+&lt;li&gt;RTCRtpReciever ... MediaStreamの受信、停止を行うオブジェクト&lt;/li&gt;
+&lt;li&gt;RTCRtpListener ... DTLSから送信されたDTPパケットを受信するオブジェクト&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;現状のWebRTCでは、STPを書き換えてCODEC変更を実装をすることが多いが、
+そういうことをしなくて良いように、CODEC関連のユーティリティが定義されています。&lt;/p&gt;
+
+&lt;h2&gt;その他&lt;/h2&gt;
+
+&lt;p&gt;ObjectRTCには、モバイル開発用ライブラリ「ortclib」、Node.js用のサーバコードなどもあります。&lt;/p&gt;
+
+&lt;h1&gt;WebRTC+WebGLで切り拓く新技術「WebAR」(m_mitsuhideさん)&lt;/h1&gt;
+
+&lt;p&gt;WrbRTC的には、ここに載っている事をやっているだけとのこと。
+&lt;a href=&quot;http://techracho.bpsinc.jp/skk/2014_05_26/17630&quot;&gt;http://techracho.bpsinc.jp/skk/2014_05_26/17630&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;本題は、jthreeというWebGLのライブラリの話。&lt;br&gt;
+&lt;a href=&quot;http://jthree.jp&quot;&gt;http://jthree.jp&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以下のエディタ画面を開いて、右側の再生ボタンからを押すとブラウザ上で3Dのモデルが動き、会場ではハンズオンという形で、ARタグを読んで初音ミクを踊らせるデモを作成。&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/&quot;&gt;http://editor.jthree.jp/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ARタグを読み込むと初音ミクが踊るというデモはこちらから。&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/?id=N0a5sg&quot;&gt;http://editor.jthree.jp/?id=N0a5sg&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;マーカーはこちら。&lt;br&gt;
+&lt;a href=&quot;http://jthree.jp/marker/&quot;&gt;http://jthree.jp/marker/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;WebGLって難しそうなイメージがあったので、こんな簡単に作れてしまう事に驚きました。&lt;/p&gt;
+
+&lt;h1&gt;WebRTC＋αで無理矢理やってみた×3（Massie_Gさん）&lt;/h1&gt;
+
+&lt;p&gt;&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/39820073&quot; width=&quot;427&quot; height=&quot;356&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;https://www.slideshare.net/mganeko/webrtc-meetup4-lt&quot; title=&quot;WebRTC ＋αで無理やりやってみた×3 WebRTC Meetup Tokyo 4&quot; target=&quot;_blank&quot;&gt;WebRTC ＋αで無理やりやってみた×3 WebRTC Meetup Tokyo 4&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&quot;http://www.slideshare.net/mganeko&quot; target=&quot;_blank&quot;&gt;mganeko&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;いろいろな事を無理矢理やりましたというお話。&lt;/p&gt;
+
+&lt;p&gt;フルメッシュになるのを避けるために、会議参加者の画像を集めたPCを用意して集約したPCを用意して、その画面をキャプチャして、各PCに送るという方法を行ってみたケースはかなりカオス。まねせずに、MCUを使いましょうと言うお話でした。&lt;/p&gt;
+
+&lt;h1&gt;ち〜ん（仮）（D.F.Macさん）&lt;/h1&gt;
+
+&lt;p&gt;&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/39838345&quot; width=&quot;427&quot; height=&quot;356&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;https://www.slideshare.net/tadfmac/ss-39838345&quot; title=&quot;ち〜ん&quot; target=&quot;_blank&quot;&gt;ち〜ん&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&quot;http://www.slideshare.net/tadfmac&quot; target=&quot;_blank&quot;&gt;tadfmac&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;プロトコルをは単純な方がいいよね、っていう話。と、skyway最高！っていうお話。&lt;/p&gt;
+
+&lt;h1&gt;OpentokでWebRTC簡単実装（末永 昌也さん）&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://speakerdeck.com/sue738/sutatoatupudefalsewebrtcdao-ru-number-webrtcjp&quot;&gt;https://speakerdeck.com/sue738/sutatoatupudefalsewebrtcdao-ru-number-webrtcjp&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;WebRTC自前で実装はいろいろ頑張ったら出来るけど、スタートアップ企業は、クラウドサービス使うのもありだよって言うお話。&lt;/p&gt;
+
+&lt;h1&gt;オープンソースMCUを試してみた（tonofoさん）&lt;/h1&gt;
+
+&lt;p&gt;以下の３つのオープンソースMCUについての比較のお話。比較点をきちんと整理された資料でお話して頂きましたが、残念ながら資料は公開難しそうという話でした。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Janus&lt;/li&gt;
+&lt;li&gt;Licode&lt;/li&gt;
+&lt;li&gt;Jitsi VideoBridge&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;MCUの対応方法としては、以下の２種類があります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;MCUと各クライアント間の上り下りを一本化する方法&lt;/li&gt;
+&lt;li&gt;MCUと各クライアント間の上りのみを一本化する方法&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;上り一本化のみを行う意味あいとしては、以下のような事があります。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;上り下り両方を一本化するとMCUが高負荷になる&lt;/li&gt;
+&lt;li&gt;一般的なWAN回線の場合は、上りが遅いことが多いので上りの一本化の方がメリットが大きい&lt;/li&gt;
+&lt;li&gt;端末にとっては、下りよりも上りの処理の方が負荷が大きい&lt;/li&gt;
+&lt;li&gt;下りを一本化すると画面レイアウトの自由度が下がる&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;オープンソース実装をいろいろ比較したが、今のところは「Lincode」が無難かなという話でした。&lt;/p&gt;
+
+&lt;p&gt;MCUを置くなら、ホワイトクラウド仮想サーバが条件良さそうと言う話でした。
+&lt;a href=&quot;http://tm.softbank.jp/cloud/iaas/virtual_server/&quot;&gt;http://tm.softbank.jp/cloud/iaas/virtual_server/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;WebRTCでECサイトに仮想試着を実装してみた(uturistさん)&lt;/h1&gt;
+
+&lt;p&gt;GetUserMediaのカメラ使って自分の画像を撮影して、
+服の画像と組み合わせて試着できるサイトのお話。
+PCのカメラで上手く撮影するのが難しいから、セルフタイマー的な機能を持たせていたのが印象的でした。&lt;/p&gt;
+
+&lt;h1&gt;知っとくと得するかもしれないconstraintsたち（かえるさん）&lt;/h1&gt;
+
+&lt;p&gt;&lt;iframe src=&quot;//www.slideshare.net/slideshow/embed_code/39836033&quot; width=&quot;427&quot; height=&quot;356&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; style=&quot;border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;&quot; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&quot;margin-bottom:5px&quot;&gt; &lt;strong&gt; &lt;a href=&quot;https://www.slideshare.net/KensakuKOMATSU/constraints-39836033&quot; title=&quot;知ってると得するかもしれないConstraintsたち&quot; target=&quot;_blank&quot;&gt;知ってると得するかもしれないConstraintsたち&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&quot;http://www.slideshare.net/KensakuKOMATSU&quot; target=&quot;_blank&quot;&gt;Kensaku Komatsu&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/p&gt;
+
+&lt;p&gt;設定すればWebRTCでDSCPやIPV6を利用できるという誰得な話題。ネットワーク周りの話なのでアプリケーションの見た目にすぐに大きな変化があるわけでは無いけれど、いろいろとメリット考えられるかもよということでした。&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Oct 2014 23:51:12 +0900</pubDate>
+        <link>http://takemikami.com/2014/10/03/webrtcmeetup4.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/10/03/webrtcmeetup4.html</guid>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>Rails製ECサイトのSpreeCommerceをインストールしてみた手順</title>
@@ -1290,106 +1429,6 @@ rbenv管理下のコマンドにパスが通るようにしておきます。  &
         
         
         <category>日記</category>
-        
-      </item>
-    
-      <item>
-        <title>chef-soloを使ってRstudioServerをセットアップする手順</title>
-        <description>&lt;p&gt;CentOS6にchef-soloを使って、&lt;br&gt;
-RStudioServerをセットアップする手順を示します。  &lt;/p&gt;
-
-&lt;p&gt;RStudioServerセットアップの手順は簡単ですが、&lt;br&gt;
-処理するデータ量が増えた時の、サーバ増強・増設を考えると、&lt;br&gt;
-自動化しておいた方がいいような気がしたので、&lt;br&gt;
-chefのcookbookにしておきました。  &lt;/p&gt;
-
-&lt;p&gt;このエントリで使用するchefのcookbookは、私のgithubにおいています。&lt;br&gt;
-　&lt;a href=&quot;https://github.com/takemikami/chef-rstudio&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chef-rstudio&quot;&gt;https://github.com/takemikami/chef-rstudio&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
-
-&lt;p&gt;RStudio自体については、以下の公式サイトをご覧下さい。  &lt;/p&gt;
-
-&lt;p&gt;RStduio&lt;br&gt;
-　&lt;a href=&quot;https://www.rstudio.com/&quot;&gt;&lt;a href=&quot;https://www.rstudio.com/&quot;&gt;https://www.rstudio.com/&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
-
-&lt;h1&gt;Knife/Berkshelfのインストール&lt;/h1&gt;
-
-&lt;p&gt;管理用のマシンで、&lt;br&gt;
-以下のコマンドから、Knife Soloの作業用ディレクトリを作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ~/rstudiosetup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;作業用ディレクトリに以下ファイルを作成します。  &lt;/p&gt;
-
-&lt;p&gt;Gemfile  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chef&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;knife-solo&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;berkshelf&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Berksfile  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;site&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:opscode&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;cookbook&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rstudio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;takemikami&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chef&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rstudio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、KnifeSoloをインストールします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/rstudiosetup
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;vendor/bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、knifeのディレクトリ構成を作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo init .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、githubからrstudioのcookbookを取得します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;berks vendor cookbooks/
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;RstudioServerのセットアップ用cookbookを適用&lt;/h1&gt;
-
-&lt;p&gt;knife-soloで接続できるCentOSの環境が用意されているとして、&lt;br&gt;
-以下のコマンドで、knifeの環境を準備します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; ~/pentahosetup
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo prepare &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;lt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;接続先マシン名&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;gt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のファイルに適用時の設定を追記します。  &lt;/p&gt;
-
-&lt;p&gt;nodes/&amp;lt;接続先マシン名&amp;gt;.json  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;{&amp;amp;quot;run_list&amp;amp;quot;:[&amp;amp;quot;recipe[rstudio::server]&amp;amp;quot;]}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、knifeでcookbookを適用をします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;knife solo cook &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;lt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;接続先マシン名&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;gt&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここまでで、RStudioServerのセットアップが完了です。  &lt;/p&gt;
-
-&lt;p&gt;上記手順以外に、&lt;br&gt;
-RstudioServerは、TCPポート8787でサービスを提供するので、&lt;br&gt;
-クライアントからTCPポート8787でアクセス出来るようにしておく必要があります。  &lt;/p&gt;
-
-&lt;p&gt;ブラウザから「http://&amp;lt;接続先マシン名&amp;gt;:8787/」にアクセスすると以下のような&lt;br&gt;
-ログイン画面が表示されます。  &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/62769571@N03/14315616396&quot; title=&quot;View &#39;chef-rstudio1&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;260&quot; title=&quot;chef-rstudio1&quot; alt=&quot;chef-rstudio1&quot; border=&quot;0&quot; src=&quot;https://farm4.staticflickr.com/3878/14315616396_74b9655490.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;サーバ上のユーザ（UNIXのユーザ）を指定してログインすると、&lt;br&gt;
-以下のような画面が表示され、Rの機能を利用することができます。  &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/62769571@N03/14358946083&quot; title=&quot;View &#39;chef-rstudio2&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;322&quot; title=&quot;chef-rstudio2&quot; alt=&quot;chef-rstudio2&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5153/14358946083_7d8333a136.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;参考にした記事&lt;/h1&gt;
-
-&lt;p&gt;RStudioがすごそうなので使ってみた - As a Futurist…&lt;br&gt;
-　&lt;a href=&quot;http://blog.riywo.com/2011/03/05/031831&quot;&gt;&lt;a href=&quot;http://blog.riywo.com/2011/03/05/031831&quot;&gt;http://blog.riywo.com/2011/03/05/031831&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
-
-&lt;p&gt;CentOS 6.2 に R と RStudio Server をインストールする - hiratake55 の開発メモ&lt;br&gt;
-　&lt;a href=&quot;http://d.hatena.ne.jp/hiratake55/20120527/1338091311&quot;&gt;&lt;a href=&quot;http://d.hatena.ne.jp/hiratake55/20120527/1338091311&quot;&gt;http://d.hatena.ne.jp/hiratake55/20120527/1338091311&lt;/a&gt;&lt;/a&gt;  &lt;/p&gt;
-</description>
-        <pubDate>Wed, 04 Jun 2014 02:03:45 +0900</pubDate>
-        <link>http://takemikami.com/archives/1484</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1484</guid>
-        
-        <category>chef</category>
-        
-        <category>r</category>
-        
-        <category>rstudio</category>
-        
-        
-        <category>it技術</category>
         
       </item>
     
