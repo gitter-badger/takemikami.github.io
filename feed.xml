@@ -6,8 +6,8 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 03 Oct 2014 23:55:13 +0900</pubDate>
-    <lastBuildDate>Fri, 03 Oct 2014 23:55:13 +0900</lastBuildDate>
+    <pubDate>Fri, 03 Oct 2014 23:58:14 +0900</pubDate>
+    <lastBuildDate>Fri, 03 Oct 2014 23:58:14 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -143,6 +143,8 @@ PCのカメラで上手く撮影するのが難しいから、セルフタイマ
         <pubDate>Fri, 03 Oct 2014 23:51:12 +0900</pubDate>
         <link>http://takemikami.com/2014/10/03/webrtcmeetup4.html</link>
         <guid isPermaLink="true">http://takemikami.com/2014/10/03/webrtcmeetup4.html</guid>
+        
+        <category>webrtc</category>
         
         
         <category>it技術</category>
