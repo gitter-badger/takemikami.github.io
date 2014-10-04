@@ -8,7 +8,7 @@
 
     <title>Rails3+devise,nginx,fluent,S3構成でのアクセスログ収集と蓄積 | takemikami's note</title>
     
-      <meta name="description" content="ユーザ認証が存在するWebアプリのアクセスログを有効に分析するためには、・Webサーバからアクセスログを集める・Webアプリのユーザとアクセスログを紐付けるの２つを行う必要があります。  この記事では、・Webサーバ： nginx・開発フレームワーク： Ruby on Rails （認証プラグインとしてdevise）・ログ集約： fluentd・ログの格納先： Amazon S3という構成のWebアプリケーションで、「アクセスログの収集と蓄...">
+      <meta name="description" content="ユーザ認証が存在するWebアプリのアクセスログを有効に分析するためには、・Webサーバからアクセスログを集める・Webアプリのユーザとアクセスログを紐付けるの２つを行う必要があります。  この記事では、・Webサーバ： nginx・開発フレームワーク： Ruby on Rails （認証プラグインとしてdevise）・ログ集約： fluentd・ログの格納先： Amazon S3という構成のWebアプリケーションで、「アクセスログの収集と蓄積」...">
     
 
 
@@ -333,9 +333,8 @@ route  get <span class="p">&amp;</span>quot<span class="p">;</span>home/index<sp
 <p>railsアプリからnginxに対してユーザIDの情報を引き渡すため
 HTTPヘッダーにユーザIDの情報を付加します。</p>
 
-<h1>ここで追加したヘッダーはnginxで削除してブラウザに返却するので、</h1>
-
-<h1>ユーザには見えません（インターネット上の経路には流出しません）。</h1>
+<p># ここで追加したヘッダーはnginxで削除してブラウザに返却するので、<br>
+# ユーザには見えません（インターネット上の経路には流出しません）。  </p>
 
 <p>「app/controllers/application_controller.rb」を以下のように編集します。</p>
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">ActionController</span><span class="o">::</span><span class="no">Base</span>  
