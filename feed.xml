@@ -6,9 +6,61 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 03 Oct 2014 23:58:14 +0900</pubDate>
-    <lastBuildDate>Fri, 03 Oct 2014 23:58:14 +0900</lastBuildDate>
+    <pubDate>Sat, 04 Oct 2014 23:48:36 +0900</pubDate>
+    <lastBuildDate>Sat, 04 Oct 2014 23:48:36 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>milkcocoaでWebサービスを作ってみよう！に行ってきました</title>
+        <description>&lt;p&gt;参加前日までmilkcocoaというものを知らなかったのですが、
+10/4(土)にmilkcocoaのイベントに参加してきました。&lt;/p&gt;
+
+&lt;p&gt;milkcocoaでWebサービスを作ってみよう！&lt;br&gt;
+&lt;a href=&quot;http://bd937566c2d179a9bc480c61b1.doorkeeper.jp/events/14805&quot;&gt;http://bd937566c2d179a9bc480c61b1.doorkeeper.jp/events/14805&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;会場は、Samurai Startup Islandというスタートアップを支援するためのスペースでの開催でした。&lt;br&gt;
+&lt;a href=&quot;http://samurai-startupisland.asia&quot;&gt;http://samurai-startupisland.asia&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;milkcocoaの紹介&lt;/h1&gt;
+
+&lt;p&gt;milkcocoaとは、JavaScriptでリアルタイム通信が出来るバックエンドを提供するサービスです。が、サイト見たり、サンプル見たりした方がどのような物かはつかみやすいと思います。&lt;br&gt;
+&lt;a href=&quot;https://mlkcca.com&quot;&gt;https://mlkcca.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;milkcocoaのサンプルコード&lt;br&gt;
+&lt;a href=&quot;http://qiita.com/sgtn/items/86ce5f4fc58490cf5fff&quot;&gt;http://qiita.com/sgtn/items/86ce5f4fc58490cf5fff&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;milkcocoaとjThreeというWebGLのライブラリと組み合わせて、作られたFPSゲームのサンプルですが、ブラウザでこのような物が動いてしまうのが面白いです。&lt;br&gt;
+&lt;a href=&quot;http://jthreefps.mlkcca-app.com/&quot;&gt;http://jthreefps.mlkcca-app.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;作成したWebサービス&lt;/h1&gt;
+
+&lt;p&gt;当日、わたし達が作成したサービスが、ブラウザ間で表示ページ・スクロール位置を同期するデモです。&lt;/p&gt;
+
+&lt;p&gt;ソースコードはこちら&lt;br&gt;
+  &lt;a href=&quot;https://github.com/takemikami/milkcocoa-browsersync-demo&quot;&gt;https://github.com/takemikami/milkcocoa-browsersync-demo&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;デモサイトはこちら&lt;br&gt;
+&lt;a href=&quot;http://takemikami.com/milkcocoa-browsersync-demo/&quot;&gt;http://takemikami.com/milkcocoa-browsersync-demo/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;※説明は、（簡単にですが）ソースコードのREADMEに書いたので、そちらをご覧下さい。&lt;/p&gt;
+
+&lt;h1&gt;感想とか&lt;/h1&gt;
+
+&lt;p&gt;milkcocoaさんのイベントでしたが、半分くらいjThreeのイベントになってました。Webブラウザ上で、リアルタイム通信とW3D処理が融合している動いている様は、お手軽で見たり触ったりしていてとても楽しいなと感じました。&lt;br&gt;
+今回作成したWebサービスではjThreeにまで手が出せなかったので、このあとはjThreeでも遊んでみようと思います。。&lt;/p&gt;
+
+&lt;p&gt;# そもそもこのイベント、jThreeの松田さんに教えて貰って参加したのでww&lt;/p&gt;
+</description>
+        <pubDate>Sat, 04 Oct 2014 12:55:49 +0900</pubDate>
+        <link>http://takemikami.com/2014/10/04/milkcocoa.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/10/04/milkcocoa.html</guid>
+        
+        <category>milkcocoa</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>WebRTC Meetup Tokyo #4 に行ってきました</title>
@@ -1382,52 +1434,6 @@ rbenv管理下のコマンドにパスが通るようにしておきます。  &
         <pubDate>Sun, 22 Jun 2014 02:55:27 +0900</pubDate>
         <link>http://takemikami.com/archives/1492</link>
         <guid isPermaLink="true">http://takemikami.com/archives/1492</guid>
-        
-        
-        <category>日記</category>
-        
-      </item>
-    
-      <item>
-        <title>「期末に予算を消化する」ことに正義はあるか？</title>
-        <description>&lt;p&gt;期末になると道路工事が増える、など
-期末までに残された予算を使い切るということが、
-公共事業や、民間企業でも行われることは多い。&lt;/p&gt;
-
-&lt;p&gt;普通に考えれば、
-緊急性の無い工事や、その時点ですぐに必要では無いものを購入したりなど
-お金の使い道を、わざわざ探して使い切るという行為は合理的ではない。
-こういった行為は、
-割り当てられた予算をきちんと使い切るという実績を作って、
-次の期に、同等の金額の予算割り当てを受けるために行われる。&lt;/p&gt;
-
-&lt;p&gt;毎期、同様の額の予算割り当てを得るために、
-期末に、わざわざお金の使い道を探して使い切る。
-そんな行為は無駄なので、
-余ったお金は繰り越して、本当に必要な時に使うなり、
-もっと必要性が高い部分にお金を回した方が、合理的だと考えるのが普通だ。&lt;/p&gt;
-
-&lt;p&gt;が、ここで少し考えてみる。
-余ったお金を繰り越したり、他にお金を回すという判断を誰がするのだろう？
-毎期ごとに、予算を見直すようになるとすると、
-その判断をする人に、予算に対する権限が極端に集中するリスクがある。
-そのリスクを回避しようとすると、
-客観性の担保のため、予算の妥当性の証明や検証の費用がさらに必要になる。&lt;/p&gt;
-
-&lt;p&gt;そう考えると、
-「期末に予算を消化する」という方法は、
-手放しでベストな方法とは呼べないけれど、
-ある程度は合理性がある方法なのかもしれないなぁと思うようになった。&lt;/p&gt;
-
-&lt;p&gt;学生の頃とかはこんなこと考えなかったけれど、
-実際に、会社などで予算執行されるプロセス見てると、
-単に、キーマンと仲の良い人が要求したら割り当てられるという判断基準も多い。
-公共事業などが、そんなノリで割り当てられるくらいなら、
-毎期、同額の方が、税金の使われ方として、まだ納得だなと思ったりする。&lt;/p&gt;
-</description>
-        <pubDate>Fri, 20 Jun 2014 02:48:43 +0900</pubDate>
-        <link>http://takemikami.com/archives/1490</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1490</guid>
         
         
         <category>日記</category>
