@@ -6,9 +6,111 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 05 Oct 2014 02:01:17 +0900</pubDate>
-    <lastBuildDate>Sun, 05 Oct 2014 02:01:17 +0900</lastBuildDate>
+    <pubDate>Mon, 27 Oct 2014 00:07:02 +0900</pubDate>
+    <lastBuildDate>Mon, 27 Oct 2014 00:07:02 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>jThree Class Tokyo #1 に行ってきました</title>
+        <description>&lt;p&gt;10/26(日)に【たった5時間でWebGLをマスターするjQueryユーザーのための勉強会】jThree Class Tokyo #1 というイベントに行ってきました。&lt;/p&gt;
+
+&lt;p&gt;jThree Class Tokyo #1&lt;br&gt;
+&lt;a href=&quot;http://jthree.doorkeeper.jp/events/16100&quot;&gt;http://jthree.doorkeeper.jp/events/16100&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;会場は、渋谷のmixiさんでした。会場には、モンスト１周年のポスターが貼られていました。&lt;br&gt;
+&lt;img src=&quot;https://farm4.staticflickr.com/3945/15446566398_72a6798612.jpg&quot; alt=&quot;jthree-mixi&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;当日の流れは、jThreeで作った作品の紹介、jThreeの使い方の概要、チーム毎に分かれて実際に作品を作ってみるという流れでした。&lt;/p&gt;
+
+&lt;p&gt;ちなみに次回は、来月(11/22)に開催予定とのことです。&lt;br&gt;
+ &lt;a href=&quot;https://atnd.org/events/58240&quot;&gt;https://atnd.org/events/58240&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;jThreeで作った作品の紹介&lt;/h1&gt;
+
+&lt;p&gt;URLメモをとっていたものだけの紹介になってしまいますが、jThreeを使うと、次のような作品がthree.jsよりも簡潔なプログラムで作成することが出来るという紹介がありました。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;「Tell Your World」を踊る初音ミクの周りに立方体を回転させる&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/?id=KcYnng&quot;&gt;http://editor.jthree.jp/?id=KcYnng&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;オサレ系3D画像鑑賞BOX&lt;br&gt;
+&lt;a href=&quot;http://goo.gl/TmLtOJ&quot;&gt;http://goo.gl/TmLtOJ&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;jThreeを使ったトロッコゲーム&lt;br&gt;
+&lt;a href=&quot;https://docs.google.com/presentation/d/1UwxJj9f6z3VJK8d9N_bRf-3P4krznEQnp-RuIxpLt7M/edit#slide=id.p&quot;&gt;https://docs.google.com/presentation/d/1UwxJj9f6z3VJK8d9N_bRf-3P4krznEQnp-RuIxpLt7M/edit#slide=id.p&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://jthree000.appspot.com/newshack/index.html&quot;&gt;http://jthree000.appspot.com/newshack/index.html&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;余談ですが、CodeZineに記事が掲載されていますが、
+もうjThree自体が進化していて、この通り実装しても動作しませんでした。&lt;br&gt;
+jThreeがどんなものかを把握するために読んでみるのも良いかと思います。&lt;br&gt;
+&lt;a href=&quot;http://codezine.jp/article/corner/522&quot;&gt;http://codezine.jp/article/corner/522&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;jThreeの使い方&lt;/h1&gt;
+
+&lt;p&gt;jThreeで作った作品の紹介の後、jThreeの使い方の概要がありましたが、詳細に書き出すと、このエントリが終わらないので省略するとして。個人的に印象に残った点を少し上げておくと。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;jThree = jQuery + three.js&lt;br&gt;
+&lt;a href=&quot;http://jquery.com/&quot;&gt;http://jquery.com/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://threejs.org/&quot;&gt;http://threejs.org/&lt;/a&gt;&lt;br&gt;
+jQueryでthree.jsを扱えるようにしたもの。というのがjThreeの本質です。jQueryを使ったことがある人ならば、簡単に3Dのオブジェクトを操れるようになります。&lt;/li&gt;
+&lt;li&gt;jThreeのデメリット
+
+&lt;ul&gt;
+&lt;li&gt;実行速度は遅い（でも高速に開発できる）&lt;/li&gt;
+&lt;li&gt;jThreeだけだと、3Dグラフィックスの基礎を理解する機会が無くなる&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;jThreeで作った作品とかを見ていると、おぉWebブラウザで3D動いてるなぁ。という感想だけになってしまいがちなのですが。jQueryで扱えるという特徴があるのでWeb系のプログラマーやデザイナーにも扱えるという点、またWebコンテンツと連携させたコンテンツが出来る可能性があるという点が、jThreeの面白い特徴なのではないかと思います。&lt;/p&gt;
+
+&lt;h1&gt;皆様の作品&lt;/h1&gt;
+
+&lt;p&gt;参加された方が作った作品を紹介しておきます。twitterにつぶやかれていたもので、私が見つけた物だけですが。&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;ja&quot;&gt;&lt;p&gt;今日作ったやつ公開してみました。&amp;#10;&lt;a href=&quot;http://t.co/cC6b43wfpG&quot;&gt;http://t.co/cC6b43wfpG&lt;/a&gt;&amp;#10;テクスチャにカメラの映像を流して音でオブジェクトの大きさかわるやつです。&amp;#10;&amp;#10;楽しかったです。お疲れ様でしたー！&amp;#10;&amp;#10;&lt;a href=&quot;https://twitter.com/hashtag/j3_class?src=hash&quot;&gt;#j3_class&lt;/a&gt;&lt;/p&gt;&amp;mdash; Kunihiko Tanaka (@kunihikot) &lt;a href=&quot;https://twitter.com/kunihikot/status/526296784755101698&quot;&gt;2014, 10月 26&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot; lang=&quot;ja&quot;&gt;&lt;p&gt;ちょろっと発表もさせてもらった今日の成果物。cameraタグでコンサート風に後ろのスクリーンに別カメラ(PVのカメラワーク)を映すやつ。 &lt;a href=&quot;https://twitter.com/hashtag/j3_class?src=hash&quot;&gt;#j3_class&lt;/a&gt; ／MIKU_camera_tag_test &lt;a href=&quot;http://t.co/g42TXClWpi&quot;&gt;http://t.co/g42TXClWpi&lt;/a&gt; &lt;a href=&quot;https://twitter.com/hashtag/WebGLEditor?src=hash&quot;&gt;#WebGLEditor&lt;/a&gt;&lt;/p&gt;&amp;mdash; えすじ (@esuji) &lt;a href=&quot;https://twitter.com/esuji/status/526293265197170688&quot;&gt;2014, 10月 26&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;script async src=&quot;//platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;私の作品は、回転させるためにいろいろ三角関数の式をいじってる間に、時間切れになってしまいましたorz 時間作って、もう少し触ってみようと思います。&lt;/p&gt;
+
+&lt;h1&gt;mixiさんのご紹介&lt;/h1&gt;
+
+&lt;p&gt;最後に、会場を提供頂いたmixiさんのサービスを紹介させて頂きます。mixiさんでは、社内でしっかりコードレビューをしてリリースするプロセスをとることに力を入れているというお話でした。私が今まで属していた会社は個人プレーで、全て個人の責任という風潮が強い会社だったので、そのような開発プロセスに新鮮な印象を受けました。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;モンスターストライク&lt;br&gt;
+&lt;a href=&quot;http://www.monster-strike.com/&quot;&gt;http://www.monster-strike.com/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;nohana 〜お気に入りの写真を、大切な家族と〜&lt;br&gt;
+&lt;a href=&quot;http://nohana.jp/&quot;&gt;http://nohana.jp/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;株式会社ミクシィ
+&lt;a href=&quot;http://mixi.co.jp/&quot;&gt;http://mixi.co.jp/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;感想とか&lt;/h1&gt;
+
+&lt;p&gt;イベントの第一回目にもかかわらず、結構な参加者も多く非常に盛り上がったイベントでした。jThee自体がまだまだ発展途上で（ドキュメントも整備されておらず）、これからどうなるか分からないからこそ、非常に面白いなと思いました。&lt;br&gt;
+ということで、次回も参加予定です！&lt;/p&gt;
+
+&lt;p&gt;3Dプリンターで作成されたjThreeのロゴもありました。↓&lt;br&gt;
+&lt;img src=&quot;https://farm6.staticflickr.com/5609/15447106850_5df9d4d83d.jpg&quot; alt=&quot;jthree-3d-printer&quot;&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Oct 2014 00:02:34 +0900</pubDate>
+        <link>http://takemikami.com/2014/10/27/jthreeclass.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/10/27/jthreeclass.html</guid>
+        
+        <category>jthree</category>
+        
+        <category>jquery</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>milkcocoaでWebサービスを作ってみよう！に行ってきました</title>
@@ -1367,76 +1469,6 @@ rbenv管理下のコマンドにパスが通るようにしておきます。  &
         
         
         <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>母校で後輩が書いた小説の合評してきました</title>
-        <description>&lt;p&gt;大学の時に所属していた文学研究会の後輩から、
-「集まるから部室来て」というメールが来たので、
-行ってみると、合評会でした。&lt;/p&gt;
-
-&lt;p&gt;文学研究会でやっている合評会は、
-みんなが書いた文芸創作（小説や詩）を読んで、
-お互いに批評し合うという会です。
-何をするのか知らなかった私は、
-当然、自分が書いた作品を用意していなかったので。
-後輩達の小説の批評をする立場として参加してきました。&lt;/p&gt;
-
-&lt;p&gt;それぞれの作品に対して、
-「読者にどういう風に読ませたいと思って書いたのか？」
-と作者の意図を聞いて、
-その意図を作品から感じ取ることが出来たかを、
-読者の立場から意見する、という形で批評を進めていました。&lt;/p&gt;
-
-&lt;p&gt;以下、合評で話題になった内容で、
-印象的だった事について触れていきたいと思います。&lt;/p&gt;
-
-&lt;p&gt;まずは、キャラクターのネーミングについて。
-登場人物に意味ありげな名前をつけていると、
-作品中でその名前の意味がはっきりしないと、
-読後にもやもやが残るという意見がありました。
-特に意味を持たせる必要が無いなら、
-シンプルな名前にしておいた方が無難ということと、
-まじめに、名前の意味とかを調べ出すと、
-勉強も資料も必要になるので、大変だねという話をしていました。&lt;/p&gt;
-
-&lt;p&gt;次に、描写を曖昧にしておきたい場合の表現について。
-作中で「○○のような」という表現があり、
-「○○のようなもの」と書くと物質的になって意図した表現にならないが、
-「○○のような」で切ってしまうと収まりが悪いという部分があった。
-ここをどのように表現することが出来るか？という点を考えていた。
-地の文が三人称だと、曖昧な様を表現する時に、
-地の文でそのまま表現するより、
-登場人物の視点に移してから表現した方がしっくりくるかも知れない、
-という話をしていました。&lt;/p&gt;
-
-&lt;p&gt;次に、食べ物と色の表現について。
-食べ物を色で表現する時に、表現したい味と色がしっかりと、
-かみあっていないと伝わらないという話題。
-具体的にはおいしいカレーって何色と書けばいいんだろう？
-という話をしていました。
-辛いカレーとおいしいカレーでは、表現すべき色は違うねという話など。&lt;/p&gt;
-
-&lt;p&gt;最後に、切ない表現をどのようにするかという話題。
-恋愛における切ない様子を表現する際に、
-登場人物の内面を描写する方法もあるが、
-情景描写を使って登場人物の切ない心情を描写したいと話をしていました。
-このような表現を学ぶには、
-昔の歌謡曲の歌詞なども参考になるという話をしていました。&lt;/p&gt;
-
-&lt;p&gt;こんな風に、創作の話をしていると、
-久しぶりに自分でも小説を書きたいなと思いました。
-楽しかったです、こういう話ができる仲間は本当に貴重だと思います。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://www.flickr.com/photos/62769571@N03/14470803751&quot; title=&quot;View &#39;DSC_0066&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;500&quot; title=&quot;DSC_0066&quot; alt=&quot;DSC_0066&quot; border=&quot;0&quot; src=&quot;https://farm4.staticflickr.com/3910/14470803751_2bba7a73a1.jpg&quot; width=&quot;281&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Sun, 22 Jun 2014 02:55:27 +0900</pubDate>
-        <link>http://takemikami.com/archives/1492</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1492</guid>
-        
-        
-        <category>日記</category>
         
       </item>
     
