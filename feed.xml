@@ -6,9 +6,121 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 27 Oct 2014 00:19:44 +0900</pubDate>
-    <lastBuildDate>Mon, 27 Oct 2014 00:19:44 +0900</lastBuildDate>
+    <pubDate>Thu, 27 Nov 2014 00:49:28 +0900</pubDate>
+    <lastBuildDate>Thu, 27 Nov 2014 00:49:28 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>jThree Class Tokyo #2 に行ってきました</title>
+        <description>&lt;p&gt;11/23(日)に【jQuery初心者超歓迎！秋のWebGL+API祭り】Microsoft Azure x jThree Class Tokyo #2 というイベントに行ってきました。&lt;br&gt;
+10月にmixiで開催された #1 も参加し、2回目ということで今回はサポートする立場で参加させて頂きました。&lt;/p&gt;
+
+&lt;p&gt;jThree Class Tokyo #2&lt;br&gt;
+&lt;a href=&quot;https://atnd.org/events/58240&quot;&gt;https://atnd.org/events/58240&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;今回の会場は、品川の日本マイクロソフトさんでした。前回マイクロソフトに来たのはすまべんの時だったかな。&lt;br&gt;
+&lt;img src=&quot;https://farm9.staticflickr.com/8668/15696786158_d9608677c0.jpg&quot; alt=&quot;jthree-microsoft&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;当日の流れは、午前中にjThreeの使い方の概要、午後からは、Kinect、milkcocoa、IMINOS、THETAの各チームにわかれて実際に作品を作ってみる、そして発表という流れでした。&lt;/p&gt;
+
+&lt;h1&gt;jThreeの使い方&lt;/h1&gt;
+
+&lt;p&gt;JThreeの使い方は、基本的に前回の勉強会と同じ内容。私は分からない人のサポートをする立場で参加させて頂きました。&lt;/p&gt;
+
+&lt;p&gt;内容はこのwikiのチュートリアルにまとめられています。&lt;br&gt;
+&lt;a href=&quot;http://jthree.jp/wiki&quot;&gt;http://jthree.jp/wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;ここにリファレンスがあります。&lt;br&gt;
+&lt;a href=&quot;http://j3doc.azurewebsites.net/&quot;&gt;http://j3doc.azurewebsites.net/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;前回は全くなかったドキュメントが、どんどん整備されていて。皆さんがjThreeに関心を持っている事もわかりますし。個人的にとてもありがたいです、助かります。&lt;/p&gt;
+
+&lt;h1&gt;IMINOSとjThreeで何か作る&lt;/h1&gt;
+
+&lt;p&gt;午後の部はチームにわかれて実際に作品を作りました。私は、IMINOSチームでサポート。&lt;/p&gt;
+
+&lt;p&gt;IMINOS: &lt;a href=&quot;https://lr.capio.jp/services/webapis/&quot;&gt;https://lr.capio.jp/services/webapis/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;IMINOSとは、Joysoundでおなじみのエクシングさんが提供してくれている言語解析APIで、文章を与えてやると、形態素解析・ポジネガ解析などを行ってくれるWebAPIです。&lt;/p&gt;
+
+&lt;p&gt;勉強会では、初音ミクにメッセージを入力すると、そのメッセージをポジティブかネガティブかを判定して、ポジティブなら踊る、ネガティブなら踊るのをやめる。という作品を作ってみました。&lt;/p&gt;
+
+&lt;p&gt;実際の作品です。&lt;br&gt;
+Miku With IMINOS: &lt;a href=&quot;http://editor.jthree.jp/?id=D-jZIg&quot;&gt;http://editor.jthree.jp/?id=D-jZIg&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;作品の試し方（なるべくChromeで試して下さい）：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;右側フレームの再生ボタンをクリック&lt;/li&gt;
+&lt;li&gt;右側フレームのどこかをクリック&lt;/li&gt;
+&lt;li&gt;ダイアログにメッセージを入れてOKをクリック&lt;/li&gt;
+&lt;li&gt;ポジティブなメッセージなら踊る、ネガティブなら踊りを止める&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;動かしてみると、こんな感じです（静止画だと、踊ってるのか、止めてるのかわからないww）&lt;/p&gt;
+
+&lt;p&gt;踊っているとき:&lt;br&gt;
+&lt;img src=&quot;https://farm9.staticflickr.com/8668/15882315701_bb74010a81.jpg&quot; alt=&quot;miku-positive&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;止めているとき:&lt;br&gt;
+&lt;img src=&quot;https://farm8.staticflickr.com/7489/15264658163_23ee012f01.jpg&quot; alt=&quot;miku-negative&quot;&gt;&lt;/p&gt;
+
+&lt;h1&gt;IMINOS以外のご紹介&lt;/h1&gt;
+
+&lt;p&gt;IMINOS以外についても紹介しておきます。&lt;/p&gt;
+
+&lt;h2&gt;Kinect&lt;/h2&gt;
+
+&lt;p&gt;MicrosoftのXBoxOneに付属しているモーションセンサーカメラです。Kinectチームの方々は、Kinectセンサーで取り込んだモーション情報で、初音ミクを動かそうと頑張っていました。&lt;/p&gt;
+
+&lt;p&gt;Kinect:&lt;br&gt;
+&lt;a href=&quot;http://www.microsoftstore.com/store/msjp/ja_JP/pdp/Kinect-for-Windows-v2-%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC-%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3-%E3%83%99%E3%83%BC%E3%82%BF/productID.298959900&quot;&gt;http://www.microsoftstore.com/store/msjp/ja_JP/pdp/Kinect-for-Windows-v2-%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC-%E3%82%AA%E3%83%BC%E3%83%97%E3%83%B3-%E3%83%99%E3%83%BC%E3%82%BF/productID.298959900&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2&gt;milkcocoa&lt;/h2&gt;
+
+&lt;p&gt;JavaScript一行でバックエンドを提供するサービスです。リアルタイム通信をWebのクライアント間で行うことができるので、チャットとか、みんなで何かを同期するというような目的で利用すると幸せになれるかもしれません。&lt;br&gt;
+WebRTCでとりこんだカメラの画像で円卓を囲みながら、milkcocoaでチャットする作品を作られていました。&lt;/p&gt;
+
+&lt;p&gt;milkcocoa:&lt;br&gt;
+&lt;a href=&quot;https://mlkcca.com/&quot;&gt;https://mlkcca.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://farm9.staticflickr.com/8568/15262028404_8221d42b78.jpg&quot; alt=&quot;milkcocoa-t&quot;&gt;&lt;br&gt;
+頂き物のmilkcocoaTシャツです。&lt;/p&gt;
+
+&lt;h2&gt;THETA&lt;/h2&gt;
+
+&lt;p&gt;全天球画像を撮影できるカメラ。会場全体の映像を取り込み、その上にjThreeで作成したステージを組み合わせた作品を作られていました。&lt;/p&gt;
+
+&lt;p&gt;THETA:&lt;br&gt;
+&lt;a href=&quot;https://theta360.com/ja/&quot;&gt;https://theta360.com/ja/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;感想とか&lt;/h1&gt;
+
+&lt;p&gt;3Dの専門家という訳でも無いし、サポートできるほどjThree使い込んでもいないので、サポートとは言ったものの足を引っ張ってしまった気がします。もう少し勉強してから行かないとというのが感想というか、反省ですね。&lt;br&gt;
+IMINOSチームで、形態素解析の技術と3DWebって何するの？という感じも会ったのですが、さらっと作った割には楽しめたのでは無いかと思います。&lt;br&gt;
+今回は前回以上に盛りだくさんの内容で、良い意味で疲れました。帰ったらすぐブログ書こうと思っていたのですが、すぐ寝てしまったくらいに。&lt;/p&gt;
+
+&lt;p&gt;それとハコスコを頂きました、週末にでも試して見ようと思います。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7553/15264658503_f014f7d6c8.jpg&quot; alt=&quot;hacosco&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;ハコスコ:&lt;br&gt;
+&lt;a href=&quot;http://hacosco.com/&quot;&gt;http://hacosco.com/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 27 Nov 2014 00:46:16 +0900</pubDate>
+        <link>http://takemikami.com/2014/11/27/jThree-Class-Tokyo-2.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/11/27/jThree-Class-Tokyo-2.html</guid>
+        
+        <category>jthree</category>
+        
+        <category>jquery</category>
+        
+        <category>threejs</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>jThree Class Tokyo #1 に行ってきました</title>
@@ -1373,99 +1485,6 @@ nodeのインストールを実行。&lt;br&gt;
         <category>javascript</category>
         
         <category>nodejs</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>MacOSXでのrbenvを使ってrubyをインストールする手順</title>
-        <description>&lt;p&gt;rubyのバージョン管理はながらくrvmを使っていて特に不満も無かったのですが、&lt;br&gt;
-まわりにrbenv使う人の方が増えてきたのもあり、&lt;br&gt;
-そろそろrbenvに乗り換えようと思ったので、ここに設定手順をまとめておきます。  &lt;/p&gt;
-
-&lt;p&gt;rbenv:&lt;br&gt;
-&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot;&gt;&lt;a href=&quot;https://github.com/sstephenson/rbenv&quot;&gt;https://github.com/sstephenson/rbenv&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;全体の流れは、次のとおり。&lt;br&gt;
-1. homebrewでrbenvをインストール&lt;br&gt;
-2. rubyのインストール  &lt;/p&gt;
-
-&lt;p&gt;※homebrewがインストールされている事は前提です  &lt;/p&gt;
-
-&lt;h1&gt;homebrewでrbenvをインストール&lt;/h1&gt;
-
-&lt;p&gt;以下のお決まりコマンドで、インストールを実行。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;brew install rbenv ruby-build
-**** 省略 ****
-&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Caveats
-To use Homebrew&lt;span class=&quot;err&quot;&gt;&amp;#39;&lt;/span&gt;s directories rather than ~/.rbenv add to your profile:
-&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;RBENV_ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/usr/local/var/rbenv
-
-To &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;shims and autocompletion add to your profile:
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; which rbenv &amp;gt; /dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(rbenv init -)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&amp;gt; Summary
-**** 省略 ****
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;上記のように説明が表示されるので、&lt;br&gt;
-これから、この説明に従って設定をしていきます。  &lt;/p&gt;
-
-&lt;p&gt;「~/.bash_profile」に以下を追記します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; which rbenv &amp;gt; /dev/null&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$(rbenv init -)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、パス設定を読み込む。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bash_profile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、パスが通っている事を確認。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv --help
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;rubyのインストール&lt;/h1&gt;
-
-&lt;p&gt;まずは、以下のコマンドで、利用可能なrubyのバージョンを確認。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv install -l
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;表示されたバージョンの中から、インストールしたいバージョンを指定して、&lt;br&gt;
-rubyのインストールを実行。&lt;br&gt;
-ここでは、「2.1.2」を指定します。&lt;br&gt;
-# しばらく時間がかかります。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv install 2.1.2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドでインストールされたことを確認。&lt;br&gt;
-# インストールしたrubyのバージョンが表示されるはずです。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv versions
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、利用するrubyのバージョンを指定します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv global 2.1.2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、指定したバージョンが有効になっている事を確認。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ruby -v
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、bunlderも入れておきます。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gem install bundler
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;bundleのようにコマンドがあるgemの場合は、&lt;br&gt;
-システムに標準でインストールされているコマンドにパスが通っていることがあるので、&lt;br&gt;
-次のように「rbenv rehash」を実行して、&lt;br&gt;
-rbenv管理下のコマンドにパスが通るようにしておきます。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which bundle
-/usr/bin/bundle
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rbenv rehash
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;which bundle
-/Users/&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;ユーザ名&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;/.rbenv/shims/bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ドキュメントをよく読まなかった私が良くなかったのですが、&lt;br&gt;
-システム標準に入っているbundlerが動き、？？？となってしまいました。&lt;br&gt;
-そこだけ意識していれば、特に難しい事は無く使えるかなと思います、&lt;br&gt;
-今のところですが。。  &lt;/p&gt;
-</description>
-        <pubDate>Mon, 25 Aug 2014 21:35:47 +0900</pubDate>
-        <link>http://takemikami.com/archives/1512</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1512</guid>
-        
-        <category>rbenv</category>
-        
-        <category>ruby</category>
         
         
         <category>it技術</category>
