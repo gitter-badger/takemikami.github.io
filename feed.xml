@@ -6,9 +6,67 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 27 Nov 2014 01:03:18 +0900</pubDate>
-    <lastBuildDate>Thu, 27 Nov 2014 01:03:18 +0900</lastBuildDate>
+    <pubDate>Tue, 16 Dec 2014 00:52:41 +0900</pubDate>
+    <lastBuildDate>Tue, 16 Dec 2014 00:52:41 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>リアルタイム通信が10倍楽しくなる2014年最後の勉強会！milkcocoa meetup! #1</title>
+        <description>&lt;p&gt;12/16(月)にリアルタイム通信が10倍楽しくなる2014年最後の勉強会！milkcocoa meetup! #1というイベントに行ってきました。
+最近、勉強会行ってきたよエントリばかりですが。(^_^;&lt;/p&gt;
+
+&lt;p&gt;milkcocoa meetup! #1&lt;br&gt;
+&lt;a href=&quot;http://mlkcca.connpass.com/event/9891/&quot;&gt;http://mlkcca.connpass.com/event/9891/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;会場は、LIGさんの「いいオフィス」、上野にあるおしゃれなコワーキングスペースです。&lt;br&gt;
+&lt;a href=&quot;https://iioffice.liginc.co.jp/&quot;&gt;https://iioffice.liginc.co.jp/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;勉強会の流れ&lt;/h1&gt;
+
+&lt;p&gt;勉強会の流れは、ざっくりと以下のような感じ。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;milkcocoaの紹介&lt;/li&gt;
+&lt;li&gt;MicrosoftAzureとmilkcocoaで作るプライベート動画サイト&lt;/li&gt;
+&lt;li&gt;Kinectでモーションキャプチャして初音ミクを踊らせる話&lt;br&gt;
+&lt;a href=&quot;http://jthree.jp/kinect/&quot;&gt;http://jthree.jp/kinect/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;JQueryでWebGLを扱えるjThreeとmilkcocoaをつなぐ話&lt;/li&gt;
+&lt;li&gt;milkcocoaのiOSとNode.js SDKを使ってみた話&lt;br&gt;
+&lt;a href=&quot;http://slides.com/sugawararyousuke/milkcocoa-ios-node-js-sdk#/&quot;&gt;http://slides.com/sugawararyousuke/milkcocoa-ios-node-js-sdk#/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;milkcocoaの未来、milkcocoaの思想的な話&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;いろいろなものと連携させることで、リアルタイム通信のバックエンドとして、milkcocoaがいろいろな可能性を持っているのだと感じさせられる内容でした。&lt;/p&gt;
+
+&lt;h1&gt;各内容に対応する感想など&lt;/h1&gt;
+
+&lt;p&gt;Kinectでモーションキャプチャ→milkcocoaでキャプチャした情報を送信→受信側で初音ミクを踊らせるというデモは、ニコニコ動画であるような「踊ってみた」を、自分の顔や体を晒さず、初音ミクというアバターでできてしまう仕組みで。エンターテイメントコンテンツを生み出す仕組みとして、可能性が有るのでは無いかと感じました。（仮想的なリアルタイムコミュニケーションというところが、特に面白いですね）&lt;/p&gt;
+
+&lt;p&gt;また、Node.jsSDKを使ってみた話では、AWSのS3上に静的HTMLコンテンツをおいて、アプリケーションを提供する仕組みを実践されていて。工数がかかりがちなインフラ・バックエンド部分で上手くmilkcocoaに依存していて、クイックにサービスを立ち上げる方法として実用的だと感じました。&lt;/p&gt;
+
+&lt;p&gt;milkcocoaの未来、思想的な話の中で。milkcocoaは、EndUserComputingを実現するプラットフォームを目指しているという話がありました。現状では、あくまでエンジニアが簡単に作れるプラットフォームだと思いますが、EndUserでも作れるというところを視野に入れているのはなかなか野心的だなと感じました。&lt;br&gt;
+個人的な意見ですが、EndUserComputingって、簡単に作れるだけではなくて、簡単に直せる・保守できるという部分も重要なファクターだと思うので、その当たりをどう取り組んでいくのか、というのも個人的な注目したいですね。&lt;/p&gt;
+
+&lt;h1&gt;全体的な感想&lt;/h1&gt;
+
+&lt;p&gt;milkcocoaのイベントは、以前ハッカソン形式のものに参加したのですが、今回も面白い（濃い？）メンバで、勉強会後の懇親会も楽しく世間話をすることが出来ました。プログラミング言語の話などエンジニアらしい会話を。（ちなみに最近メインに使っているRubyはdisられましたww）&lt;/p&gt;
+
+&lt;p&gt;milkcocoaでWebサービスを作ってみよう！に行ってきました&lt;br&gt;
+&lt;a href=&quot;http://takemikami.com/2014/10/04/milkcocoa.html&quot;&gt;http://takemikami.com/2014/10/04/milkcocoa.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;NetscapeでWebが一般に普及してから、Webの世界にはいろいろなトレンドがありましたが。Webのリアルタイム化というのは、サービス的にも技術的にも（コンテンツ的にもネットワーク的にも）インパクトがあるという意味で、非常に興味深く面白いトレンドでは無いかと思っています。&lt;br&gt;
+milkcocoaを使うと驚くほど簡単にリアルタイムのWebの世界に触れることができるので、新しい物が好きなエンジニアであれば、少し時間をとって試して見ることをおすすめしまます。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Dec 2014 00:49:55 +0900</pubDate>
+        <link>http://takemikami.com/2014/12/16/102014milkcocoa-meetup-1.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/12/16/102014milkcocoa-meetup-1.html</guid>
+        
+        <category>milkcocoa</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>jThree Class Tokyo #2 に行ってきました</title>
@@ -1364,127 +1422,6 @@ var pusher = new Pusher(&amp;#39;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/
         <category>rails4</category>
         
         <category>websocket</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>MacOSXでAngularJS開発環境を構築する手順</title>
-        <description>&lt;p&gt;MacOSXでAngularJSでの開発環境を構築したので、&lt;br&gt;
-その手順のメモを残します。  &lt;/p&gt;
-
-&lt;p&gt;AngularJS:&lt;br&gt;
-&lt;a href=&quot;https://angularjs.org&quot;&gt;&lt;a href=&quot;https://angularjs.org&quot;&gt;https://angularjs.org&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;全体の流れは、次のとおり。&lt;br&gt;
-1. nodebrewのインストール&lt;br&gt;
-2. nodeのインストール&lt;br&gt;
-3. grunt-cli, yo, bower, generator-angularのインストール&lt;br&gt;
-4. compassのインストール&lt;br&gt;
-5. AngularJSアプリのテンプレート生成  &lt;/p&gt;
-
-&lt;h1&gt;nodebrewのインストール&lt;/h1&gt;
-
-&lt;p&gt;まず、nodeのversion管理ツールとしてnodebrewをインストールします。&lt;br&gt;
-# 世間にはいくつかnodeのversion管理ツールがあるようですが、&lt;br&gt;
-# なんとなくactiveっぽいので、ここではnodebrewを選びました。  &lt;/p&gt;
-
-&lt;p&gt;nodebrew:&lt;br&gt;
-&lt;a href=&quot;https://github.com/hokaccha/nodebrew&quot;&gt;&lt;a href=&quot;https://github.com/hokaccha/nodebrew&quot;&gt;https://github.com/hokaccha/nodebrew&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;以下の手順は、基本的に公式サイトの手順通りです。&lt;br&gt;
-次のコマンドでインストール実行。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl -L git.io/nodebrew &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; perl - setup
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;「~/.bash_profile」に以下を追記して、パスを設定。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;/.nodebrew/current/bin:&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、パス設定を読み込む。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt; ~/.bash_profile
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、パスが通っている事を確認。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew &lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;nodeのインストール&lt;/h1&gt;
-
-&lt;p&gt;次は、nodebrewを使って、nodeをインストールします。  &lt;/p&gt;
-
-&lt;p&gt;まずは、以下のコマンドで、利用可能なnodeのバージョンを確認。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew ls-remote
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;表示されたバージョンの中から、インストールしたいバージョンを指定して、&lt;br&gt;
-nodeのインストールを実行。&lt;br&gt;
-ここでは、最新の「v0.11.13」を指定します。&lt;br&gt;
-# しばらく時間がかかります。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew install v0.11.13
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドでインストールされたことを確認。&lt;br&gt;
-# インストールしたnodeのバージョンが表示されるはずです。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew list
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、利用するnodeのバージョンを指定します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nodebrew  use v0.11.13
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドで、指定したバージョンが有効になっている事を確認。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;node -v
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;grunt-cli, yo, bower, generator-angularのインストール&lt;/h1&gt;
-
-&lt;p&gt;以下のコマンドで、AngularJSの開発に利用する各種ツールをインストールします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install -g grunt-cli
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install -g yo
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install -g bower
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;インストールしたツールのサイトはそれぞれ、以下の通り。  &lt;/p&gt;
-
-&lt;p&gt;Grunt:&lt;br&gt;
-&lt;a href=&quot;http://gruntjs.com&quot;&gt;&lt;a href=&quot;http://gruntjs.com&quot;&gt;http://gruntjs.com&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Yeoman:&lt;br&gt;
-&lt;a href=&quot;http://yeoman.io&quot;&gt;&lt;a href=&quot;http://yeoman.io&quot;&gt;http://yeoman.io&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Bower:&lt;br&gt;
-&lt;a href=&quot;http://bower.io&quot;&gt;&lt;a href=&quot;http://bower.io&quot;&gt;http://bower.io&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;compassのインストール&lt;/h1&gt;
-
-&lt;p&gt;この手順では、sass/scssを利用するので、&lt;br&gt;
-以下のコマンドでcompassをインストールしておきます。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sudo gem install compass
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;AngularJSアプリのテンプレート生成&lt;/h1&gt;
-
-&lt;p&gt;以下のコマンドで、AngularJSの開発のテンプレートを生成するツールをインストールします。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;npm install generator-angular
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のコマンドでAngularJSアプリケーションのテンプレートを生成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir ngapp
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;ngapp
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;yo angular ngapp
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;生成時にいろいろ聞かれますが、ひとまず全て既定値で回答しておきます。  &lt;/p&gt;
-
-&lt;p&gt;生成が終わったら、以下のコマンドで開発用のWebサーバを起動します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;grunt serve
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;既定のブラウザが開き、&lt;br&gt;
-次のような画面が表示されれば、テンプレート作成OKです。  &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15027881561&quot; title=&quot;View &#39;angularjs01&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;324&quot; title=&quot;angularjs01&quot; alt=&quot;angularjs01&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5581/15027881561_c81342553f.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;# 本番はここからですけどね  &lt;/p&gt;
-</description>
-        <pubDate>Mon, 25 Aug 2014 21:42:57 +0900</pubDate>
-        <link>http://takemikami.com/archives/1516</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1516</guid>
-        
-        <category>AngularJS</category>
-        
-        <category>javascript</category>
-        
-        <category>nodejs</category>
         
         
         <category>it技術</category>
