@@ -6,9 +6,159 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 16 Dec 2014 00:58:06 +0900</pubDate>
-    <lastBuildDate>Tue, 16 Dec 2014 00:58:06 +0900</lastBuildDate>
+    <pubDate>Wed, 17 Dec 2014 01:32:14 +0900</pubDate>
+    <lastBuildDate>Wed, 17 Dec 2014 01:32:14 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Sublime Text3 でローカルPC上にjThreeの開発環境を作る(v2.1.0編)</title>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;このエントリは、QiitaのWebGLAdventCalendar2014で記載した内容をv2.1.0向けに修正した記事です。&lt;br&gt;
+元記事：&lt;a href=&quot;http://qiita.com/takemikami/items/dba4192bb2b7d09bfaa7&quot;&gt;http://qiita.com/takemikami/items/dba4192bb2b7d09bfaa7&lt;/a&gt;&lt;br&gt;
+v2.0.7→v2.1.0のバージョンアップでは、jThreeエディタからの移植の際に、ライブラリパスの修正が不要になりました。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;jQueryで手軽にWebGLを扱えるjThree。&lt;br&gt;
+WebベースのjThreeエディタを使うと、ブラウザ上でコードを書いてすぐに試す事が出来て便利ですが。&lt;br&gt;
+やはり、手元のPC上で開発出来る環境がある方が、&lt;br&gt;
+自分の好きなエディタを使ったり、モデルデータをおいたりなど自由度が高くなります。&lt;br&gt;
+このエントリでは、Sublime Text3のSublimeServerプラグインを使って、
+ローカルPC上にjThreeの開発環境を作る手順を紹介します。&lt;/p&gt;
+
+&lt;p&gt;jThree Editor&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/&quot;&gt;http://editor.jthree.jp/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;SublimeText3とSublimeServerの設定&lt;/h1&gt;
+
+&lt;p&gt;まずは、Sublime Text3とSublimeServerのインストールと設定を行います。&lt;/p&gt;
+
+&lt;p&gt;①以下のサイトから、利用しているOSのバイナリをダウンロードして、インストールします。&lt;/p&gt;
+
+&lt;p&gt;Sublime Text 3&lt;br&gt;
+&lt;a href=&quot;http://www.sublimetext.com/3&quot;&gt;http://www.sublimetext.com/3&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;②Sublime Text 3を起動します。&lt;/p&gt;
+
+&lt;p&gt;③以下のサイトに記載されている「import〜」のコードを、「View→Show Console」で表示された入力エリアに貼り付けます。&lt;/p&gt;
+
+&lt;p&gt;Package Control&lt;br&gt;
+&lt;a href=&quot;https://sublime.wbond.net/installation&quot;&gt;https://sublime.wbond.net/installation&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16010628836&quot; title=&quot;jthree-env1 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7514/16010628836_c9e02a9ecd.jpg&quot; width=&quot;500&quot; height=&quot;421&quot; alt=&quot;jthree-env1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15850641467&quot; title=&quot;jthree-env2 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7514/15850641467_4f392a8cac.jpg&quot; width=&quot;500&quot; height=&quot;261&quot; alt=&quot;jthree-env2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;いろいろメッセージがでて、しばらくすると完了します。&lt;/p&gt;
+
+&lt;p&gt;④「Tools→Command Pallete」で「package cont…」と入力すると、候補に「Package Controll: Install Package」が出てくるので選択。
+次のパッケージ検索の入力欄に「sublimeserver」と入力、「SublimeServer」を選択して、インストールを実行します。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15416760453&quot; title=&quot;jthree-env3 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm9.staticflickr.com/8614/15416760453_2b1c5a8eaa.jpg&quot; width=&quot;500&quot; height=&quot;255&quot; alt=&quot;jthree-env3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15414133644&quot; title=&quot;jthree-env4 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7461/15414133644_5e3ce27af0.jpg&quot; width=&quot;450&quot; height=&quot;129&quot; alt=&quot;jthree-env4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;⑤「Tools→SublimeServer→Start SublimeServer」を選択して、SublimeServerを起動します。&lt;/p&gt;
+
+&lt;p&gt;⑥ブラウザを起動して&lt;code&gt;http://localhost:8080/&lt;/code&gt;にアクセスして以下のように表示されていればOKです。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16034455121&quot; title=&quot;jthree-env5 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7561/16034455121_a0a8410467.jpg&quot; width=&quot;388&quot; height=&quot;170&quot; alt=&quot;jthree-env5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;jThreeのライブラリのダウンロード・展開&lt;/h1&gt;
+
+&lt;p&gt;次に、jThreeのライブラリをダウンロードし、SublimeServerから内容を確認します。&lt;/p&gt;
+
+&lt;p&gt;①以下のサイトから、「jThree v2.1.0をダウンロード」をクリックして「jThree.zip」をダウンロード、適当なディレクトリに展開します。&lt;/p&gt;
+
+&lt;p&gt;jThree&lt;br&gt;
+&lt;a href=&quot;http://jthree.jp/&quot;&gt;http://jthree.jp/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;②Sublime Text3で「File→Open」を選び、「jThree.zip」を展開したディレクトリを開きます。&lt;/p&gt;
+
+&lt;p&gt;③ブラウザの&lt;code&gt;http://localhost:8080/&lt;/code&gt;を再読み込みすると、以下のように表示されるので「jThree2.1.0」を選びます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15416760373&quot; title=&quot;jthree-env6 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm9.staticflickr.com/8655/15416760373_42b5abfdaf.jpg&quot; width=&quot;449&quot; height=&quot;240&quot; alt=&quot;jthree-env6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;④以下のようなディレクトリが表示されていてればOKです。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16010628646&quot; title=&quot;jthree-env7 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7523/16010628646_460ef1dffa.jpg&quot; width=&quot;498&quot; height=&quot;327&quot; alt=&quot;jthree-env7&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;jThreeエディタで作成したファイルをローカルで動かす&lt;/h1&gt;
+
+&lt;p&gt;次にjThreeエディタで作成したファイルをダウンロードして、ローカルPC上で動かしてみます。&lt;/p&gt;
+
+&lt;p&gt;①以下のURLからjThreeエディタの初期状態のデモを表示し、「DL」メニューをクリックして「WebGLEditor.zip」ファイルをダウンロードします。&lt;/p&gt;
+
+&lt;p&gt;jThreeエディタ（初期デモ雛形）&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/?id=JtHWxQ&quot;&gt;http://editor.jthree.jp/?id=JtHWxQ&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;②「WebGLEditor.zip」を展開して、各ファイルを「jThree.zip」を展開したディレクトリに配置します。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16035764222&quot; title=&quot;jthree-env8 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7525/16035764222_30d0781b1e.jpg&quot; width=&quot;184&quot; height=&quot;281&quot; alt=&quot;jthree-env8&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;③ブラウザで&lt;code&gt;http://localhost:8080/jThree2.0.7/&lt;/code&gt;にアクセスすると、jThreeエディタで表示されていたものと同様のサンプルを確認することができます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15414133514&quot; title=&quot;jthree-env9 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7471/15414133514_8990c5f1e7.jpg&quot; width=&quot;500&quot; height=&quot;312&quot; alt=&quot;jthree-env9&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;※MMDモデル・モーションやテクスチャなどを利用した作品をローカルに持ってくる場合は、使用しているデータをローカルPC上に配置する必要があります。&lt;/p&gt;
+
+&lt;h1&gt;jThreeエディタ以外のMMDモデルを表示する&lt;/h1&gt;
+
+&lt;p&gt;最後に、せっかくローカルPC上に環境を作ったので、jThreeエディタに含まれていないMMDモデルを表示してみることにします。&lt;/p&gt;
+
+&lt;p&gt;なんと都合が良いことに、
+前日のAdventCalendar（jThreeでMMDモデルを使うときに知っておきたいこと～テクスチャの形式変換～ &lt;a href=&quot;http://crow968.blog.fc2.com/blog-entry-30.html&quot;&gt;http://crow968.blog.fc2.com/blog-entry-30.html&lt;/a&gt; ）のR-tenPさんがMMDモデルを配布されているので、それを表示してみます。&lt;/p&gt;
+
+&lt;p&gt;【MMD】虎視眈々【カメラ、モデル配布】&lt;br&gt;
+&lt;a href=&quot;http://www.nicovideo.jp/watch/sm24835196&quot;&gt;http://www.nicovideo.jp/watch/sm24835196&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;①入手したMMDモデルのファイルを、各ファイルをjThree.zip」を展開したディレクトリに配置します。&lt;/p&gt;
+
+&lt;p&gt;②以下のように、index.htmlにMMDプラグインを追加します。&lt;/p&gt;
+
+&lt;p&gt;index.html&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;libs/mmd/1.5/jThree.MMD.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;③以下のように、index.gomlを変更し、MMDモデルを呼び出します（mmdタグのmodel属性は、配置したpmxファイルを指定して下さい）。&lt;/p&gt;
+
+&lt;p&gt;index.goml(削除部分)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;positionX: 7;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;positionX: -7;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;positionY: 7;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;position: 7 7 0;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;position: -7 7 0;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;obj&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;positionY: 14;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;positionX: 7;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl1&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;positionX: -7;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/obj&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;index.goml(追記部分)&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mmd&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;model=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;./V-Style/Corde_V-Style_v1.0/Corde_V-Style_1.0.pmx&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;position: 0 0 0;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/mmd&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;④ブラウザを再読み込みすると以下のように、読み込んだモデルが表示されます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16010628586&quot; title=&quot;jthree-env10 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7565/16010628586_8716ce5246.jpg&quot; width=&quot;500&quot; height=&quot;370&quot; alt=&quot;jthree-env10&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;jThreeエディタで用意されているリソースを利用したい場合は個別に入手する必要がある等の注意点はあるものの、
+このようにローカルPC上に環境を作っておくと、
+読み込ませるリソースの切り替えなどの作業もしやすくなるので、
+みなさんも、このような環境を作ってみてjThreeで遊んでみてはいかがでしょうか。&lt;/p&gt;
+</description>
+        <pubDate>Wed, 17 Dec 2014 01:27:15 +0900</pubDate>
+        <link>http://takemikami.com/2014/12/17/Sublime-Text3-PCjThreev210.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/12/17/Sublime-Text3-PCjThreev210.html</guid>
+        
+        <category>jThree</category>
+        
+        <category>sublimetext</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>milkcocoa meetup! #1に行ってきました</title>
@@ -1179,249 +1329,6 @@ $ git push
         <category>github</category>
         
         <category>shippable</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>PusherとRubyOnRailsでチャットアプリを作ってみた</title>
-        <description>&lt;p&gt;このエントリでは、&lt;br&gt;
-PusherとRubyOnRailsで簡単なチャットアプリを作成する流れを示します。  &lt;/p&gt;
-
-&lt;p&gt;WebSocketを使うと、Webアプリケーションで、&lt;br&gt;
-サーバ・クライアント間でリアルタイムな双方向通信を行うことが出来ます。&lt;br&gt;
-Pusherというサービスを使うと、&lt;br&gt;
-WebSocketに対応したサーバを自前で用意しなくても、&lt;br&gt;
-お手軽にWebSocketを使用する事ができるので、&lt;br&gt;
-Railsと組み合わせて、簡単なチャットアプリを作ってみます。  &lt;/p&gt;
-
-&lt;p&gt;Pusher&lt;br&gt;
-&lt;a href=&quot;http://pusher.com&quot;&gt;&lt;a href=&quot;http://pusher.com&quot;&gt;http://pusher.com&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;このエントリで作成したソースコードはgithubに上げています。&lt;br&gt;
-&lt;a href=&quot;https://github.com/takemikami/chat_rails_pusher_sample&quot;&gt;&lt;a href=&quot;https://github.com/takemikami/chat_rails_pusher_sample&quot;&gt;https://github.com/takemikami/chat_rails_pusher_sample&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;作成するアプリの概要&lt;/h1&gt;
-
-&lt;p&gt;作成するアプリは以下の流れで、&lt;br&gt;
-チャットのメッセージを送信し、ページに表示することとします。  &lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;ブラウザからメッセージ送信&lt;br&gt;&lt;/li&gt;
-&lt;li&gt;Railsサーバで受信、PusherにPush通知依頼&lt;br&gt;&lt;/li&gt;
-&lt;li&gt;PusherからブラウザにPush通知&lt;br&gt;&lt;/li&gt;
-&lt;li&gt;Push通知を受けて、メッセージを表示領域に即時表示&lt;br&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15034779635&quot; title=&quot;View &#39;chat_rails_pusher_1&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;375&quot; title=&quot;chat_rails_pusher_1&quot; alt=&quot;chat_rails_pusher_1&quot; border=&quot;0&quot; src=&quot;https://farm4.staticflickr.com/3849/15034779635_0597b39a56.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;以下の流れでアプリを作っていきます。&lt;br&gt;
-・Puhserのアカウントとアプリケーションを作る&lt;br&gt;
-・既定の状態のRailsアプリを作る&lt;br&gt;
-・チャット画面の枠組みを作る&lt;br&gt;
-・サーバサイドの機能を組み込む&lt;br&gt;
-・クライアントサイドの機能を組み込む&lt;br&gt;
-・チャットの動作確認を行う&lt;br&gt;
-・Pusherのキー情報を設定ファイルに移動させる  &lt;/p&gt;
-
-&lt;h1&gt;Pusherのアカウントとアプリケーションを作る&lt;/h1&gt;
-
-&lt;p&gt;まずは、Pusherのアカウントとアプリを作成していきます。  &lt;/p&gt;
-
-&lt;p&gt;Pusherのサイトにアクセスする。  &lt;/p&gt;
-
-&lt;p&gt;Pusher&lt;br&gt;
-&lt;a href=&quot;http://pusher.com&quot;&gt;&lt;a href=&quot;http://pusher.com&quot;&gt;http://pusher.com&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;「Create a Free Account」から手順に従って、アカウント作成。&lt;br&gt;
-アカウントを作成したら、以下からログインして、Dashbordを表示します。  &lt;/p&gt;
-
-&lt;p&gt;Pusher: Dashboard&lt;br&gt;
-&lt;a href=&quot;https://app.pusher.com/accounts/sign_in&quot;&gt;&lt;a href=&quot;https://app.pusher.com/accounts/sign_in&quot;&gt;https://app.pusher.com/accounts/sign_in&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Your Appsで「+ New app」ボタンを押し、&lt;br&gt;
-「chat_rails_pusher_sample」という名称を指定して、&lt;br&gt;
-「Create app」を押し、アプリを作成します。  &lt;/p&gt;
-
-&lt;p&gt;アプリ作成後の画面では、&lt;br&gt;
-「Code examples」が表示され、&lt;br&gt;
-クライアント側のJavascriptと、&lt;br&gt;
-サーバ側の各種言語のサンプルが確認できます。  &lt;/p&gt;
-
-&lt;p&gt;後ほどの手順では、&lt;br&gt;
-ここに表示されるサンプルをコピーして使用していきます。  &lt;/p&gt;
-
-&lt;h1&gt;既定の状態のRailsアプリを作る&lt;/h1&gt;
-
-&lt;p&gt;ひとまず、既定の状態のRailsアプリを用意します。  &lt;/p&gt;
-
-&lt;p&gt;次のコマンドでRailsアプリ用のディレクトリを作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir chat_rails_pusher_sample
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;chat_rails_pusher_sample
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のとおり「Gemfile」を作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;https://rubygems.org&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;rails&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のコマンドでrailsをインストール、Railsアプリを作成します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path vendor/bundle
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails new .
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のコマンドで、開発用Webサーバを起動します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails s
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ブラウザで「&lt;a href=&quot;http://127.0.0.1:3000/%E3%80%8D%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%97%E3%80%81&quot;&gt;http://127.0.0.1:3000/」を表示し、&lt;/a&gt;&lt;br&gt;
-RailsのWelcomeが表示されていることを確認。  &lt;/p&gt;
-
-&lt;h1&gt;チャット画面の枠組みを作る&lt;/h1&gt;
-
-&lt;p&gt;次に、チャット画面を枠組みを作ります。  &lt;/p&gt;
-
-&lt;p&gt;次のコマンドで、メインのコントローラーを作成。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails g controller chat
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;「config/routes.rb」に、&lt;br&gt;
-チャットのメイン画面のルート、メッセージの送信先ルートを設定します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;application&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;draw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chat#index&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;post&amp;#39;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;chat#post&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;****&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;省略&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;****&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;「app/views/chat/index.html.erb」を編集し、&lt;br&gt;
-チャットのメイン画面の枠組みをつくります。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= form_tag(&amp;#39;/post&amp;#39;, :remote =&amp;gt; true) do %&amp;gt;
-&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= text_field_tag &amp;#39;message&amp;#39; %&amp;gt;
-&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= submit_tag &amp;#39;send&amp;#39; %&amp;gt;
-&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;% end %&amp;gt;
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;messagelog&amp;#39;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;前半のform_tagが、メッセージの送信用フォーム&lt;br&gt;
-後半のdivタグが、メッセージの表示領域です。  &lt;/p&gt;
-
-&lt;h1&gt;サーバサイドの機能を組み込む&lt;/h1&gt;
-
-&lt;p&gt;次にサーバサイド側の機能を組み込んでいきます。  &lt;/p&gt;
-
-&lt;p&gt;pusherのライブラリを使うので、「Gemfile」に以下を追記します。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pusher&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のコマンドで、先ほど追記したpusherのgemをインストール。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;PusherのDashbordからRails用のコードを確認します。&lt;br&gt;
-Dashbordに表示されているサンプルコードを元に、&lt;br&gt;
-以下のように「config/initializers/pusher.rb」を作成。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pusher&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://&amp;lt;あなたのaccess_key&amp;gt;:&amp;lt;あなたのaccess_key_secret&amp;gt;@api.pusherapp.com/apps/&amp;lt;あなたのapp_id&amp;gt;&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;gem追加とinitializer配下を修正したので、&lt;br&gt;
-ここで、railsのWebサーバは再起動しておきます。  &lt;/p&gt;
-
-&lt;p&gt;以下のように「app/controllers/chat_controller.rb」を編集します。&lt;br&gt;
-ここでは、ブラウザからpostされたメッセージを受け付け、&lt;br&gt;
-そのメッセージ情報をpush送信するように、pusherに依頼を行っています。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChatController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;post&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;general_channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;trigger&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;chat_event&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;ss&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;render&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;OK&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;クライアントサイドの機能を組み込む&lt;/h1&gt;
-
-&lt;p&gt;ここまでで、&lt;br&gt;
-1. ブラウザからメッセージ送信&lt;br&gt;
-2. Railsサーバで受信、PusherにPush通知依頼&lt;br&gt;
-3. PusherからブラウザにPush通知&lt;br&gt;
-まで実装できたので、&lt;br&gt;
-次は、ブラウザ側でPush通知を受け付け、&lt;br&gt;
-メッセージ表示領域に追記する部分を実装します。  &lt;/p&gt;
-
-&lt;p&gt;PusherのDashbordのクライアント側サンプルコードを元に、&lt;br&gt;
-以下のように「app/views/chat/index.html.erb」に処理を追記。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;//js.pusher.com/2.2/pusher.min.js&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// Enable pusher logging - don&amp;#39;t include this in production&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pusher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;あなたのaccess_key&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;channel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;pusher&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;subscribe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;general_channel&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;channel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;chat_event&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messagelog&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getElementById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;messagelog&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;messagediv&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;document&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;createElement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;div&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;messagediv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;innerHTML&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;messagelog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;appendChild&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;messagediv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-
-**** 省略 ****
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;チャットの動作確認を行う&lt;/h1&gt;
-
-&lt;p&gt;ここまでで、チャットアプリの流れは完成したので、動作確認を行います。&lt;br&gt;
-２つのブラウザを起動し、&lt;br&gt;
-両方のブラウザで「&lt;a href=&quot;http://127.0.0.1:3000/%E3%80%8D%E3%82%92%E9%96%8B%E3%81%8D%E3%81%BE%E3%81%99%E3%80%82&quot;&gt;http://127.0.0.1:3000/」を開きます。&lt;/a&gt;  &lt;/p&gt;
-
-&lt;p&gt;一方でメッセージを入力し送信すると、&lt;br&gt;
-即時に両方にメッセージが追記されることが確認出来るはずです。  &lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15031721821&quot; title=&quot;View &#39;chat_rails_pusher_2&#39; on Flickr.com&quot;&gt;&lt;img height=&quot;258&quot; title=&quot;chat_rails_pusher_2&quot; alt=&quot;chat_rails_pusher_2&quot; border=&quot;0&quot; src=&quot;https://farm6.staticflickr.com/5573/15031721821_6a58c09530.jpg&quot; width=&quot;500&quot;/&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;Pusherのキー情報を設定ファイルに移動させる&lt;/h1&gt;
-
-&lt;p&gt;Pusherのキー情報がソースコードべた書きなのが気持ち悪いので、&lt;br&gt;
-最後にキー情報を設定ファイルに移動させておきます。  &lt;/p&gt;
-
-&lt;p&gt;次のように「config/pusher.yml」を作成。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;development:
-app_id: &amp;lt;あなたのapp_id&amp;gt;
-access_key: &amp;lt;あなたのaccess_key&amp;gt;
-access_key_secret: &amp;lt;あなたのaccess_key_secret&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のとおり「config/initializer/pusher.rb」を修正。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;pusher&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;YAML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;config/pusher.yml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;http://&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;access_key_secret&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@api.pusherapp.com/apps/{config_pusher[&amp;#39;app_id&amp;#39;]}&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;no&quot;&gt;Pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のとおり「app/controllers/chat_controller.rb」を修正。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ChatController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ApplicationController&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;index&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;YAML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;config/pusher.yml&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Rails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;env&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;vi&quot;&gt;@pusher_access_key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config_pusher&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;access_key&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;****&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;省略&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;****&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;次のとおり「app/views/chat/index.html.erb」を修正。  &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;**** 省略 ****
-var pusher = new Pusher(&amp;#39;&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%= @pusher_access_key %&amp;gt;&amp;#39;);
-**** 省略 ****
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以上。。  &lt;/p&gt;
-</description>
-        <pubDate>Tue, 26 Aug 2014 04:08:10 +0900</pubDate>
-        <link>http://takemikami.com/archives/1518</link>
-        <guid isPermaLink="true">http://takemikami.com/archives/1518</guid>
-        
-        <category>pusher</category>
-        
-        <category>rails4</category>
-        
-        <category>websocket</category>
         
         
         <category>it技術</category>
