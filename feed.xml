@@ -6,8 +6,8 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Dec 2014 02:03:26 +0900</pubDate>
-    <lastBuildDate>Thu, 18 Dec 2014 02:03:26 +0900</lastBuildDate>
+    <pubDate>Thu, 18 Dec 2014 02:12:36 +0900</pubDate>
+    <lastBuildDate>Thu, 18 Dec 2014 02:12:36 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -158,6 +158,9 @@ GOMLタグ→MMDモデル/初音ミクから挿入&lt;/p&gt;
   margin: 0;
   background-color:#0f0;
 }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GOML(head配下)の、rdrのframeに「#parts0」を指定。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;rdr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;frame=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#parts0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;camera=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;camera:first&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;param=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;antialias: true;clearColor: #fff;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;ここまでで、以下のような表示になると思いますが、このようにWebGL部分だけ白抜けになってしまいます。&lt;/p&gt;
 
