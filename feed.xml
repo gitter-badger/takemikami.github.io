@@ -6,9 +6,186 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 17 Dec 2014 01:32:14 +0900</pubDate>
-    <lastBuildDate>Wed, 17 Dec 2014 01:32:14 +0900</lastBuildDate>
+    <pubDate>Thu, 18 Dec 2014 02:03:26 +0900</pubDate>
+    <lastBuildDate>Thu, 18 Dec 2014 02:03:26 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>jQueryの記法で学ぶWeb3D勉強会@Adwaysに行ってきました</title>
+        <description>&lt;p&gt;12/16(火)に、Adwaysさんで開かれたjThreeの勉強会にお邪魔してきました。&lt;br&gt;
+10名ほどのアットホームな感じの勉強会でいろいろお話が出来て楽しかったです。松田さん、参加された皆さんありがとうございました。&lt;/p&gt;
+
+&lt;p&gt;jQueryの記法で学ぶWeb3D勉強会@Adways&lt;br&gt;
+&lt;a href=&quot;https://atnd.org/events/60053&quot;&gt;https://atnd.org/events/60053&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;38階から新宿の街を見下ろせる素晴らしい眺望の会場でした。せっかくの景色なのに、写真撮ってくるのを忘れてしまった…&lt;/p&gt;
+
+&lt;p&gt;勉強会の流れは、以下のwikiのチュートリアルに従って行われました。&lt;br&gt;
+&lt;a href=&quot;http://jthree.jp/wiki&quot;&gt;http://jthree.jp/wiki&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;それ以外に、立体音響の新機能などを紹介をして頂いたので、ここでその一部の使い方を簡単に紹介させて頂きます。&lt;/p&gt;
+
+&lt;h1&gt;XYZ軸の補助線表示&lt;/h1&gt;
+
+&lt;p&gt;3Dの世界でカメラを動かしていると、XYZ軸がどこにあるか見失ってしまうので、それをわかりやすくするために補助線を表示する事が出来ます。&lt;/p&gt;
+
+&lt;p&gt;ここからスタート：&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/?id=UdbmUw&quot;&gt;http://editor.jthree.jp/?id=UdbmUw&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;スクリプトのゴミが残っているので、&lt;br&gt;
+JavaScriptから以下を削除&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;  &lt;span class=&quot;nx&quot;&gt;j3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;mesh&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;j3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;geo&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;j3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;attr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;geo&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#geo&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;animate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mtlColor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;mode&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#f00&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;#00f&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GOML(head部分)に&lt;br&gt;
+GOMLタグ→形状データ/立方体から挿入&lt;br&gt;
+GOMLタグ→材質データ/つややかから挿入&lt;br&gt;
+idにそれぞれ、geo0,mtl0のように、適当なidを設定&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;geo&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Cube&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;param=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;3 3 3&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;mtl&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;mtl0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;MeshPhong&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;param=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;color: #f00; specular: #fff; ambient: #300;&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GOML(body部分)に&lt;br&gt;
+GOMLタグ→一般オブジェクト/メッシュから挿入&lt;br&gt;
+geo,mtlに先ほどの形状・材質に設定したidを記載&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/mesh&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GOML(body部分)に書いた&lt;br&gt;
+先ほどのmeshのstyleに「axis:20;」のように指定を追記&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;axis:20;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/mesh&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16041840381&quot; title=&quot;jthree211_1 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7552/16041840381_fb9eace71b.jpg&quot; width=&quot;500&quot; height=&quot;480&quot; alt=&quot;jthree211_1&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Red=X軸, Green=Y軸, Blue=Z軸 という色で軸が表示されます。特に、回転させるときなど重宝しそうです。&lt;br&gt;
+また、sceneタグ自体にもaxisを指定することが可能です。&lt;/p&gt;
+
+&lt;h1&gt;立体音響&lt;/h1&gt;
+
+&lt;p&gt;目玉機能の立体音響です。視点を移動させることで音響の聞こえ方が変わりますが、言葉で説明するよりも、やってみた方が速いので、以下の手順で試して見てください。&lt;/p&gt;
+
+&lt;p&gt;HTML(body部分)に、&lt;br&gt;
+プラグイン→音源/千本桜から挿入&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;audio&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;controls&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;audio/sakura.mp3&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;audio/sakura.ogg&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/audio&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;CSSに以下を記載&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;audio&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GOML(body部分)に書いた&lt;br&gt;
+meshのstyleに「audio=&amp;quot;html audio&amp;quot;」のように指定を追記&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mesh&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;geo=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#geo0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;mtl=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#mtl0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;axis:20;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;audio=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;html audio&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/mesh&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以下のような感じで表示されるので、左上の再生ボタンで音楽を再生します。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16041840311&quot; title=&quot;jthree211_2 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7490/16041840311_a3cf0af454.jpg&quot; width=&quot;500&quot; height=&quot;381&quot; alt=&quot;jthree211_2&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;マウス操作で視点を離して3Dのメッシュが小さく見えるようになると音が小さくなります。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15857738619&quot; title=&quot;jthree211_3 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7570/15857738619_f97cd043d5.jpg&quot; width=&quot;500&quot; height=&quot;382&quot; alt=&quot;jthree211_3&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;マウス操作で視点を回転させると、音の聞こえる方向が変わります。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15856511060&quot; title=&quot;jthree211_4 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7530/15856511060_386166b840.jpg&quot; width=&quot;500&quot; height=&quot;383&quot; alt=&quot;jthree211_4&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;Audioとダンスの同期&lt;/h1&gt;
+
+&lt;p&gt;jThreeでは簡単に初音ミクを踊らせることができます。ここでは、音楽にあわせてダンスを踊らせてみます。&lt;/p&gt;
+
+&lt;p&gt;ここからスタート：&lt;br&gt;
+&lt;a href=&quot;http://editor.jthree.jp/?id=UdbmUw&quot;&gt;http://editor.jthree.jp/?id=UdbmUw&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;HTML(head部分)に&lt;br&gt;
+プラグイン→モデルローダ/MMD(.pmx/.vmd)から挿入&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;libs/mmd/1.5/jThree.MMD.js&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;HTML(body部分)に&lt;br&gt;
+プラグイン→音源/カゲロウデイズから挿入&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;audio&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;controls&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;audio/kagerou.mp3&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;source&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;audio/kagerou.ogg&amp;quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/audio&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;GOML(scene配下)に&lt;br&gt;
+GOMLタグ→MMDモデル/初音ミクから挿入&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;mmd&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;model=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;model/miku/index.pmx&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;motion=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;motion/kagerou.vmd&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/mmd&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;CSSに以下を記載&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nt&quot;&gt;audio&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;JavaScriptに以下を記載&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span class=&quot;nx&quot;&gt;jThree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;MMD&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;audio&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;これで音楽に同期をとって、初音ミクがダンスするようになります。一時停止や途中からの再生などを行うと同期がとられているのが分かると思います。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15858022457&quot; title=&quot;jthree211_5 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7550/15858022457_65f6ae5b0c.jpg&quot; width=&quot;451&quot; height=&quot;500&quot; alt=&quot;jthree211_5&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1&gt;背景を透明にする&lt;/h1&gt;
+
+&lt;p&gt;Webサイト上にjThreeを配置する場合のために、Webサイトになじませるために3Dオブジェクトの周りを透明にする方法を試して見ます。&lt;br&gt;
+ここではbody背景が緑色のWebサイトの中心に初音ミクを表示させてみます。&lt;/p&gt;
+
+&lt;p&gt;HTML(body部分)に以下を追記&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;parts0&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;CSSに以下を記載&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-css&quot; data-lang=&quot;css&quot;&gt;&lt;span class=&quot;nf&quot;&gt;#parts0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;position&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;absolute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;top&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;25%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;25%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;50%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;CSSのbodyに、background-colorを指定&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;body {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color:#0f0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;ここまでで、以下のような表示になると思いますが、このようにWebGL部分だけ白抜けになってしまいます。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/15858022417&quot; title=&quot;jthree211_6 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm8.staticflickr.com/7500/15858022417_183a530c46.jpg&quot; width=&quot;500&quot; height=&quot;453&quot; alt=&quot;jthree211_6&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;GOML(head配下)の、rdrのparamから&lt;br&gt;
+「clearColor: #fff;」を削除して、「clearAlpha:0;」を追記。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;rdr&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;frame=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;#parts0&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;camera=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;camera:first&amp;quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;param=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;clearAlpha:0;antialias: true;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;これで、白抜け部分が透明になり、Webサイトになじむようになりました。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16018012676&quot; title=&quot;jthree211_7 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm9.staticflickr.com/8659/16018012676_81efc67e89.jpg&quot; width=&quot;423&quot; height=&quot;361&quot; alt=&quot;jthree211_7&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;以上、駆け足でしたが機能の使い方を紹介させて頂きました。&lt;/p&gt;
+
+&lt;p&gt;立体音響の機能が加わり、グラフィックだけでなくサウンドでも3Dを楽しめる用になるなど、jThreeはますます面白くなりました。&lt;br&gt;
+3Dの世界に興味を持たれた方は、手軽なjThreeを手始めに、是非面白いコンテンツを作って見てください。そういう人が増えると、世の中どんどん面白くなるのではないかなと思います。&lt;/p&gt;
+</description>
+        <pubDate>Thu, 18 Dec 2014 02:01:33 +0900</pubDate>
+        <link>http://takemikami.com/2014/12/18/jQueryWeb3DAdways.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2014/12/18/jQueryWeb3DAdways.html</guid>
+        
+        <category>jThree</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>Sublime Text3 でローカルPC上にjThreeの開発環境を作る(v2.1.0編)</title>
@@ -1146,189 +1323,6 @@ $ bundle install --path vendor/bundle
         <guid isPermaLink="true">http://takemikami.com/2014/09/16/blogjekyll.html</guid>
         
         <category>jekyll</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>blogをGitHubPages/jekyllに移行したメモ</title>
-        <description>&lt;p&gt;このブログをGitHubPagesに移行し、同時にWordPressからjekyllでの静的ページ生成に切り替えたので。移行のメモとして、GitHubPagesとjekyllでサイトを作成する手順を残しておきます。&lt;/p&gt;
-
-&lt;p&gt;GitHubPageではjekyllを使って動的にサイト生成する機能があるのですが、pluginなどを自由に拡張できないなどの制約があるので、Shippableでページを生成して、静的ファイルをホスティングする流れでいきます。全体の流れを以下の図に示します。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://farm4.staticflickr.com/3886/15226091626_5cf3367829.jpg&quot; alt=&quot;ShippableとGitHubPages全体図&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;この手順を実施する際に以下のページを参考にさせていただきました。
-Shippableの場合はsshkeyがあるのでTravisのよりも、シンプルに実現できました。&lt;/p&gt;
-
-&lt;p&gt;Middleman で作った web サイトを Travis + GitHub pages でお手軽に運用する
-&lt;a href=&quot;http://tricknotes.hateblo.jp/entry/2013/06/17/020229&quot;&gt;http://tricknotes.hateblo.jp/entry/2013/06/17/020229&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;GutHubPagesを準備する&lt;/h1&gt;
-
-&lt;h2&gt;GitHubPagesとは&lt;/h2&gt;
-
-&lt;p&gt;GitHubPagesとは、GitHubのサーバで静的なWebサイトをホスティングする機能です。サイトのソースコードがGitHubのリポジトリで管理されます。&lt;/p&gt;
-
-&lt;p&gt;HTML, CSS, Japascript, ImageなどをリポジトリにpushするとWebサイトとして公開されるという仕組みです。&lt;/p&gt;
-
-&lt;p&gt;詳しくはこちら、 &lt;a href=&quot;https://pages.github.com/&quot;&gt;https://pages.github.com/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;GitHubPageを準備する&lt;/h2&gt;
-
-&lt;p&gt;手順は、先ほどのページに書いてありますが。「[githubのアカウント名].github.io」という名称のリポジトリをgithubに作成して。「index.html」ファイルをpushすれば準備完了です。&lt;/p&gt;
-
-&lt;p&gt;しばらく待ってから、&lt;code&gt;http://[githubのアカウント名].github.io/&lt;/code&gt;にアクセスするとサイトが確認できます。（※ 私の場合、10分と少しほど待てば確認出来ました。）&lt;/p&gt;
-
-&lt;h1&gt;PCへのjekyllセットアップ&lt;/h1&gt;
-
-&lt;h2&gt;jekyllとは&lt;/h2&gt;
-
-&lt;p&gt;jekyllとは、markdownやtextile記法で書かれたテキストファイルを、静的なWebサイトやブログに変換するツールです。GitHubPagesやOctpressというブログツールなどで利用されています。&lt;/p&gt;
-
-&lt;p&gt;詳しくはこちら、&lt;a href=&quot;http://jekyllrb.com&quot;&gt;http://jekyllrb.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;jekyllのセットアップ&lt;/h2&gt;
-
-&lt;p&gt;まずはローカルPCにjekyllをセットアップします。rubyの環境が構築出来ている前提で話をすすめます。（※私の場合は、MacOSX&amp;amp;rbenvでruby2.1.2でやっています）&lt;/p&gt;
-
-&lt;p&gt;bundlerで、jekyllをセットアップします。&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;Gemfile&lt;/code&gt;を次のように作成&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://rubygems.org&amp;#39;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;jekyll&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のように、インストールと初期化を実施。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path vendor/bundle
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll new &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;/.gitignore ./
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mv &lt;span class=&quot;nb&quot;&gt;source&lt;/span&gt;/_config.yml ./
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;_config.yml&lt;/code&gt;に以下を追記しておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# Global settings&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;source&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;※_config.ymlの設定についてはこちら、&lt;a href=&quot;http://jekyllrb.com/docs/configuration/&quot;&gt;http://jekyllrb.com/docs/configuration/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;ここまで出来たら以下のコマンドから、開発用Webサーバを起動し、&lt;code&gt;http://localhost:4000/&lt;/code&gt; で表示を確認出来るはずです。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;.gitignore&lt;/code&gt;に、以下を追加しておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Ignore vendor gems
-/vendor/bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここで一度commitしておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git init
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git add --all
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git commit -a -m &lt;span class=&quot;s2&quot;&gt;&amp;quot;install jekyll&amp;quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;このリポジトリをbitbucketの非公開リポジトリにpushしておきます。手順は、bitbucketで新規リポジトリを生成した後に出てくる、既存リポジトリの登録方法を参照してください。&lt;/p&gt;
-
-&lt;h2&gt;GitHubPagesへの公開&lt;/h2&gt;
-
-&lt;p&gt;それでは、ローカルPCからjekyllで生成したページをGitHubPagesに公開します。&lt;/p&gt;
-
-&lt;p&gt;まず、&lt;code&gt;_site&lt;/code&gt;以下に、GitHubPages用のリポジトリを取り込みます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ rm -rf _site
-$ git clone git@github.com:[あなたのID]/[あなたのID].github.io.git _site
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;jekyllでページを生成します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle exec jekyll build
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;_site&lt;/code&gt;以下でcommit/pushを行い、変更をGitHubPagesに反映します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ cd _site
-$ git add --all
-$ git commit -m &amp;quot;&amp;quot;
-$ git push
-$ cd ../
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここまで出来たら&lt;code&gt;http://[あなたのID].github.io/&lt;/code&gt; でサイトの表示を確認出来るはずです。&lt;/p&gt;
-
-&lt;h1&gt;Shippableでの配備の設定&lt;/h1&gt;
-
-&lt;h2&gt;Shippableとは&lt;/h2&gt;
-
-&lt;p&gt;Shippableとはアプリケーションの継続的インテグレーションと配備の機能を提供しているWebサービスです。類似のサービスにTravisCIやCircleCIなどがあります。&lt;/p&gt;
-
-&lt;p&gt;shippableでの継続的インテグレーションは、以下の２点を対応を行えば設定することができます。&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;対象リポジトリにshippable.ymlという定義ファイルを格納&lt;/li&gt;
-&lt;li&gt;ShippableにbitbucketのIDでログインし該当リポジトリをEnableに設定&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;詳しくはこちら、 &lt;a href=&quot;http://www.shippable.com&quot;&gt;http://www.shippable.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;Shippableでの配備設定を行う&lt;/h2&gt;
-
-&lt;p&gt;前準備として、先ほど手動で行ったGitHubPagesへの公開の手順を&lt;code&gt;Rakefile&lt;/code&gt;として作成しておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;REPO_URL=&amp;#39;git@github.com:[あなたのID]/[あなたのID].github.io.git&amp;#39;
-
-desc &amp;#39;setup for github pages deploy&amp;#39;
-task :setup do
-  unless File.exists?(&amp;#39;_site/.git&amp;#39;)
-    system &amp;#39;rm -rf _site&amp;#39;
-    system &amp;quot;git clone --quiet #{REPO_URL} _site&amp;quot;
-  end
-end
-
-desc &amp;#39;build site&amp;#39;
-task :build do
-  system &amp;#39;rm -rf _site/*&amp;#39;
-  system &amp;#39;bundle exec jekyll build&amp;#39;
-end
-
-desc &amp;#39;deploy to github pages&amp;#39;
-task :deploy do
-  msg = `git log -n 1 --oneline`.chomp
-  system &amp;quot;cd _site &amp;amp;&amp;amp; git add --all &amp;amp;&amp;amp; git commit -m \&amp;quot;update with #{msg}\&amp;quot;&amp;quot;
-  system &amp;quot;cd _site &amp;amp;&amp;amp; git push --quiet #{REPO_URL}&amp;quot;
-end
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;以下のように&lt;code&gt;shippable.yml&lt;/code&gt;を作成して、Rakefileで定義したtaskを呼び出すようにします。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;language&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;ruby&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;rvm&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;2.0.0&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;branches&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;l-Scalar-Plain&quot;&gt;only&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;master&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;before_script&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake setup&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake build&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;after_success&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;p-Indicator&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;rake deploy&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Shippalbeの管理画面で、Organizationを選び、Reposの中から対象のリポジトリを選び「Enable」を押すと、継続的インテグレーションを有効にします。&lt;/p&gt;
-
-&lt;p&gt;ただし、このままではShippableからGitHubに対してpushが出来ないので、以下の手順でGitHubにsshkeyを登録します。&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Shippableの管理画面で、Organizationを選び、「Deployment Key」で表示される公開鍵をコピーします。&lt;/li&gt;
-&lt;li&gt;GitHubのアカウントSettingから「SSH Keys」を選び、「Add SSH Key」でShippableの公開鍵をペーストし、登録します&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;ここまで出来たら、次のようにbitbucketに変更をpushします。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ git add shippable.yml Rakefile
-$ git commit -a -m &amp;quot;install shippable&amp;quot;
-$ git push
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;あとは、自動的にShippableがページを生成して、GitHubPagesにpushしてサイトが公開されます。（Shippableがバージョンアップした直後だからなのか、無償アカウントだからなのか、30〜40分くらい待たないと生成が開始しないみたいです。）&lt;/p&gt;
-
-&lt;p&gt;生成から配備までの流れは以上になります。ここまで設定すれば、あとは記事を追加して、bitbucketにpushすれば、サイト公開まで自動的に行われます。&lt;/p&gt;
-
-&lt;p&gt;WordPressもよく出来たアプリケーションですが、このような仕組みの方がソースと公開したファイルのバージョン管理がやりやすくて好きですね。&lt;/p&gt;
-</description>
-        <pubDate>Tue, 16 Sep 2014 02:48:47 +0900</pubDate>
-        <link>http://takemikami.com/2014/09/16/blogGitHubPagesjekyll.html</link>
-        <guid isPermaLink="true">http://takemikami.com/2014/09/16/blogGitHubPagesjekyll.html</guid>
-        
-        <category>jekyll</category>
-        
-        <category>github</category>
-        
-        <category>shippable</category>
         
         
         <category>it技術</category>
