@@ -6,9 +6,56 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 18 Dec 2014 02:12:36 +0900</pubDate>
-    <lastBuildDate>Thu, 18 Dec 2014 02:12:36 +0900</lastBuildDate>
+    <pubDate>Sat, 28 Mar 2015 23:50:30 +0900</pubDate>
+    <lastBuildDate>Sat, 28 Mar 2015 23:50:30 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>リアルタイム通信が楽しくなるmilkcocoaハッカソン！でサイリウムを振ってきました</title>
+        <description>&lt;p&gt;3/28(土)に、リアルタイム通信が楽しくなるmilkcocoaハッカソン！に参加してサイリウムを振ってきました。会場はソラシティという新御茶ノ水駅直結の綺麗なビルにある「デジタルハリウッド大学」さんでした。&lt;br&gt;
+今回は、個人的に知り合いも多かったこともありとてもリラックスしてハッカソンに取り組め、楽しかったです。&lt;/p&gt;
+
+&lt;p&gt;リアルタイム通信が楽しくなるmilkcocoaハッカソン！&lt;br&gt;
+&lt;a href=&quot;http://mlkcca.connpass.com/event/12332/?utm_campaign=promote_12332&amp;amp;utm_medium=facebook&amp;amp;utm_source=promote&quot;&gt;http://mlkcca.connpass.com/event/12332/?utm_campaign=promote_12332&amp;amp;utm_medium=facebook&amp;amp;utm_source=promote&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.flickr.com/photos/62769571@N03/16929027206&quot; title=&quot;DSC_0236 by takemikami, on Flickr&quot;&gt;&lt;img src=&quot;https://farm9.staticflickr.com/8753/16929027206_251175f0ef.jpg&quot; width=&quot;500&quot; height=&quot;281&quot; alt=&quot;DSC_0236&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;昨年10月にmilkcocoaのハッカソンに参加して、milkcocoaの簡単な使い方は知っていたこともあって、今回はもくもくとコーディングして来ました。&lt;/p&gt;
+
+&lt;p&gt;そして作成した作品がこれです。&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;375&quot; allowfullscreen allowtransparency=&quot;true&quot; frameborder=&quot;0&quot; src=&quot;http://jthird.net/?v=MwYBMg&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Miku and Cyalume | jThird&lt;br&gt;
+&lt;a href=&quot;http://jthird.net/?w=MwYBMg&quot;&gt;http://jthird.net/?w=MwYBMg&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;jThreeというライブラリを使うと、ブラウザ上で簡単に初音ミクを踊らせることができるのですが。初音ミクのダンス見るだけじゃ無く、自分たちも参加してみたいということでみんなでサイリウムを振れるようにしてみました。&lt;br&gt;
+右下の「add」を押すとサイリウムを追加して、「shake」を押すとサイリウムを振ります。&lt;br&gt;
+ブラウザを２つ立ち上げ両方にこのページを表示して「shake」を押すと、片方で押して「shake」に反応して逆側のブラウザでもサイリウムが振られているのが確認出来ると思います。この部分がmilkcocoaでリアルタイム通信をしている部分です。  &lt;/p&gt;
+
+&lt;p&gt;ニコニコ動画にあるような「○○してみた」系のコンテンツで、見た人がサイリウムを振るくらいの気軽さで作品に反応することができれば、見てる人も参加してる感があるし、作品作った側も反応を感じやすくて、楽しいんじゃ無いかなぁと思います。&lt;/p&gt;
+
+&lt;p&gt;ちなみにこの作品は、jThirdというWeb3Dな作品を簡単に公開できるプラットフォームを使って作成・公開しています。&lt;br&gt;
+興味のある方は、以下の使い方の記事を参考に使ってみてはいかがでしょうか？ 今回のハッカソンを通じて、ハッカソンなどでささっと作った物を公開する場所として、こういうプラットフォームを使うと便利だなと感じました。&lt;/p&gt;
+
+&lt;p&gt;jThird&lt;br&gt;
+&lt;a href=&quot;http://jthird.net/&quot;&gt;http://jthird.net/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;jThird Editorの使い方 | Qiita&lt;br&gt;
+&lt;a href=&quot;http://qiita.com/m_mitsuhide/items/7fe21c70ba51bfb145e3&quot;&gt;http://qiita.com/m_mitsuhide/items/7fe21c70ba51bfb145e3&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 28 Mar 2015 23:42:40 +0900</pubDate>
+        <link>http://takemikami.com/2015/03/28/milkcocoa.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2015/03/28/milkcocoa.html</guid>
+        
+        <category>milkcocoa</category>
+        
+        <category>jThree</category>
+        
+        
+        <category>it技術</category>
+        
+      </item>
     
       <item>
         <title>jQueryの記法で学ぶWeb3D勉強会@Adwaysに行ってきました</title>
@@ -1229,103 +1276,6 @@ $ bundle install --path vendor/bundle
         <category>rails</category>
         
         <category>slack</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>blog用にjekyllを設定したメモ</title>
-        <description>&lt;p&gt;このブログをjekyllで生成するにあたって、プラグインとかいろいろと調べたので、このエントリにまとめておきます。&lt;/p&gt;
-
-&lt;h1&gt;基本的なこと&lt;/h1&gt;
-
-&lt;h2&gt;jekyllのプラグイン機能って？&lt;/h2&gt;
-
-&lt;p&gt;jekyllにはプラグイン機能があり、いろいろとサイト生成の挙動を拡張できます。作成したプラグインは&lt;code&gt;_plugins&lt;/code&gt;ディレクトリに配置して利用します。以下のページの「Available Plugins」というところで、利用できるプラグインも紹介されています。&lt;/p&gt;
-
-&lt;p&gt;プラグイン機能の説明： &lt;a href=&quot;http://jekyllrb.com/docs/plugins/&quot;&gt;http://jekyllrb.com/docs/plugins/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;Liquidって？&lt;/h2&gt;
-
-&lt;p&gt;jekyllではLiquidというテンプレートエンジンを利用しています。基本的には、変数の表示：&lt;code&gt;{{ variable }}&lt;/code&gt;、機能の実行：&lt;code&gt;{% function %}&lt;/code&gt;で、テンプレートを作成していきます。Liquidの文法などは次のページに説明があります。&lt;/p&gt;
-
-&lt;p&gt;Liquid Documentaion：  &lt;a href=&quot;http://docs.shopify.com/themes/liquid-documentation/basics&quot;&gt;http://docs.shopify.com/themes/liquid-documentation/basics&lt;/a&gt;&lt;/p&gt;
-
-&lt;h1&gt;設定したこと&lt;/h1&gt;
-
-&lt;p&gt;jekyllとか関係ないこともありますが、ブログを生成する際に設定したことをずらっと並べていきます。&lt;/p&gt;
-
-&lt;h2&gt;アイコンを利用する&lt;/h2&gt;
-
-&lt;p&gt;このブログでは、 &lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt; &lt;i class=&quot;fa fa-calendar&quot;&gt;&lt;/i&gt; などのアイコンを利用していますが、これはFont Awesomeというツールキットのアイコンです。以下のプラグインを使えばLiquidのタグでアイコンを表示出来るようになります。&lt;/p&gt;
-
-&lt;p&gt;アイコンを表示するプラグイン： &lt;a href=&quot;http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/&quot;&gt;http://ryancmorrissey.com/blog/2014/01/25/font-awesome-icons-jekyll-tag-plugin/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Font Awesomeについて： &lt;a href=&quot;http://fortawesome.github.io/Font-Awesome/&quot;&gt;http://fortawesome.github.io/Font-Awesome/&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;アイコンの一覧：　&lt;a href=&quot;http://fortawesome.github.io/Font-Awesome/icons/&quot;&gt;http://fortawesome.github.io/Font-Awesome/icons/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;一覧をページングする&lt;/h2&gt;
-
-&lt;p&gt;一覧ページをページングする場合は、次のページの方法で設定します。&lt;/p&gt;
-
-&lt;p&gt;Pagination: &lt;a href=&quot;http://jekyllrb.com/docs/pagination/&quot;&gt;http://jekyllrb.com/docs/pagination/&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;タグページを作る&lt;/h2&gt;
-
-&lt;p&gt;タグページ（タグ毎の投稿一覧ページ）を作成する場合は、次のプラグインを利用します。このプラグインでタグクラウドも生成出来ます。&lt;/p&gt;
-
-&lt;p&gt;jekyll-tagginプラグイン：&lt;a href=&quot;https://github.com/pattex/jekyll-tagging&quot;&gt;https://github.com/pattex/jekyll-tagging&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;カテゴリページを作る&lt;/h2&gt;
-
-&lt;p&gt;カテゴリページ（カテゴリ毎の投稿一覧ページ）は、次のページを参考に作成しました。
- jekyllのカテゴリページ：&lt;a href=&quot;http://count0.org/2013/07/04/jekyll-category-page.html&quot;&gt;http://count0.org/2013/07/04/jekyll-category-page.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;サイトマップを作る&lt;/h2&gt;
-
-&lt;p&gt;サイトマップ（検索エンジンに読み込ませるためのサイトマップ）は、次のプラグインで生成できます。&lt;/p&gt;
-
-&lt;p&gt;Jekyll Plugin: sitemap.xml Generator : &lt;a href=&quot;https://github.com/kinnetica/jekyll-plugins&quot;&gt;https://github.com/kinnetica/jekyll-plugins&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;Liquidのテンプレートを無効にする&lt;/h2&gt;
-
-&lt;p&gt;投稿の本文に&lt;code&gt;{{ variable }}&lt;/code&gt;のような記載があるとLiquidのタグとして処理され困ることがあるので、これを回避するために以下のプラグインで無効化出来るようにします。&lt;/p&gt;
-
-&lt;p&gt;Raw tag for jekyll:  &lt;a href=&quot;https://gist.github.com/phaer/1020852&quot;&gt;https://gist.github.com/phaer/1020852&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;数式を表示する&lt;/h2&gt;
-
-&lt;p&gt;数式の表示にはMathJaxを利用します。これでLaTexライクに数式が利用できます。以下はjekyllでの設定方法と、MathJax自体のドキュメントです。&lt;/p&gt;
-
-&lt;p&gt;MathJax with Jekyll: &lt;a href=&quot;http://gastonsanchez.com/blog/opinion/2014/02/16/Mathjax-with-jekyll.html&quot;&gt;http://gastonsanchez.com/blog/opinion/2014/02/16/Mathjax-with-jekyll.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;MathJax Documentation: &lt;a href=&quot;http://docs.mathjax.org/en/latest/index.html&quot;&gt;http://docs.mathjax.org/en/latest/index.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;MathJaxを利用する場合は&lt;code&gt;_&lt;/code&gt;記号を頻繁に利用するので、redcarpetを利用している場合は、&lt;code&gt;_config.yml&lt;/code&gt;を以下のように設定して強調表示を無効にしておいた方が良さそうです。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;l-Scalar-Plain&quot;&gt;markdown&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;l-Scalar-Plain&quot;&gt;redcarpet&lt;/span&gt;
-&lt;span class=&quot;l-Scalar-Plain&quot;&gt;redcarpet&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt;
- &lt;span class=&quot;l-Scalar-Plain&quot;&gt;extensions&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p-Indicator&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;#39;no_intra_emphasis&amp;#39;&lt;/span&gt;&lt;span class=&quot;p-Indicator&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2&gt;サイト内検索&lt;/h2&gt;
-
-&lt;p&gt;jekyllで生成するページは静的ページなので、サイト内検索は外部の機能を利用します（JavaScriptでなんとかするのもアリですが、）。このサイトで利用しているのはGoogleのカスタム検索です。&lt;/p&gt;
-
-&lt;p&gt;Googleのカスタム検索: &lt;a href=&quot;https://www.google.co.jp/cse/?hl=ja&quot;&gt;https://www.google.co.jp/cse/?hl=ja&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2&gt;ドラフト原稿を登録する&lt;/h2&gt;
-
-&lt;p&gt;jekyllでは、&lt;code&gt;_posts&lt;/code&gt;の代わりに&lt;code&gt;_drafts&lt;/code&gt;というディレクトリ配下に原稿を置くとドラフト原稿となり、&lt;code&gt;--drafts&lt;/code&gt;オプションをつけて起動した場合のみ、生成対象にすることが出来ます。これでドラフト原稿安心して、バージョン管理に含めることが出来ますね。。&lt;/p&gt;
-
-&lt;p&gt;他にもあるけど、ひとまずこんな感じ。。&lt;/p&gt;
-</description>
-        <pubDate>Tue, 16 Sep 2014 02:49:11 +0900</pubDate>
-        <link>http://takemikami.com/2014/09/16/blogjekyll.html</link>
-        <guid isPermaLink="true">http://takemikami.com/2014/09/16/blogjekyll.html</guid>
-        
-        <category>jekyll</category>
         
         
         <category>it技術</category>
