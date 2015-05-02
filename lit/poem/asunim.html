@@ -18,6 +18,7 @@
     <link rel="canonical" href="http://takemikami.com/lit/poem/asunim.html">
     
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({ tex2jax: { inlineMath: [["\\(","\\)"]] } });
     </script>
@@ -235,6 +236,15 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
   ga('require', 'linkid', 'linkid.js');
   ga('send', 'pageview');
 
+</script>
+
+<script type="text/javascript">
+$(function(){$("a").click(function(e){
+var ahref = jQuery(this).attr('href');
+if(ahref.indexOf("www.amazon.co.jp")!=-1 && ahref.indexOf("teltelnopaige-22")!=-1){
+ ga('send', 'event', 'affiliate', 'amazon', document.title );
+}
+});});
 </script>
 
 
