@@ -6,9 +6,76 @@
 </description>
     <link>http://takemikami.com/</link>
     <atom:link href="http://takemikami.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 02 May 2015 18:41:20 +0900</pubDate>
-    <lastBuildDate>Sat, 02 May 2015 18:41:20 +0900</lastBuildDate>
+    <pubDate>Tue, 19 May 2015 01:14:11 +0900</pubDate>
+    <lastBuildDate>Tue, 19 May 2015 01:14:11 +0900</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>大阪都構想について思ったことつらつら</title>
+        <description>&lt;p&gt;先日の住民投票で、大阪都構想が僅差の反対多数で否決されました。&lt;br&gt;
+大阪府にも大阪市にも住んだことは無いですが、&lt;br&gt;
+お隣の兵庫県出身の私にとっても関心の高い事柄でした。&lt;/p&gt;
+
+&lt;p&gt;特に、何か結論があるわけでも無いですが、&lt;br&gt;
+思ったことをつらつらと書こうと思います。&lt;/p&gt;
+
+&lt;p&gt;大阪都構想の意図としては、&lt;br&gt;
+①府市の二重行政の財源の無駄を無くす&lt;br&gt;
+②府市一本化で意思決定を迅速にし、大阪を成長させる&lt;br&gt;
+という２点になるのかなと理解しています。&lt;/p&gt;
+
+&lt;p&gt;詳しくは以下のページに&lt;br&gt;
+大阪都構想&lt;br&gt;
+　&lt;a href=&quot;http://oneosaka.jp/tokoso/&quot;&gt;http://oneosaka.jp/tokoso/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;何年もかけて議論されてきた中で、&lt;br&gt;
+大阪維新の会が都構想を提案し始めた頃は、&lt;br&gt;
+賛成ムードの方が強い世論だったのかなという印象を、私は持っていました。  &lt;/p&gt;
+
+&lt;p&gt;ただ私は、「東京の特別区」のような制度と聞いたときに、&lt;br&gt;
+東京の制度は、手放しで成功と言える制度では無いし、&lt;br&gt;
+東京のような制度では、&lt;br&gt;
+大阪府民はともかく、大阪市民には不利益が多いのではないかと思っていました。&lt;br&gt;
+# 東京の制度は、区の財源・権限が限定され過ぎているという意見もある&lt;/p&gt;
+
+&lt;p&gt;このあたりの懸念点は、&lt;br&gt;
+東京都よりも区に財源や権限を多く与える制度設計になっていたり、&lt;br&gt;
+区が小規模になり過ぎないように区割りを設計したり、&lt;br&gt;
+などの配慮が、なされていたようです。&lt;/p&gt;
+
+&lt;p&gt;このあたりの懸念とその懸念に対する配慮が、&lt;br&gt;
+住民投票をする市民にどれくらい伝わっていたのだろうか？&lt;br&gt;
+ということには、とても疑問に思いました。  &lt;/p&gt;
+
+&lt;p&gt;「東京の特別区」の制度を元にはしているけれど、&lt;br&gt;
+東京のイケてないところを修正した、東京よりも優れた制度です！&lt;br&gt;
+東京よりもイケてる大阪を作ろうというPRを、&lt;br&gt;
+早くからしていたら結果は違ったのかも知れないなと思ったりもしました。&lt;br&gt;
+# 私自身は大阪の現状や都構想について詳しく調べた訳でも無く&lt;br&gt;
+# 反対とも賛成とも言えないのですが、&lt;/p&gt;
+
+&lt;p&gt;都構想の賛否を問う住民投票でしたが、&lt;br&gt;
+大阪がこのままではダメだと思っている人がとても多かったんだな、&lt;br&gt;
+という印象を持ちました。
+都構想に賛成した方はもちろん、&lt;br&gt;
+都構想という制度には反対だが…、という方もいたと思われるので。&lt;/p&gt;
+
+&lt;p&gt;東日本大震災の時に首都機能が麻痺したりなど&lt;br&gt;
+何かと問題の多い東京への一極集中を避ける意味や、&lt;br&gt;
+日本の文化を世界にPRしていく時には&lt;br&gt;
+文化財の多い近畿圏を活性化させることは大きな意味があると思います。&lt;br&gt;
+このままではダメだ、変えたいと思う方が多く居る大阪には、&lt;br&gt;
+日本全体の視点から見ても、&lt;br&gt;
+変化して強い都市になって行って欲しいなと、今回の投票結果を見て感じました。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 19 May 2015 01:10:18 +0900</pubDate>
+        <link>http://takemikami.com/2015/05/19/osakato.html</link>
+        <guid isPermaLink="true">http://takemikami.com/2015/05/19/osakato.html</guid>
+        
+        
+        <category>日記</category>
+        
+      </item>
     
       <item>
         <title>SE35歳定年説と数学と</title>
@@ -909,299 +976,6 @@ PCのカメラで上手く撮影するのが難しいから、セルフタイマ
         <guid isPermaLink="true">http://takemikami.com/2014/10/03/webrtcmeetup4.html</guid>
         
         <category>webrtc</category>
-        
-        
-        <category>it技術</category>
-        
-      </item>
-    
-      <item>
-        <title>Rails製ECサイトのSpreeCommerceをインストールしてみた手順</title>
-        <description>&lt;p&gt;SpreeCommerceというRailsで作られたECサイトのオープンソースパッケージがあったので、インストールして少しだけ設定してみました。&lt;/p&gt;
-
-&lt;p&gt;SpreeCommerce&lt;br&gt;
-　&lt;a href=&quot;https://github.com/spree/spree&quot;&gt;https://github.com/spree/spree&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;空のRailsアプリを作って、そこに認証機能(Devise)をインストール、SpreeCommerce本体をインストール、認証機能との連携、国際化、商品作成、PayPalプラグインを追加という流れでセットアップします。&lt;/p&gt;
-
-&lt;h1&gt;Railsアプリの作成&lt;/h1&gt;
-
-&lt;p&gt;以下のコマンドのようにして、さらっとRailsアプリの基本を作ります。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mkdir sample
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;sample
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;source &amp;#39;https://rubygems.org&amp;#39;&amp;quot;&lt;/span&gt; &amp;gt; Gemfile
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;gem &amp;#39;rails&amp;#39;, &amp;#39;4.1.4&amp;#39;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; Gemfile
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path vendor/bundle
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails new . --skip-bundle
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;rm Gemfile.lock
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install --path vendor/bundle
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;認証機能(devise)のインストール&lt;/h1&gt;
-
-&lt;p&gt;認証機能もつけたいのでdeviseをインストールします。以下のdeviseのページに書かれている流れの通り、さらっと設定します。&lt;/p&gt;
-
-&lt;p&gt;devise&lt;br&gt;
-　&lt;a href=&quot;https://github.com/plataformatec/devise&quot;&gt;https://github.com/plataformatec/devise&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;gem &amp;#39;devise&amp;#39;&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; Gemfile
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails generate devise:install
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails generate devise User
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rake db:migrate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;app/views/layouts/application.html.erb&lt;/code&gt;に以下を追記しておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;p class=&amp;quot;notice&amp;quot;&amp;gt;&amp;lt;%= notice %&amp;gt;&amp;lt;/p&amp;gt;
-&amp;lt;p class=&amp;quot;alert&amp;quot;&amp;gt;&amp;lt;%= alert %&amp;gt;&amp;lt;/p&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ひとまず、&lt;code&gt;bundle exec rails s&lt;/code&gt;で起動し、&lt;code&gt;http://localhost:3000/users/sign_in&lt;/code&gt;でログイン画面が表示されることを確認しておきます。&lt;/p&gt;
-
-&lt;h1&gt;SpreeCommerce本体のインストール&lt;/h1&gt;
-
-&lt;p&gt;ここまで来れば、次はいよいよSpreeCommerceのインストールです。
-&lt;code&gt;Gemfile&lt;/code&gt;にSpree本体のgemを追記します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spree&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spree/spree&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;2-3-stable&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;bundle installの実行及びSpreeのインストールを実行します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails g spree:install --sample&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt; --seed&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;この状態で、&lt;code&gt;bundle exec rails s&lt;/code&gt;で起動して&lt;code&gt;http://localhost:3000/&lt;/code&gt;にアクセスすると、商品等何も無い状態のページが表示出来ます。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5566/15084575120_5c5ef0d604.jpg&quot; alt=&quot;spree-plain&quot;&gt;&lt;/p&gt;
-
-&lt;p&gt;※この手順では実施しませんが、以下を入力するとサンプルデータを投入できます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle exec rake db:seed
-$ bundle exec rake spree_sample:load
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;カスタム認証(deviseと連携する)&lt;/h1&gt;
-
-&lt;p&gt;SpreeCommerceと認証機能との連携については、以下のSpreeCommerceのドキュメントに手順が説明されているので、この記事に従って、設定します。&lt;/p&gt;
-
-&lt;p&gt;Custome Authentication - Developer Guide&lt;br&gt;
-　&lt;a href=&quot;http://guides.spreecommerce.com/developer/authentication.html&quot;&gt;http://guides.spreecommerce.com/developer/authentication.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;DeviseのユーザテーブルにSpreeCommerceで利用するカラムを追加します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ bundle exec rails g spree:custom_user User
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;SpreeCommerceと連携させるモデルの名称を設定ファイル&lt;code&gt;config/initializers/spree.rb&lt;/code&gt;で指定します。変更前は「Spree::LegacyUser」になっています。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Spree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;user_class&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;User&amp;quot;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;lib/spree/authentication_helpers.rb&lt;/code&gt;をdeviseのユーザモデル名に変更します。本エントリの手順の場合は変更不要ですが、ユーザのモデル名を「User」以外に設定した場合は、次の部分の&lt;code&gt;current_user&lt;/code&gt;を変更します。例えばモデル名をPersonにした場合はcurrent_personにする。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    def spree_current_user
-      current_user
-    end
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;config/routes.rb&lt;/code&gt;で、SpreeCommerceの遷移先パスの接続先をDeviseのコントローラに向けます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;devise_scope&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:user&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/login&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;devise/sessions#new&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/signup&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;devise/registrations#new&amp;quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;/logout&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:to&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;devise/sessions#destroy&amp;quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ヘッダのナビバーにログイン状態表示・ログイン・ログアウトボタンを表示するビューを追加します。Defaceというもので、元のビューに内容を追加したり、置き換えたりすることが出来まます。ここでは、Defaceの差し込み機能を使って、ナビバーに必要な情報を追加します。&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;app/overrides/auth_login_bar.rb&lt;/code&gt;で、差し込み部分・差し込むビューを定義。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Deface&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Override&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:virtual_path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;spree/shared/_nav_bar&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- &lt;span class=&quot;ss&quot;&gt;:name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;auth_shared_login_bar&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- &lt;span class=&quot;ss&quot;&gt;:insert_before&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;li#search-bar&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- &lt;span class=&quot;ss&quot;&gt;:partial&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;spree/shared/login_bar&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- &lt;span class=&quot;ss&quot;&gt;:disabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
- &lt;span class=&quot;ss&quot;&gt;:original&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;eb3fa668cd98b6a1c75c36420ef1b238a1fc55ad&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;app/views/spree/shared/_login_bar.html.erb&lt;/code&gt;で差し込むビューを定義。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;% if &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spree_current_user&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;  &amp;lt;li&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%= link_to Spree.t(:logout), spree_logout_path, :method =&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:delete&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;  &amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;% else %&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;  &amp;lt;li&amp;gt;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;%= link_to Spree.t(:login), spree_login_path %&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;  &amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;  &amp;lt;li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;    &amp;lt;%=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;link_to&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Spree&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:signup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;spree_signup_path&lt;/span&gt; &lt;span class=&quot;sx&quot;&gt;%&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;sx&quot;&gt;  &amp;lt;/li&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sx&quot;&gt;% end &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここまで設定したら、以下のコマンドでDBにカラムを追加しておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rake db:migrate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;管理者ユーザの追加&lt;/h1&gt;
-
-&lt;p&gt;&lt;code&gt;bundle exec rails s&lt;/code&gt;でアプリを起動し、&lt;code&gt;http://localhost:3000/sign_up&lt;/code&gt;から、メールアドレス・パスワードを指定して、ユーザを登録します。&lt;/p&gt;
-
-&lt;p&gt;以下のようにコマンドを入力して、登録したユーザに管理権限を設定します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails c
-&amp;gt; &lt;span class=&quot;nv&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; User.find_by&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;email: &lt;span class=&quot;s2&quot;&gt;&amp;quot;※登録したメールアドレス※&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&amp;gt; user.spree_roles &amp;lt;&amp;lt; Spree::Role.find_or_create_by&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;name: &lt;span class=&quot;s2&quot;&gt;&amp;quot;admin&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;http://localhost:3000/admin&lt;/code&gt;にアクセスして管理画面を、と思ったらエラーが出てますね。。。&lt;/p&gt;
-
-&lt;p&gt;エラーメッセージとソース見てみた感じ、以下の内容で&lt;code&gt;app/assets/stylesheets/spree/backend/globals/_variables_override.scss&lt;/code&gt;というファイルを追加したら、管理画面が表示されました。（こういう仕様では無いような気がするので、すぐに解消されるような気がしますが。）&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$color-ste-success-bg:         #FFFFFF !default;
-$color-ste-notice-bg:          #FFFFFF !default;
-$color-ste-error-bg:           #FFFFFF !default;
-
-$color-ste-success-text:       #6788A2 !default;
-$color-ste-notice-text:        #6788A2 !default;
-$color-ste-error-text:         #6788A2 !default;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;再び&lt;code&gt;http://localhost:3000/admin&lt;/code&gt;にアクセスすると、管理画面が出てきました。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://farm6.staticflickr.com/5580/15084575300_95d10ef70f.jpg&quot; alt=&quot;spree-admin&quot;&gt;&lt;/p&gt;
-
-&lt;h1&gt;国際化モジュール(spree_i18n)のインストール&lt;/h1&gt;
-
-&lt;p&gt;&lt;code&gt;Gemfile&lt;/code&gt;にSpree国際化モジュールのgemを追記します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spree_i18n&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spree/spree_i18n&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;2-3-stable&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;bundle installの実行及びおよび国際化モジュールのインストールを行います。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails g spree_i18n:install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;&lt;code&gt;config/application.rb&lt;/code&gt;に日本語ロケールを指定しておきます。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;    &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i18n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;default_locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:ja&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;管理画面も日本語になりました。（※railsの再起動必要です）&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://farm4.staticflickr.com/3900/15270893312_463b3e763c.jpg&quot; alt=&quot;spree-adminjp&quot;&gt;&lt;/p&gt;
-
-&lt;h1&gt;商品の作成&lt;/h1&gt;
-
-&lt;p&gt;それでは、何か購入出来るように管理画面から商品を作ります。&lt;/p&gt;
-
-&lt;h2&gt;通貨の設定&lt;/h2&gt;
-
-&lt;p&gt;設定→一般で、以下の内容を設定して更新。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;通貨の設定 - 通貨の選択：JapaneseYen(JPY)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;ゾーンの作成&lt;/h2&gt;
-
-&lt;p&gt;設定→国→「＋NEW COUNTRY」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：日本&lt;/li&gt;
-&lt;li&gt;ISO名：JP&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;設定→ゾーン→「＋新規ゾーン」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：日本&lt;/li&gt;
-&lt;li&gt;支払い方法：国による区別&lt;/li&gt;
-&lt;li&gt;デフォルトのタックスゾーン：チェックあり&lt;/li&gt;
-&lt;li&gt;国：日本&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;税金の作成&lt;/h2&gt;
-
-&lt;p&gt;設定→税金カテゴリ→「＋新規税金カテゴリ」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：消費税&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;設定→税率→「＋新規税率」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：消費税（税込）&lt;/li&gt;
-&lt;li&gt;比率：8&lt;/li&gt;
-&lt;li&gt;価格に含まれる：チェックあり&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;配送方法の作成&lt;/h2&gt;
-
-&lt;p&gt;設定→配送カテゴリ→「＋新規配送カテゴリ」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：日本国内配送&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;設定→配送方法→「＋新規配送方法」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：日本国内配送&lt;/li&gt;
-&lt;li&gt;配送カテゴリ：日本国内配送&lt;/li&gt;
-&lt;li&gt;ゾーン：日本&lt;/li&gt;
-&lt;li&gt;計算方法：一定
-
-&lt;ul&gt;
-&lt;li&gt;金額：1000&lt;/li&gt;
-&lt;li&gt;通貨：JPY&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;税金：消費税（税込）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2&gt;商品の作成&lt;/h2&gt;
-
-&lt;p&gt;商品管理→プロトタイプ→「＋新規プロトタイプ」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;p&gt;名称：書籍&lt;/p&gt;
-
-&lt;p&gt;商品管理→「＋新規商品」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;名称：面白い本&lt;/li&gt;
-&lt;li&gt;定価：5000&lt;/li&gt;
-&lt;li&gt;発売開始日・入荷日：本日以前&lt;/li&gt;
-&lt;li&gt;Slug：HON-001&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;と思ったら、商品作ろうとするとslugが必須とエラーが出て商品が作れないですね(^_^;　とりあえず、以下のファイルを直接修正して、slugの入力欄を足しておきます。むりやりですが。。。&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;vendor/bundle/ruby/2.1.0/bundler/gems/spree-458e1cb3b6c1/backend/app/views/spree/admin/products/new.html.erb&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    &amp;lt;div class=&amp;#39;row&amp;#39;&amp;gt;
-    &amp;lt;div data-hook=&amp;quot;admin_product_form_slug&amp;quot;&amp;gt;
-      &amp;lt;%= f.field_container :slug do %&amp;gt;
-        &amp;lt;%= f.label :slug, raw(Spree.t(:slug) + content_tag(:span, &amp;#39; *&amp;#39;,  :class =&amp;gt; &amp;quot;required&amp;quot;)) %&amp;gt;
-        &amp;lt;%= f.text_field :slug, :class =&amp;gt; &amp;#39;fullwidth title&amp;#39; %&amp;gt;
-        &amp;lt;%= f.error_message_on :slug %&amp;gt;
-      &amp;lt;% end %&amp;gt;
-    &amp;lt;/div&amp;gt;
-    &amp;lt;/div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;ここまで設定して、&lt;code&gt;http://localhost:3000/&lt;/code&gt;を開くと、登録した商品が表示されます。カートには投入できますが、支払い方法が存在しないので、まだ購入完了まで進めません。&lt;/p&gt;
-
-&lt;h1&gt;Paypalとの決済連携モジュールをインストール&lt;/h1&gt;
-
-&lt;p&gt;&lt;code&gt;Gemfile&lt;/code&gt;にSpreeのPaypal支払いモジュールのgemを追記します。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spree_paypal_express&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;spree-contrib/better_spree_paypal_express&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;branch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;2-3-stable&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;bundle installとテーブル追加を行います。&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle install
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rails g spree_paypal_express:install
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;rake db:migrate
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h1&gt;Paypalとの決済連携設定&lt;/h1&gt;
-
-&lt;p&gt;支払い方法を設定しますが、その前にPayPalのSandboxアカウントを作成しておきます。sandbox用アカウントはPaypalDevelperから作成出来ます。Dashbord→Sandbox:AccountってところでCreateAccountでBusinessタイプを作成して、APIcredentialsってところに出てくる情報を控えておきます。&lt;/p&gt;
-
-&lt;p&gt;PayPalDevleoper&lt;br&gt;
-　&lt;a href=&quot;https://developer.paypal.com&quot;&gt;https://developer.paypal.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;設定→支払い方法→「＋支払い方法を追加」と選び、以下の内容を設定して、「作成」。&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;プロバイダー：Spree::PaypalGatewayExpress&lt;/li&gt;
-&lt;li&gt;名称：Paypal&lt;/li&gt;
-&lt;li&gt;ログイン、パスワード、SIGNATURE：先ほど作成したSandboxアカウントの値&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;ここまで設定すると、&lt;code&gt;http://localhost:3000/&lt;/code&gt;から商品を購入することが出来ます（本当にとりあえずですが）。。
-テストで商品購入と試すときはPayPalに遷移したときURLが&lt;code&gt;https://www.sandbox.paypal.com&lt;/code&gt;のようにsandboxとなっているかは確認しておきましょう。。&lt;/p&gt;
-
-&lt;p&gt;開発がアクティブなので、運用に使うにはきちんとテストと手直しが必要ですが、ある程度Rails分かる人なら、十分使えそうな気がしました。&lt;/p&gt;
-</description>
-        <pubDate>Thu, 18 Sep 2014 05:34:20 +0900</pubDate>
-        <link>http://takemikami.com/2014/09/18/RailsECSpreeCommerce.html</link>
-        <guid isPermaLink="true">http://takemikami.com/2014/09/18/RailsECSpreeCommerce.html</guid>
-        
-        <category>spree</category>
-        
-        <category>ec</category>
-        
-        <category>rails</category>
         
         
         <category>it技術</category>
